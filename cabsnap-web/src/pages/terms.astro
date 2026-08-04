@@ -1,0 +1,57 @@
+---
+import Prose from '../layouts/Prose.astro';
+import { SITE, DISCLAIMER } from '../config';
+---
+<Prose
+  title="Terms of Service — CabSnap"
+  description="Terms governing use of CabSnap."
+  path="/terms"
+  heading="Terms of Service"
+  updated="[DATE]"
+>
+  <div class="note">
+    <strong>Draft — requires legal review before publishing.</strong> A structural
+    starting point, not a reviewed legal document.
+  </div>
+
+  <h2>Agreement</h2>
+  <p>
+    By using CabSnap you agree to these terms. CabSnap is operated by
+    {SITE.company}, {SITE.companyLocation}.
+  </p>
+
+  <h2>What CabSnap is</h2>
+  <p>{DISCLAIMER}</p>
+
+  <h2>Your responsibilities</h2>
+  <ul>
+    <li>You are responsible for the accuracy of your own tax records.</li>
+    <li>You should verify extracted data against the original receipt. Automated text extraction makes mistakes.</li>
+    <li>You must not use the app for unlawful purposes.</li>
+  </ul>
+
+  <h2>Your content</h2>
+  <p>
+    Your receipt images are yours. [CONFIRM: the licence the app requires to store
+    and process them, stated in plain language.]
+  </p>
+
+  <h2>Payment</h2>
+  <p>
+    CabSnap is free to download. In-app purchases are processed by Google Play and
+    governed by Google's terms. [CONFIRM: subscription duration, renewal behaviour,
+    and refund policy.]
+  </p>
+
+  <h2>Availability</h2>
+  <p>
+    We aim to keep the service running but do not guarantee uninterrupted
+    availability. [CONFIRM: limitation of liability — legal review required.]
+  </p>
+
+  <h2>Termination</h2>
+  <p>You may stop using CabSnap at any time. [CONFIRM: data export and deletion on termination.]</p>
+
+  <h2>Contact</h2>
+  <p><a href={`mailto:${SITE.email}`}>{SITE.email}</a></p>
+</Prose>

@@ -1,0 +1,30 @@
+---
+import Prose from '../layouts/Prose.astro';
+import { SITE } from '../config';
+---
+<Prose
+  title="Contact CabSnap"
+  description="Get in touch with the team behind CabSnap. Real email, real replies."
+  path="/contact"
+  heading="Contact"
+>
+  <p>
+    One address, and a person reads it:
+    <a href={`mailto:${SITE.email}`}>{SITE.email}</a>
+  </p>
+
+  <h2>What to send</h2>
+  <ul>
+    <li><strong>A receipt that didn't read correctly.</strong> Attach the photo if you can — it is the single most useful thing you can send us.</li>
+    <li><strong>Something broken.</strong> Your phone model and what you were doing helps.</li>
+    <li><strong>A missing feature.</strong> Tell us what you were trying to do, not what to build.</li>
+    <li><strong>Billing.</strong> In-app purchases are handled through Google Play; we can help you find the right place.</li>
+  </ul>
+
+  <h2>Mailing address</h2>
+  <p>{SITE.company}<br />{SITE.companyLocation}</p>
+
+  <div class="note">
+    We are a small operation. If you email on a Saturday, the reply comes Monday.
+  </div>
+</Prose>

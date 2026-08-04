@@ -1,0 +1,118 @@
+---
+import '../styles/global.css';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+import { SITE } from '../config';
+
+interface Props {
+  title: string;
+  description: string;
+  /** Path only, e.g. "/vs/shoeboxed". Used for the canonical tag. */
+  path: string;
+  ogImage?: string;
+  /** Ad landing pages drop the nav and footer — one CTA, no exits. */
+  bare?: boolean;
+  /** Any FAQ block on the page, emitted as FAQPage schema. */
+  faq?: { q: string; a: string }[];
+}
+
+const {
+  title,
+  description,
+  path,
+  ogImage = '/img/og-default.jpg',
+  bare = false,
+  faq,
+} = Astro.props;
+
+const canonical = new URL(path, Astro.site).href;
+const ogUrl = new URL(ogImage, Astro.site).href;
+const noindex = import.meta.env.PUBLIC_NOINDEX === 'true';
+
+const orgSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  name: SITE.name,
+  url: Astro.site?.href,
+  email: SITE.email,
+  parentOrganization: { '@type': 'Organization', name: SITE.company },
+};
+
+const faqSchema = faq && {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faq.map(({ q, a }) => ({
+    '@type': 'Question',
+    name: q,
+    acceptedAnswer: { '@type': 'Answer', text: a },
+  })),
+};
+---
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <title>{title}</title>
+  <meta name="description" content={description} />
+  <link rel="canonical" href={canonical} />
+  {noindex && <meta name="robots" content="noindex, nofollow" />}
+
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content={title} />
+  <meta property="og:description" content={description} />
+  <meta property="og:url" content={canonical} />
+  <meta property="og:image" content={ogUrl} />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card" content="summary_large_image" />
+
+  <meta name="theme-color" content="#14213D" />
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;800;900&family=Courier+Prime:wght@400;700&family=Inter:wght@400;500;600&display=swap"
+    rel="stylesheet"
+  />
+
+  <script type="application/ld+json" set:html={JSON.stringify(orgSchema)} />
+  {faqSchema && <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />}
+</head>
+
+<body>
+  {!bare && <Nav />}
+  <slot />
+  {!bare && <Footer />}
+
+  <script>
+    // Preserve UTM parameters through to the Play Store so campaign
+    // attribution survives the handoff, and fire PlayStoreClick.
+    document.addEventListener('click', (e) => {
+      const link = (e.target as HTMLElement)?.closest?.('a[data-play-store]');
+      if (!link) return;
+
+      const params = new URLSearchParams(window.location.search);
+      const utms = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term']
+        .filter((k) => params.get(k))
+        .map((k) => `${k}=${encodeURIComponent(params.get(k)!)}`)
+        .join('&');
+
+      if (utms) {
+        const url = new URL((link as HTMLAnchorElement).href);
+        url.searchParams.set('referrer', utms);
+        (link as HTMLAnchorElement).href = url.toString();
+      }
+
+      if (typeof (window as any).fbq === 'function') {
+        (window as any).fbq('trackCustom', 'PlayStoreClick', {
+          page: window.location.pathname,
+        });
+      }
+    });
+  </script>
+</body>
+</html>

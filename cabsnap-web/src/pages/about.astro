@@ -1,0 +1,49 @@
+---
+import Prose from '../layouts/Prose.astro';
+import { SITE } from '../config';
+---
+<Prose
+  title="About CabSnap"
+  description="CabSnap is built by Nuvol Holdings LLC in East Brunswick, NJ. A receipt app for people who buy their own fuel."
+  path="/about"
+  heading="About"
+>
+  <p>
+    CabSnap is a receipt capture app for owner-operators, lease operators, and
+    1099 drivers. You photograph a receipt, the app reads it and files it, and
+    it stays readable long after the paper version has faded.
+  </p>
+
+  <h2>Why it exists</h2>
+  <p>
+    Nearly every receipt a driver collects is thermal paper — fuel, scale tickets,
+    truck stop slips. Thermal paper does not survive a summer in a cab. By the time
+    anyone sits down to sort it out, a meaningful share of the year's spending is a
+    stack of blank slips.
+  </p>
+  <p>
+    That money was already spent. The only thing lost is the proof.
+  </p>
+
+  <h2>What we deliberately don't do</h2>
+  <ul>
+    <li><strong>Mileage tracking.</strong> Good apps already exist for this. We would rather do one thing properly.</li>
+    <li><strong>Tax advice.</strong> We are a recordkeeping tool. What you can deduct is a question for your tax preparer.</li>
+    <li><strong>iOS.</strong> Android only for now. We would rather say so than imply otherwise.</li>
+  </ul>
+
+  <h2>Who's behind it</h2>
+  <p>
+    CabSnap is a product of {SITE.company}, based in {SITE.companyLocation}.
+    Questions, problems, or feedback go to <a href={`mailto:${SITE.email}`}>{SITE.email}</a>,
+    and a person reads them.
+  </p>
+
+  <div class="note">
+    <strong>On reviews and testimonials:</strong> you will not find star ratings,
+    download counts, or customer quotes on this site. Not because there is nothing
+    to say, but because inventing them is what every other app does and drivers
+    can tell. When there are real reviews on the Play Store, they will speak for
+    themselves there.
+  </div>
+</Prose>

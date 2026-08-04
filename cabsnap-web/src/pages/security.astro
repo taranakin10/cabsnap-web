@@ -1,0 +1,40 @@
+---
+import Prose from '../layouts/Prose.astro';
+import { SITE } from '../config';
+---
+<Prose
+  title="Security — CabSnap"
+  description="Where your receipt data lives and who can see it."
+  path="/security"
+  heading="Security"
+>
+  <p>
+    You are handing an app a picture of everything you spend money on. It is fair
+    to ask where that goes.
+  </p>
+
+  <div class="note">
+    <strong>Draft — needs completion before launch.</strong> The sections below
+    must be filled in with the app's actual infrastructure before this page ships.
+    Do not publish placeholder security claims; an inaccurate security page is
+    worse than no security page.
+  </div>
+
+  <h2>Where receipts are stored</h2>
+  <p>[CONFIRM: hosting provider, region, and whether images are stored encrypted at rest.]</p>
+
+  <h2>Who can see them</h2>
+  <p>[CONFIRM: which staff, if any, can access user receipt images, and under what circumstances.]</p>
+
+  <h2>How data moves</h2>
+  <p>[CONFIRM: TLS version for transit, and which third-party services process receipt images for text extraction.]</p>
+
+  <h2>Deleting your data</h2>
+  <p>[CONFIRM: how a user deletes their account and what happens to stored images afterward. Google Play requires an account deletion path.]</p>
+
+  <h2>Reporting a problem</h2>
+  <p>
+    Found something concerning? Email <a href={`mailto:${SITE.email}`}>{SITE.email}</a>
+    and we will look at it.
+  </p>
+</Prose>

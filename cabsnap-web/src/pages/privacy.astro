@@ -1,0 +1,67 @@
+---
+import Prose from '../layouts/Prose.astro';
+import { SITE } from '../config';
+---
+<Prose
+  title="Privacy Policy — CabSnap"
+  description="How CabSnap handles your data."
+  path="/privacy"
+  heading="Privacy Policy"
+  updated="[DATE]"
+>
+  <div class="note">
+    <strong>Draft — requires legal review before publishing.</strong> This is a
+    structural starting point written from how the product appears to work, not a
+    reviewed legal document. Every bracketed item must be confirmed against actual
+    app behaviour, and the whole thing should be read by a lawyer. Google Play
+    requires an accurate privacy policy, and an inaccurate one is a compliance
+    problem rather than a formality.
+  </div>
+
+  <h2>Who we are</h2>
+  <p>
+    CabSnap is operated by {SITE.company}, {SITE.companyLocation}.
+    Contact: <a href={`mailto:${SITE.email}`}>{SITE.email}</a>.
+  </p>
+
+  <h2>What we collect</h2>
+  <ul>
+    <li><strong>Receipt images</strong> you photograph, and the data extracted from them.</li>
+    <li><strong>Account information</strong> — [CONFIRM: email address, sign-in method].</li>
+    <li><strong>Purchase records</strong> for in-app purchases, processed by Google Play.</li>
+    <li><strong>Usage data</strong> — [CONFIRM: which analytics SDKs are in the app].</li>
+  </ul>
+
+  <h2>What we do with it</h2>
+  <ul>
+    <li>Extract text from receipt images so you can search and organise them.</li>
+    <li>Store your receipts so they remain available to you.</li>
+    <li>[CONFIRM: whether images or extracted data are used to improve extraction accuracy. This must be stated plainly either way.]</li>
+  </ul>
+
+  <h2>Who we share it with</h2>
+  <p>[CONFIRM: list every third-party processor — hosting, text extraction, analytics, crash reporting.]</p>
+  <p>We do not sell your data.</p>
+
+  <h2>How long we keep it</h2>
+  <p>[CONFIRM: retention period for receipt images, and what happens on account deletion.]</p>
+
+  <h2>Your rights</h2>
+  <p>
+    You can request access to, correction of, or deletion of your data by emailing
+    <a href={`mailto:${SITE.email}`}>{SITE.email}</a>.
+    [CONFIRM: in-app account deletion path — Google Play requires one.]
+  </p>
+
+  <h2>Website analytics</h2>
+  <p>
+    This website uses Meta Pixel and Google Analytics to measure which pages lead
+    to Play Store visits. [CONFIRM: cookie consent requirements for your traffic regions.]
+  </p>
+
+  <h2>Children</h2>
+  <p>CabSnap is not directed at children under 13 and we do not knowingly collect their data.</p>
+
+  <h2>Changes</h2>
+  <p>Material changes to this policy will be posted here with an updated date.</p>
+</Prose>

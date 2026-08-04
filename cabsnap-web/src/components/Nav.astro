@@ -1,0 +1,35 @@
+---
+import { CTA } from '../config';
+---
+<nav>
+  <div class="nav-in">
+    <a class="logo" href="/">Cab<span>Snap</span></a>
+    <a class="nav-cta" href="#get">{CTA.nav}</a>
+  </div>
+</nav>
+
+<style>
+  nav {
+    position: sticky; top: 0; z-index: 50;
+    background: var(--navy);
+    border-bottom: 1px solid rgba(0,0,0,.3);
+  }
+  .nav-in {
+    max-width: var(--maxw); margin-inline: auto;
+    padding: 12px var(--pad);
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .logo {
+    font-family: var(--font-display); font-weight: 900;
+    font-size: 24px; letter-spacing: -.02em; text-transform: uppercase;
+    color: var(--paper); text-decoration: none;
+  }
+  /* brand green sits on navy at ~6:1 — the only place it is legible */
+  .logo span { color: var(--green); }
+  .nav-cta {
+    font-family: var(--font-display); font-weight: 800;
+    text-transform: uppercase; font-size: 15px; letter-spacing: .04em;
+    background: var(--orange); color: var(--navy);
+    padding: 8px 15px; border-radius: 3px; text-decoration: none;
+  }
+</style>

@@ -1,0 +1,7 @@
+---
+import { CTA, PLAY_STORE_URL } from '../config';
+interface Props { label?: string; note?: boolean; }
+const { label = CTA.primary, note = true } = Astro.props;
+---
+<a class="btn" id="get" href={PLAY_STORE_URL} data-play-store rel="noopener">{label}</a>
+{note && <p class="btn-note">{CTA.note}</p>}

@@ -1,0 +1,186 @@
+---
+import Base from '../../layouts/Base.astro';
+import Cta from '../../components/Cta.astro';
+import Faq from '../../components/Faq.astro';
+
+/**
+ * COMPARISON PAGE RULES — do not relax these when editing.
+ *
+ * 1. Every claim about Shoeboxed must be verifiable on shoeboxed.com today.
+ * 2. The comparison table carries a visible "verified" date. Their product
+ *    changes; an undated table becomes a false claim by neglect.
+ * 3. Concede their strengths in the first screen, not buried at the bottom.
+ * 4. No disparagement. This page wins by being believed, not by winning.
+ *
+ * All Shoeboxed facts below were verified against shoeboxed.com on 2026-08-04.
+ */
+const VERIFIED = 'August 4, 2026';
+
+const rows = [
+  { feature: 'Built for',        cabsnap: 'Owner-operators & 1099 drivers', them: 'Small business & bookkeepers' },
+  { feature: 'Capture method',   cabsnap: 'Phone camera',                   them: 'Phone, mail-in, email, Gmail plugin' },
+  { feature: 'Mail-in scanning', cabsnap: 'No',                             them: 'Yes — the Magic Envelope' },
+  { feature: 'Mileage tracking', cabsnap: 'No',                             them: 'Yes, included' },
+  { feature: 'iPhone app',       cabsnap: 'Not yet',                        them: 'Yes' },
+  { feature: 'Android app',      cabsnap: 'Yes',                            them: 'Yes' },
+  { feature: 'Operating since',  cabsnap: '2025',                           them: '2007' },
+];
+
+const faq = [
+  {
+    q: 'Is CabSnap cheaper than Shoeboxed?',
+    a: 'Shoeboxed publishes plans from $9 to $179 per month. CabSnap is free to download from Google Play and has in-app purchases. Check the Play Store listing for current pricing, since we would rather you see the real number than a number we typed on a marketing page.',
+  },
+  {
+    q: 'Can I use both?',
+    a: 'Some drivers do, and that is a reasonable setup. Shoeboxed handles a backlog of paper through the mail; CabSnap handles the receipt in your hand right now, at the pump. They solve different halves of the same problem.',
+  },
+  {
+    q: 'What does Shoeboxed do that CabSnap does not?',
+    a: 'Mail-in scanning with human verification, mileage tracking, an iPhone app, accounting integrations, and nearly two decades of operating history. If any of those are requirements for you, they are the better fit and we would rather you knew that now.',
+  },
+  {
+    q: 'Why would a trucker pick CabSnap?',
+    a: 'Because it does one thing and it is designed around the cab of a truck — one hand, engine running, glare on the windshield. Shoeboxed is built for a desk. Neither is wrong; they are aimed at different places.',
+  },
+];
+---
+
+<Base
+  title="CabSnap vs Shoeboxed — An Honest Comparison for Truckers"
+  description="Shoeboxed is a bookkeeping service for offices. CabSnap is a receipt app for the cab of a truck. A straight comparison, including what Shoeboxed does better."
+  path="/vs/shoeboxed"
+  faq={faq}
+>
+  <section class="hero dark">
+    <div class="wrap">
+      <p class="eyebrow orange">Comparison</p>
+      <h1>CabSnap<br />vs <em>Shoeboxed</em></h1>
+      <p class="lead">
+        Shoeboxed is a bookkeeping service for offices. CabSnap is a receipt app
+        for the cab of a truck. Same paper, different job.
+      </p>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <p class="eyebrow">First, the honest part</p>
+      <h2>Shoeboxed is<br />a good product.</h2>
+      <p class="intro">
+        They have been doing this since 2007. They will mail you a prepaid envelope,
+        scan your backlog by hand, verify the data with real people, and track your
+        mileage for free. They have an iPhone app and we don't.
+      </p>
+      <p>
+        If you have a drawer of paper going back three years, or you need mileage
+        tracking, stop reading and go use Shoeboxed. We would rather lose you here
+        than lose you after you have paid for something that was never going to fit.
+      </p>
+      <p>
+        What follows is for everyone else.
+      </p>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <p class="eyebrow">Side by side</p>
+      <h2>The differences<br />that matter.</h2>
+      <div class="tablewrap">
+        <table>
+          <thead>
+            <tr><th></th><th>CabSnap</th><th>Shoeboxed</th></tr>
+          </thead>
+          <tbody>
+            {rows.map((r) => (
+              <tr>
+                <th scope="row">{r.feature}</th>
+                <td>{r.cabsnap}</td>
+                <td>{r.them}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      <p class="verified">
+        Shoeboxed details verified against shoeboxed.com on {VERIFIED}.
+        Their product changes — check their site for current information.
+      </p>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <p class="eyebrow">The real difference</p>
+      <h2>One is built<br />for a desk.</h2>
+      <p class="intro">
+        Look at who Shoeboxed writes for: bookkeepers, accountants, teams,
+        realtors, therapists, consultants. It is a receipt service for people
+        who work at a desk and occasionally drive.
+      </p>
+      <p>
+        CabSnap is for people who work in a vehicle and occasionally sit at a desk.
+        That sounds like a small distinction. It is not. It decides whether the
+        capture flow assumes two hands or one, good light or windshield glare,
+        a quiet moment or thirty seconds at a fuel island.
+      </p>
+      <p>
+        We do less. We do it where you actually are.
+      </p>
+    </div>
+  </section>
+
+  <section class="dark">
+    <div class="wrap">
+      <p class="eyebrow">Questions</p>
+      <h2>Straight answers.</h2>
+      <Faq items={faq} />
+    </div>
+  </section>
+
+  <div class="dark closing">
+    <div class="wrap">
+      <h2>Try the one built<br />for the <em>truck</em>.</h2>
+      <Cta />
+    </div>
+  </div>
+</Base>
+
+<style>
+  .hero { padding: 56px 0 52px; }
+  .eyebrow.orange { color: var(--orange); }
+  h1 em { font-style: normal; color: var(--orange); }
+  h2 em { font-style: normal; color: var(--orange); }
+  .lead { font-size: 18px; margin-top: 18px; }
+  .intro { margin-top: 16px; }
+  section p + p { margin-top: 14px; }
+
+  .tablewrap { margin-top: 26px; overflow-x: auto; }
+  table { width: 100%; border-collapse: collapse; font-size: 14.5px; }
+  th, td {
+    text-align: left; padding: 12px 10px;
+    border-bottom: 1px solid var(--rule); vertical-align: top;
+  }
+  thead th {
+    font-family: var(--font-display); font-weight: 800;
+    text-transform: uppercase; font-size: 16px;
+    border-bottom: 2px solid var(--navy);
+  }
+  thead th:nth-child(2) { color: var(--orange-ink); }
+  tbody th {
+    font-weight: 600; color: var(--muted);
+    font-size: 13.5px; width: 34%;
+  }
+  .verified {
+    font-family: var(--font-mono); font-size: 11.5px;
+    color: var(--muted); margin-top: 14px; line-height: 1.5;
+  }
+
+  .dark :global(.faq details) { border-bottom-color: var(--rule-dk); }
+  .dark :global(.faq summary) { color: var(--paper); }
+  .dark :global(.faq summary::after) { color: var(--green); }
+
+  .closing { text-align: center; padding: 56px 0; border-bottom: none; }
+  .closing h2 { margin-bottom: 4px; }
+</style>

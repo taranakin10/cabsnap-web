@@ -1,0 +1,234 @@
+---
+import Base from '../layouts/Base.astro';
+import Cta from '../components/Cta.astro';
+import Faq from '../components/Faq.astro';
+import IrsProof from '../components/IrsProof.astro';
+
+/**
+ * PRIMARY AUDIENCE PAGE — this is the template.
+ *
+ * The five sibling pages are copies of this file with the data blocks below
+ * swapped out. Everything that changes per audience lives in the consts at
+ * the top; the markup stays identical.
+ *
+ * The thing that makes these pages work is naming the SPECIFIC receipts that
+ * audience actually holds. Generic "business expenses" copy converts nobody.
+ */
+
+const RECEIPTS = [
+  { name: 'Fuel', note: 'The big one, and the one that fades fastest' },
+  { name: 'Scale tickets', note: 'Weigh station slips, thermal paper, illegible by spring' },
+  { name: 'Lumper fees', note: 'Cash out of pocket, hardest to prove later' },
+  { name: 'Tolls', note: 'Small individually, thousands annually' },
+  { name: 'Repairs & tires', note: 'The receipts you actually keep — sometimes' },
+  { name: 'Showers & parking', note: 'The ones nobody bothers with' },
+];
+
+const faq = [
+  {
+    q: 'Does the IRS accept photos of receipts?',
+    a: 'Yes. Under Rev. Proc. 97-22 the IRS accepts electronic copies of paper records, provided the image is legible, matches the original, can be printed on request, and is stored securely. This is a recordkeeping answer, not tax advice — talk to your tax preparer about your own situation.',
+  },
+  {
+    q: 'Will it read a faded fuel receipt?',
+    a: 'It reads what is still legible. Nothing reads ink that is already gone, which is exactly why the receipt needs photographing while it is fresh rather than in April. A photo taken today stays readable forever.',
+  },
+  {
+    q: 'Does CabSnap track my miles?',
+    a: 'No. CabSnap captures and keeps receipts, and that is the whole job. If you need mileage tracking you will want a separate app for it.',
+  },
+  {
+    q: 'What about scale tickets and lumper receipts?',
+    a: 'Any paper you can photograph. The app captures the image and reads what it can from it. Even where the extracted data is incomplete, the photo itself is preserved as your record.',
+  },
+  {
+    q: 'Does it work without signal?',
+    a: 'The photo is captured on your phone when you take it. Reliable capture in dead zones is exactly the situation this needs to survive, so if you hit a case where it does not behave, email admin@getcabsnap.com and tell us.',
+  },
+  {
+    q: 'Is there an iPhone version?',
+    a: 'Not yet. CabSnap is Android only right now, on Google Play.',
+  },
+];
+---
+
+<Base
+  title="Receipt App for Truck Drivers — CabSnap"
+  description="Fuel, scale tickets, lumper fees, tolls. Photograph it once and it is kept. Built for drivers who buy their own fuel. Free on Google Play."
+  path="/receipt-app-for-truck-drivers"
+  faq={faq}
+>
+  <header class="dark hero">
+    <div class="hero-photo">
+      <img src="/img/hands-receipts.webp" width="900" height="900" fetchpriority="high"
+           alt="A driver's hands holding a stack of crumpled receipts at a truck stop fuel island" />
+    </div>
+    <div class="wrap hero-copy">
+      <p class="eyebrow orange">For truck drivers</p>
+      <h1>Your receipts are<br />in the <em>glovebox</em>.</h1>
+      <p class="lead">
+        Fuel, scale tickets, lumper fees, tolls. Photograph each one when you get it
+        and it is kept — readable in April, when the paper version won't be.
+      </p>
+      <Cta />
+      <p class="plat">Android &middot; Google Play &middot; <b>&#10003;</b> in-app purchases available</p>
+    </div>
+  </header>
+
+  <section>
+    <div class="wrap">
+      <p class="eyebrow">What you're carrying</p>
+      <h2>The paper a driver<br />collects in a week.</h2>
+      <div class="receipts">
+        {RECEIPTS.map((r) => (
+          <div class="receipt">
+            <h3>{r.name}</h3>
+            <p>{r.note}</p>
+          </div>
+        ))}
+      </div>
+      <p class="closer">
+        Every one of those is money you already spent. The only question is
+        whether you can still prove it eleven months from now.
+      </p>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <p class="eyebrow">What goes wrong</p>
+      <h2>Thermal paper<br />is the enemy.</h2>
+      <figure>
+        <img src="/img/faded-receipt.webp" width="1200" height="900" loading="lazy"
+             alt="A thermal paper receipt on a dashboard, its printing faded to almost nothing" />
+        <figcaption>Left on a dashboard through a summer. Nothing left to read.</figcaption>
+      </figure>
+      <p class="intro">
+        Fuel receipts, scale tickets, and truck stop slips are nearly all thermal
+        paper. Heat kills it, and a cab in July gets hotter than anywhere else that
+        paper will ever sit. A receipt from a run in August can be blank by the time
+        anyone looks at it.
+      </p>
+      <p>
+        A photograph taken the day you got it does not fade. That is the entire
+        premise of this app.
+      </p>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <p class="eyebrow">How it works</p>
+      <h2>Three seconds<br />at the pump.</h2>
+      <div class="steps">
+        <div class="step">
+          <div class="step-n">1</div>
+          <div><h3>Snap it</h3><p>One hand, engine running, before you climb back in.</p></div>
+        </div>
+        <div class="step">
+          <div class="step-n">2</div>
+          <div><h3>AI reads it</h3><p>Vendor, date, and total pulled off the paper. No typing.</p></div>
+        </div>
+        <div class="step">
+          <div class="step-n">3</div>
+          <div><h3>It's kept</h3><p>Filed and searchable. The paper can go out the window.</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <IrsProof />
+
+  <section class="topline">
+    <div class="wrap">
+      <p class="eyebrow">Questions</p>
+      <h2>Straight answers.</h2>
+      <Faq items={faq} />
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <p class="eyebrow">Also built for</p>
+      <div class="siblings">
+        <a href="/receipt-app-for-owner-operators">
+          <span>Owner-operators</span><small>Your truck, your expenses</small>
+        </a>
+        <a href="/receipt-app-for-1099-contractors">
+          <span>1099 contractors</span><small>No employer, no reimbursement</small>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <div class="dark closing">
+    <div class="wrap">
+      <h2>The paper fades.<br />The <em>photo doesn't</em>.</h2>
+      <Cta />
+    </div>
+  </div>
+</Base>
+
+<style>
+  .hero { padding-bottom: 40px; }
+  .hero-photo { position: relative; }
+  .hero-photo::after {
+    content: ""; position: absolute; inset: 0;
+    background: linear-gradient(180deg,
+      rgba(20,33,61,.5) 0%, rgba(20,33,61,.1) 35%,
+      rgba(20,33,61,.45) 70%, var(--navy) 100%);
+  }
+  .hero-copy { padding-top: 26px; }
+  .eyebrow.orange { color: var(--orange); }
+  h1 em, h2 em { font-style: normal; color: var(--orange); }
+  .lead { font-size: 18px; margin-top: 16px; }
+  .plat {
+    text-align: center; margin-top: 12px; font-size: 12.5px;
+    color: var(--muted-dk); font-family: var(--font-mono);
+  }
+  .plat b { color: var(--green); font-weight: 400; }
+
+  .receipts { margin-top: 26px; display: flex; flex-direction: column; gap: 1px; background: var(--rule); }
+  .receipt { background: var(--paper); padding: 16px 0; }
+  .receipt h3 { font-size: 19px; }
+  .receipt p { font-size: 14.5px; margin-top: 3px; color: var(--muted); }
+  .closer { margin-top: 24px; font-size: 17px; }
+
+  figure { margin: 26px 0 0; }
+  figure img { width: 100%; border-radius: 5px; }
+  figcaption {
+    font-family: var(--font-mono); font-size: 12.5px;
+    color: var(--muted); margin-top: 9px;
+  }
+  .intro { margin-top: 20px; }
+  section p + p { margin-top: 14px; }
+
+  .steps { margin-top: 28px; display: flex; flex-direction: column; gap: 26px; }
+  .step { display: grid; grid-template-columns: 44px 1fr; gap: 14px; align-items: start; }
+  .step-n {
+    font-family: var(--font-display); font-weight: 900;
+    font-size: 38px; color: var(--orange); line-height: .8;
+  }
+  .step h3 { margin-bottom: 5px; }
+  .step p { font-size: 15.5px; }
+
+  .topline { border-top: 1px solid var(--rule); }
+
+  .siblings { margin-top: 20px; display: grid; grid-template-columns: 1fr 1fr; gap: 9px; }
+  .siblings a {
+    display: block; text-decoration: none; color: var(--text);
+    background: var(--card); border: 1px solid var(--rule);
+    border-radius: 4px; padding: 16px 14px;
+  }
+  .siblings span {
+    display: block; font-family: var(--font-display); font-weight: 800;
+    text-transform: uppercase; font-size: 18px; line-height: 1.05;
+  }
+  .siblings small {
+    display: block; color: var(--muted); font-size: 12px;
+    margin-top: 5px; font-family: var(--font-mono);
+  }
+
+  .closing { text-align: center; padding: 56px 0; border-bottom: none; }
+  .closing h2 { margin-bottom: 4px; }
+</style>
