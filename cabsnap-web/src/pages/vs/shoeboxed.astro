@@ -1,7 +1,8 @@
 ---
 import Base from '../../layouts/Base.astro';
-import Cta from '../../components/Cta.astro';
 import Faq from '../../components/Faq.astro';
+import CompareTable from '../../components/CompareTable.astro';
+import Closing from '../../components/Closing.astro';
 
 /**
  * COMPARISON PAGE RULES — do not relax these when editing.
@@ -87,26 +88,12 @@ const faq = [
     <div class="wrap">
       <p class="eyebrow">Side by side</p>
       <h2>The differences<br />that matter.</h2>
-      <div class="tablewrap">
-        <table>
-          <thead>
-            <tr><th></th><th>CabSnap</th><th>Shoeboxed</th></tr>
-          </thead>
-          <tbody>
-            {rows.map((r) => (
-              <tr>
-                <th scope="row">{r.feature}</th>
-                <td>{r.cabsnap}</td>
-                <td>{r.them}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-      <p class="verified">
-        Shoeboxed details verified against shoeboxed.com on {VERIFIED}.
-        Their product changes — check their site for current information.
-      </p>
+      <CompareTable
+        them="Shoeboxed"
+        themDomain="shoeboxed.com"
+        verified={VERIFIED}
+        rows={rows}
+      />
     </div>
   </section>
 
@@ -139,12 +126,7 @@ const faq = [
     </div>
   </section>
 
-  <div class="dark closing">
-    <div class="wrap">
-      <h2>Try the one built<br />for the <em>truck</em>.</h2>
-      <Cta />
-    </div>
-  </div>
+  <Closing html="Try the one built<br />for the <em>truck</em>." />
 </Base>
 
 <style>
@@ -156,31 +138,7 @@ const faq = [
   .intro { margin-top: 16px; }
   section p + p { margin-top: 14px; }
 
-  .tablewrap { margin-top: 26px; overflow-x: auto; }
-  table { width: 100%; border-collapse: collapse; font-size: 14.5px; }
-  th, td {
-    text-align: left; padding: 12px 10px;
-    border-bottom: 1px solid var(--rule); vertical-align: top;
-  }
-  thead th {
-    font-family: var(--font-display); font-weight: 800;
-    text-transform: uppercase; font-size: 16px;
-    border-bottom: 2px solid var(--navy);
-  }
-  thead th:nth-child(2) { color: var(--orange-ink); }
-  tbody th {
-    font-weight: 600; color: var(--muted);
-    font-size: 13.5px; width: 34%;
-  }
-  .verified {
-    font-family: var(--font-mono); font-size: 11.5px;
-    color: var(--muted); margin-top: 14px; line-height: 1.5;
-  }
-
   .dark :global(.faq details) { border-bottom-color: var(--rule-dk); }
   .dark :global(.faq summary) { color: var(--paper); }
   .dark :global(.faq summary::after) { color: var(--green); }
-
-  .closing { text-align: center; padding: 56px 0; border-bottom: none; }
-  .closing h2 { margin-bottom: 4px; }
 </style>

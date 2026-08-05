@@ -1,0 +1,29 @@
+---
+/** The three-step how-it-works block. Copy varies per audience. */
+interface Props {
+  items: readonly { h: string; p: string }[];
+}
+const { items } = Astro.props;
+---
+<div class="steps">
+  {items.map((s, i) => (
+    <div class="step">
+      <div class="step-n">{i + 1}</div>
+      <div>
+        <h3>{s.h}</h3>
+        <p>{s.p}</p>
+      </div>
+    </div>
+  ))}
+</div>
+
+<style>
+  .steps { margin-top: 28px; display: flex; flex-direction: column; gap: 26px; }
+  .step { display: grid; grid-template-columns: 44px 1fr; gap: 14px; align-items: start; }
+  .step-n {
+    font-family: var(--font-display); font-weight: 900;
+    font-size: 38px; color: var(--orange); line-height: .8;
+  }
+  .step h3 { margin-bottom: 5px; }
+  .step p { font-size: 15.5px; }
+</style>

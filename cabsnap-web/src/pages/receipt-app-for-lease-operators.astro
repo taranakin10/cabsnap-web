@@ -1,0 +1,145 @@
+---
+import Base from '../layouts/Base.astro';
+import Faq from '../components/Faq.astro';
+import IrsProof from '../components/IrsProof.astro';
+import HeroOverlay from '../components/HeroOverlay.astro';
+import ReceiptList from '../components/ReceiptList.astro';
+import Steps from '../components/Steps.astro';
+import SiblingLinks from '../components/SiblingLinks.astro';
+import Closing from '../components/Closing.astro';
+
+const RECEIPTS = [
+  { name: 'Settlement deductions', note: 'Taken off the top — keep your own copy of every statement' },
+  { name: 'Escrow', note: 'Money held against the truck, reconciled rarely' },
+  { name: 'Fuel', note: 'Whether you buy on the card or out of pocket' },
+  { name: 'Maintenance reserves', note: 'Withheld weekly, spent against work you may never see billed' },
+  { name: 'Out-of-pocket repairs', note: 'The roadside call the reserve did not cover' },
+  { name: 'Tolls & scale tickets', note: 'Small paper, thermal, gone by spring' },
+];
+
+const STEPS = [
+  { h: 'Snap it', p: 'The settlement sheet, the shop invoice, the fuel slip. One hand.' },
+  { h: 'AI reads it', p: 'Vendor, date, and total pulled off the paper automatically.' },
+  { h: "It's kept", p: 'Your copy, in your hands, independent of the carrier’s portal.' },
+];
+
+const faq = [
+  {
+    q: 'The carrier already has all of this. Why keep my own copy?',
+    a: 'Because it is their portal, their retention policy, and their access. Lease agreements end, sometimes abruptly, and portal access tends to end with them. A photo on your phone is yours regardless of what happens to the relationship.',
+  },
+  {
+    q: 'Does the IRS accept photos of receipts?',
+    a: 'Yes. Under Rev. Proc. 97-22 the IRS accepts electronic copies of paper records, provided the image is legible, matches the original, can be printed on request, and is stored securely. This is a recordkeeping answer, not tax advice — talk to your tax preparer about your own situation.',
+  },
+  {
+    q: 'Can CabSnap read a settlement statement?',
+    a: 'It captures the image and reads what it can from it. Settlement layouts vary a lot between carriers, so treat the extracted data as a convenience and the photo itself as the record. The image is always kept alongside whatever was read.',
+  },
+  {
+    q: 'What about escrow — is that a receipt?',
+    a: 'Not in the usual sense, but the statements showing what was withheld and what was returned are records worth keeping, and they are the ones drivers most often cannot produce later. Photograph them the same way.',
+  },
+  {
+    q: 'Does CabSnap track my miles?',
+    a: 'No. CabSnap captures and keeps receipts, and that is the whole job. If you need mileage tracking you will want a separate app for it.',
+  },
+  {
+    q: 'Is there an iPhone version?',
+    a: 'Not yet. CabSnap is Android only right now, on Google Play.',
+  },
+];
+---
+
+<Base
+  title="Receipt App for Lease Operators — CabSnap"
+  description="Settlement deductions, escrow, fuel, maintenance reserves. Keep your own copy of the paper, independent of the carrier's portal. Free on Google Play."
+  path="/receipt-app-for-lease-operators"
+  faq={faq}
+>
+  <HeroOverlay
+    img="/img/hero-cab.webp"
+    alt="A driver photographing a receipt on the steering wheel of a truck cab"
+    eyebrow="For lease operators"
+  >
+    <h1 slot="h1">Their portal.<br />Your <em>records</em>.</h1>
+    <p slot="lead" class="lead">
+      Settlement deductions, escrow, fuel, maintenance reserves. Keep your own copy
+      of every piece of it, in your hand, whatever happens to the lease.
+    </p>
+  </HeroOverlay>
+
+  <section>
+    <div class="wrap">
+      <p class="eyebrow">What you're carrying</p>
+      <h2>The paper a lease<br />operator should keep.</h2>
+      <ReceiptList items={RECEIPTS} />
+      <p class="closer">
+        Some of it is money you spent. Some of it is money that was taken before
+        you saw it. Both are worth being able to produce later.
+      </p>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <p class="eyebrow">What goes wrong</p>
+      <h2>Access ends with<br />the lease.</h2>
+      <figure>
+        <img src="/img/glovebox.webp" width="900" height="900" loading="lazy"
+             alt="An open glove compartment crammed with crumpled paper receipts" />
+        <figcaption>The other half of the filing system: whatever is in the truck.</figcaption>
+      </figure>
+      <p class="intro">
+        A lease operator's records live in two places: the carrier's portal, and a
+        pile of thermal paper in the cab. One of those you do not control, and the
+        other goes blank in a hot truck in a few weeks.
+      </p>
+      <p>
+        Photographing both as you go is the only version where the record is
+        actually yours. It does not fade and it does not get switched off.
+      </p>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <p class="eyebrow">How it works</p>
+      <h2>Three seconds<br />per document.</h2>
+      <Steps items={STEPS} />
+    </div>
+  </section>
+
+  <IrsProof />
+
+  <section class="topline">
+    <div class="wrap">
+      <p class="eyebrow">Questions</p>
+      <h2>Straight answers.</h2>
+      <Faq items={faq} />
+    </div>
+  </section>
+
+  <SiblingLinks slugs={['owner-operators', 'truck-drivers']} />
+
+  <Closing />
+</Base>
+
+<style>
+  h2 em { font-style: normal; color: var(--orange); }
+  .closer { margin-top: 24px; font-size: 17px; }
+  .intro { margin-top: 20px; }
+  section p + p { margin-top: 14px; }
+
+  figure { margin: 26px 0 0; }
+  figure img {
+    width: 100%; height: 220px; object-fit: cover; border-radius: 5px;
+  }
+  @media (min-width: 768px) { figure img { height: 280px; } }
+  figcaption {
+    font-family: var(--font-mono); font-size: 12.5px;
+    color: var(--muted); margin-top: 9px;
+  }
+
+  .topline { border-top: 1px solid var(--rule); }
+</style>

@@ -1,0 +1,145 @@
+---
+import Base from '../layouts/Base.astro';
+import Faq from '../components/Faq.astro';
+import IrsProof from '../components/IrsProof.astro';
+import HeroOverlay from '../components/HeroOverlay.astro';
+import ReceiptList from '../components/ReceiptList.astro';
+import Steps from '../components/Steps.astro';
+import SiblingLinks from '../components/SiblingLinks.astro';
+import Closing from '../components/Closing.astro';
+
+const RECEIPTS = [
+  { name: 'Fuel', note: 'Same pump, same slip, five days a week' },
+  { name: 'Parking', note: 'Lots, meters, and garages on the route' },
+  { name: 'Meals', note: 'Bought on the road even when you sleep at home' },
+  { name: 'Tolls', note: 'Every day, both directions, all year' },
+  { name: 'Small repairs & supplies', note: 'The things you pick up between runs' },
+];
+
+const STEPS = [
+  { h: 'Snap it', p: 'At the pump or the lot, before you climb back in.' },
+  { h: 'AI reads it', p: 'Vendor, date, and total pulled off the paper. No typing.' },
+  { h: "It's kept", p: 'Filed and searchable, so the drawer at home stays empty.' },
+];
+
+const faq = [
+  {
+    q: "I'm home every night. Can't I just file them at the house?",
+    a: 'You can, and some drivers do. The catch is that the pile at home is fed by a pile in the truck, and the paper fades in the truck. Photographing at the pump takes the second pile out of the process entirely.',
+  },
+  {
+    q: 'Does the IRS accept photos of receipts?',
+    a: 'Yes. Under Rev. Proc. 97-22 the IRS accepts electronic copies of paper records, provided the image is legible, matches the original, can be printed on request, and is stored securely. This is a recordkeeping answer, not tax advice — talk to your tax preparer about your own situation.',
+  },
+  {
+    q: 'Everything is the same few vendors every week. Does that make it easier?',
+    a: 'It makes it easier to remember and harder to prove. Twenty identical fuel slips from the same station are exactly the ones nobody keeps, because each one feels like a copy of the last. Any single one of them is still the only record of that purchase.',
+  },
+  {
+    q: 'Does CabSnap track my miles?',
+    a: 'No. CabSnap captures and keeps receipts, and that is the whole job. If you need mileage tracking you will want a separate app for it.',
+  },
+  {
+    q: 'What if the AI reads a receipt wrong?',
+    a: 'You can correct any field yourself. The original photo is always kept alongside the data, so even if a number is off, the actual receipt image is still there as your record.',
+  },
+  {
+    q: 'Is there an iPhone version?',
+    a: 'Not yet. CabSnap is Android only right now, on Google Play.',
+  },
+];
+---
+
+<Base
+  title="Receipt App for Local & Regional Drivers — CabSnap"
+  description="Fuel, parking, meals, tolls. Home every night and the paper still piles up. Photograph each receipt at the pump and it is kept. Free on Google Play."
+  path="/receipt-app-for-local-drivers"
+  faq={faq}
+>
+  <HeroOverlay
+    img="/img/hero-cab.webp"
+    alt="A driver photographing a fuel receipt on the steering wheel of a truck cab"
+    eyebrow="For local & regional drivers"
+  >
+    <h1 slot="h1">Home nightly.<br />Paper <em>still piles up</em>.</h1>
+    <p slot="lead" class="lead">
+      Fuel, parking, meals, tolls. Sleeping in your own bed does not file anything.
+      Photograph each receipt at the pump and it is kept.
+    </p>
+  </HeroOverlay>
+
+  <section>
+    <div class="wrap">
+      <p class="eyebrow">What you're carrying</p>
+      <h2>The paper a local<br />run generates.</h2>
+      <ReceiptList items={RECEIPTS} />
+      <p class="closer">
+        None of it is dramatic. It is the same handful of slips, five days a week,
+        fifty weeks a year, and that is exactly why it stops getting kept.
+      </p>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <p class="eyebrow">What goes wrong</p>
+      <h2>Routine is what<br />kills the habit.</h2>
+      <figure>
+        <img src="/img/faded-receipt.webp" width="1200" height="900" loading="lazy"
+             alt="A thermal paper receipt on a dashboard, its printing faded to almost nothing" />
+        <figcaption>Weeks on a dashboard, on a truck that goes home every night.</figcaption>
+      </figure>
+      <p class="intro">
+        Long-haul drivers know the paper matters because it accumulates somewhere
+        visible. On a local run it goes in the cup holder, then the door pocket,
+        then the kitchen counter, and the same familiarity that makes it feel
+        unimportant is what makes twelve months of it disappear.
+      </p>
+      <p>
+        The truck is still hot in July. Thermal paper does not care whether the
+        route was three hundred miles or thirty. A photograph does not fade.
+      </p>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <p class="eyebrow">How it works</p>
+      <h2>Three seconds<br />at the pump.</h2>
+      <Steps items={STEPS} />
+    </div>
+  </section>
+
+  <IrsProof />
+
+  <section class="topline">
+    <div class="wrap">
+      <p class="eyebrow">Questions</p>
+      <h2>Straight answers.</h2>
+      <Faq items={faq} />
+    </div>
+  </section>
+
+  <SiblingLinks slugs={['truck-drivers', 'gig-drivers']} />
+
+  <Closing />
+</Base>
+
+<style>
+  h2 em { font-style: normal; color: var(--orange); }
+  .closer { margin-top: 24px; font-size: 17px; }
+  .intro { margin-top: 20px; }
+  section p + p { margin-top: 14px; }
+
+  figure { margin: 26px 0 0; }
+  figure img {
+    width: 100%; height: 220px; object-fit: cover; border-radius: 5px;
+  }
+  @media (min-width: 768px) { figure img { height: 280px; } }
+  figcaption {
+    font-family: var(--font-mono); font-size: 12.5px;
+    color: var(--muted); margin-top: 9px;
+  }
+
+  .topline { border-top: 1px solid var(--rule); }
+</style>

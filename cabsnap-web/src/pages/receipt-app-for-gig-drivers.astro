@@ -1,0 +1,177 @@
+---
+import Base from '../layouts/Base.astro';
+import Faq from '../components/Faq.astro';
+import IrsProof from '../components/IrsProof.astro';
+import HeroOverlay from '../components/HeroOverlay.astro';
+import ReceiptList from '../components/ReceiptList.astro';
+import Steps from '../components/Steps.astro';
+import SiblingLinks from '../components/SiblingLinks.astro';
+import Closing from '../components/Closing.astro';
+
+/**
+ * GIG DRIVERS — the honest-mismatch page.
+ *
+ * Most people searching for a gig-driver expense app want MILEAGE TRACKING,
+ * which CabSnap does not do. That answer is given in the section immediately
+ * below the hero, above the fold on a phone — not buried in the FAQ. A visitor
+ * who needs mileage should leave in the first ten seconds rather than install
+ * and find out. Do not soften or relocate that block.
+ */
+
+const RECEIPTS = [
+  { name: 'Gas', note: 'Every fill, on the days the deliveries barely covered it' },
+  { name: 'Car washes', note: 'Small, frequent, and never kept' },
+  { name: 'Phone mounts & chargers', note: 'The gear that quietly wears out every few months' },
+  { name: 'Hot bags & coolers', note: 'Bought out of pocket, replaced more than once a year' },
+  { name: 'Tolls', note: 'Pennies at a time, hundreds by December' },
+];
+
+const STEPS = [
+  { h: 'Snap it', p: 'In the parking lot, before the next ping. One hand.' },
+  { h: 'AI reads it', p: 'Vendor, date, and total pulled off the paper. No typing.' },
+  { h: "It's kept", p: 'Filed and searchable, months after the paper went in the door pocket.' },
+];
+
+const faq = [
+  {
+    q: 'Does CabSnap track my miles?',
+    a: 'No. CabSnap captures and keeps receipts, and that is the entire job. Mileage tracking is a different product and we do not build one. If mileage is your main need, use a dedicated mileage app — plenty of drivers run one of those alongside CabSnap for the paper side.',
+  },
+  {
+    q: 'Then what is this for, if I mostly drive my own car?',
+    a: 'The things you buy. Gas, car washes, mounts, chargers, hot bags, tolls, the replacement phone cable in month three. Those are paper and card slips, and they are the ones that vanish. Miles are tracked by a mileage app; purchases are not.',
+  },
+  {
+    q: 'Does the IRS accept photos of receipts?',
+    a: 'Yes. Under Rev. Proc. 97-22 the IRS accepts electronic copies of paper records, provided the image is legible, matches the original, can be printed on request, and is stored securely. This is a recordkeeping answer, not tax advice — talk to your tax preparer about your own situation.',
+  },
+  {
+    q: 'My gas receipts are on a card statement anyway. Why photograph them?',
+    a: 'A statement shows an amount and a merchant. The receipt shows what was actually bought. Which of those matters to you is a question for your tax professional, but only one of the two is a record of the purchase itself, and it is the one that fades.',
+  },
+  {
+    q: 'Is there an iPhone version?',
+    a: 'Not yet. CabSnap is Android only right now, on Google Play. A lot of gig drivers are on iPhone, and we would rather say so plainly than waste your time.',
+  },
+  {
+    q: 'Do I need it if I only drive part time?',
+    a: 'Fewer receipts is still receipts. The app does not care about volume — it costs nothing to download and the habit takes three seconds per receipt.',
+  },
+];
+---
+
+<Base
+  title="Receipt App for Gig Drivers — CabSnap"
+  description="Gas, car washes, phone mounts, hot bags, tolls. CabSnap keeps the receipts for what you buy. It does not track mileage — read why before you download."
+  path="/receipt-app-for-gig-drivers"
+  faq={faq}
+>
+  <HeroOverlay
+    img="/img/hands-receipts.webp"
+    alt="A driver's hands holding a stack of crumpled receipts"
+    eyebrow="For rideshare & delivery"
+  >
+    <h1 slot="h1">Receipts, yes.<br /><em>Mileage, no</em>.</h1>
+    <p slot="lead" class="lead">
+      Gas, car washes, mounts, hot bags, tolls — photograph each one and it is kept.
+      CabSnap does not track miles, and that is worth knowing before you download.
+    </p>
+  </HeroOverlay>
+
+  <section class="upfront">
+    <div class="wrap">
+      <p class="eyebrow">Before you download</p>
+      <h2>If you came here<br />for mileage, stop.</h2>
+      <p class="intro">
+        Most gig drivers looking for an expense app want automatic mileage tracking.
+        CabSnap does not do that. Not a smaller version of it, not a manual version
+        of it &mdash; it is not in the app and it is not on the roadmap.
+      </p>
+      <p>
+        If mileage is the thing you need, close this page and go install a mileage
+        app. We would rather lose you in ten seconds than have you find out after
+        the download.
+      </p>
+      <p>
+        What CabSnap does is the other half: the paper for everything you
+        <em>buy</em>. Plenty of drivers run a mileage app and CabSnap side by side,
+        because those are genuinely two different problems.
+      </p>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <p class="eyebrow">What you're carrying</p>
+      <h2>The paper a gig<br />driver collects.</h2>
+      <ReceiptList items={RECEIPTS} />
+      <p class="closer">
+        Every one of those is money you already spent on the job. The only question
+        is whether you can still show it next spring.
+      </p>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <p class="eyebrow">What goes wrong</p>
+      <h2>The door pocket<br />is not a system.</h2>
+      <figure>
+        <img src="/img/faded-receipt.webp" width="1200" height="900" loading="lazy"
+             alt="A thermal paper receipt on a dashboard, its printing faded to almost nothing" />
+        <figcaption>A summer on a dashboard. Nothing left to read.</figcaption>
+      </figure>
+      <p class="intro">
+        Gas slips and drive-thru receipts are thermal paper, and a parked car in
+        July is about the worst place that paper can sit. They do not get lost so
+        much as they go blank while sitting exactly where you left them.
+      </p>
+      <p>
+        A photograph taken the day you got it does not fade.
+      </p>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <p class="eyebrow">How it works</p>
+      <h2>Three seconds<br />in the lot.</h2>
+      <Steps items={STEPS} />
+    </div>
+  </section>
+
+  <IrsProof />
+
+  <section class="topline">
+    <div class="wrap">
+      <p class="eyebrow">Questions</p>
+      <h2>Straight answers.</h2>
+      <Faq items={faq} />
+    </div>
+  </section>
+
+  <SiblingLinks slugs={['1099-contractors', 'local-drivers']} />
+
+  <Closing />
+</Base>
+
+<style>
+  h2 em { font-style: normal; color: var(--orange); }
+  .upfront { background: var(--card); }
+  .upfront em { font-style: normal; font-weight: 600; color: var(--orange-ink); }
+  .closer { margin-top: 24px; font-size: 17px; }
+  .intro { margin-top: 20px; }
+  section p + p { margin-top: 14px; }
+
+  figure { margin: 26px 0 0; }
+  figure img {
+    width: 100%; height: 220px; object-fit: cover; border-radius: 5px;
+  }
+  @media (min-width: 768px) { figure img { height: 280px; } }
+  figcaption {
+    font-family: var(--font-mono); font-size: 12.5px;
+    color: var(--muted); margin-top: 9px;
+  }
+
+  .topline { border-top: 1px solid var(--rule); }
+</style>

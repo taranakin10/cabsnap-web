@@ -1,0 +1,145 @@
+---
+import Base from '../layouts/Base.astro';
+import Faq from '../components/Faq.astro';
+import IrsProof from '../components/IrsProof.astro';
+import HeroOverlay from '../components/HeroOverlay.astro';
+import ReceiptList from '../components/ReceiptList.astro';
+import Steps from '../components/Steps.astro';
+import SiblingLinks from '../components/SiblingLinks.astro';
+import Closing from '../components/Closing.astro';
+
+const RECEIPTS = [
+  { name: 'Tools', note: 'The drill, the bits, the thing you replaced twice this year' },
+  { name: 'Supplies', note: 'Consumables bought a few at a time, all year long' },
+  { name: 'Phone', note: 'The line you run the work on, and the gear that goes with it' },
+  { name: 'Parking', note: 'Meters, garages, lots — small slips that never make it home' },
+  { name: 'Materials', note: 'Bought at the counter, sometimes fronted for the client' },
+];
+
+const STEPS = [
+  { h: 'Snap it', p: 'At the counter, in the van, before it goes in a pocket.' },
+  { h: 'AI reads it', p: 'Vendor, date, and total pulled off the paper. No typing.' },
+  { h: "It's kept", p: 'Filed and searchable, with the original photo alongside it.' },
+];
+
+const faq = [
+  {
+    q: 'Does the IRS accept photos of receipts?',
+    a: 'Yes. Under Rev. Proc. 97-22 the IRS accepts electronic copies of paper records, provided the image is legible, matches the original, can be printed on request, and is stored securely. This is a recordkeeping answer, not tax advice — talk to your tax preparer about your own situation.',
+  },
+  {
+    q: "There's no employer to submit these to. Does that change anything?",
+    a: 'It changes who is responsible for the paper: you, entirely. Expense-report apps are built around submitting to a company and getting reimbursed. With no company in the loop, the receipt is not a claim — it is just a record you either have or do not have.',
+  },
+  {
+    q: 'I buy materials for clients and get paid back. Should I photograph those?',
+    a: 'They are records of money that moved, so most contractors keep them. How they are treated at tax time is a question for your tax professional — what CabSnap does is make sure the paper still exists when you need to answer that question.',
+  },
+  {
+    q: 'What if the AI reads a receipt wrong?',
+    a: 'You can correct any field yourself. The original photo is always kept alongside the data, so even if a number is off, the actual receipt image is still there as your record.',
+  },
+  {
+    q: 'Does CabSnap track my miles?',
+    a: 'No. CabSnap captures and keeps receipts, and that is the whole job. If you need mileage tracking you will want a separate app for it.',
+  },
+  {
+    q: 'Is there an iPhone version?',
+    a: 'Not yet. CabSnap is Android only right now, on Google Play.',
+  },
+];
+---
+
+<Base
+  title="Receipt App for 1099 Contractors — CabSnap"
+  description="Tools, supplies, phone, parking, materials. No employer to submit to and nobody filing it for you. Photograph each receipt and it is kept. Free on Google Play."
+  path="/receipt-app-for-1099-contractors"
+  faq={faq}
+>
+  <HeroOverlay
+    img="/img/hands-receipts.webp"
+    alt="Hands holding a stack of crumpled paper receipts"
+    eyebrow="For 1099 contractors"
+  >
+    <h1 slot="h1">No employer.<br />No <em>reimbursement</em>.</h1>
+    <p slot="lead" class="lead">
+      Tools, supplies, phone, parking, materials. Nobody is expensing this for you
+      and nobody is filing it. Photograph each one and it is kept.
+    </p>
+  </HeroOverlay>
+
+  <section>
+    <div class="wrap">
+      <p class="eyebrow">What you're carrying</p>
+      <h2>The paper a contractor<br />collects in a week.</h2>
+      <ReceiptList items={RECEIPTS} />
+      <p class="closer">
+        Every one of those came out of your own pocket. The only question is
+        whether you can still show it eleven months from now.
+      </p>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <p class="eyebrow">What goes wrong</p>
+      <h2>Expense apps assume<br />a company.</h2>
+      <figure>
+        <img src="/img/glovebox.webp" width="900" height="900" loading="lazy"
+             alt="A compartment crammed with crumpled paper receipts" />
+        <figcaption>The filing system most self-employed people actually use.</figcaption>
+      </figure>
+      <p class="intro">
+        Nearly every expense tool is built around a workflow that ends in someone
+        approving a report and paying you back. Take away the employer and most of
+        that machinery is doing nothing except adding steps.
+      </p>
+      <p>
+        What is left is the part that actually matters: does the receipt still
+        exist? Most of them are thermal paper and most of them are in a van, a
+        pocket, or a tool bag. A photograph taken the day you got it does not fade.
+      </p>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <p class="eyebrow">How it works</p>
+      <h2>Three seconds<br />at the counter.</h2>
+      <Steps items={STEPS} />
+    </div>
+  </section>
+
+  <IrsProof />
+
+  <section class="topline">
+    <div class="wrap">
+      <p class="eyebrow">Questions</p>
+      <h2>Straight answers.</h2>
+      <Faq items={faq} />
+    </div>
+  </section>
+
+  <SiblingLinks slugs={['gig-drivers', 'owner-operators']} />
+
+  <Closing />
+</Base>
+
+<style>
+  h2 em { font-style: normal; color: var(--orange); }
+  .closer { margin-top: 24px; font-size: 17px; }
+  .intro { margin-top: 20px; }
+  section p + p { margin-top: 14px; }
+
+  figure { margin: 26px 0 0; }
+  figure img {
+    width: 100%; height: 220px; object-fit: cover; border-radius: 5px;
+  }
+  @media (min-width: 768px) { figure img { height: 280px; } }
+  figcaption {
+    font-family: var(--font-mono); font-size: 12.5px;
+    color: var(--muted); margin-top: 9px;
+  }
+
+  .topline { border-top: 1px solid var(--rule); }
+</style>

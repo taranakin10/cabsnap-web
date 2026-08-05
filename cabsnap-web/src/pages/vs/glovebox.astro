@@ -1,0 +1,151 @@
+---
+import Base from '../../layouts/Base.astro';
+import Faq from '../../components/Faq.astro';
+import Closing from '../../components/Closing.astro';
+
+/**
+ * The honest competitor. Short by design — this page is a joke that lands,
+ * not an argument that grinds. Resist the urge to add sections; every one
+ * added makes it less funny and less true to what it is.
+ */
+
+const faq = [
+  {
+    q: 'Is the glovebox really the main competitor?',
+    a: 'Yes. Not another app — the glovebox. Most owner-operators are not choosing between receipt apps; they are choosing between an app and a pile of paper that has worked well enough so far.',
+  },
+  {
+    q: 'What if I like the glovebox?',
+    a: 'Then keep using it. It is free, it never needs charging, and it has no privacy policy. The only thing it cannot do is still be readable in April, which unfortunately is the one thing it is being asked to do.',
+  },
+  {
+    q: 'Does the IRS accept photos of receipts?',
+    a: 'Yes. Under Rev. Proc. 97-22 the IRS accepts electronic copies of paper records, provided the image is legible, matches the original, can be printed on request, and is stored securely. This is a recordkeeping answer, not tax advice — talk to your tax preparer about your own situation.',
+  },
+];
+---
+
+<Base
+  title="CabSnap vs the Glovebox — The Honest Competitor"
+  description="The glovebox is free, offline, and always available. It has one flaw: thermal paper goes blank in a hot cab. A short, honest comparison."
+  path="/vs/glovebox"
+  faq={faq}
+>
+  <section class="hero dark">
+    <div class="wrap">
+      <p class="eyebrow orange">Comparison</p>
+      <h1>CabSnap<br />vs the <em>glovebox</em></h1>
+      <p class="lead">
+        Our real competitor isn't another app. It's a compartment.
+      </p>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <p class="eyebrow">First, the honest part</p>
+      <h2>The glovebox is<br />undefeated.</h2>
+      <p class="intro">
+        It is free. It works offline, in a dead zone, at three in the morning. It
+        never asks you to log in, never updates itself at a bad moment, never
+        runs out of battery, and has never once sent anybody a marketing email.
+      </p>
+      <p>
+        It has been holding receipts since before any of us were born and it has
+        never lost a single one. Everything in there is exactly where you put it.
+      </p>
+      <p>
+        We want to be clear that we respect the glovebox.
+      </p>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <p class="eyebrow">The one flaw</p>
+      <h2>It keeps the paper.<br />Not the <em>writing</em>.</h2>
+      <p class="intro">
+        Thermal paper goes blank in heat. A cab in July is hotter than almost
+        anywhere else that paper will ever sit, and after a few weeks the fuel
+        slip is still perfectly, faithfully there &mdash; just white.
+      </p>
+      <p>
+        So the glovebox does not lose receipts. It preserves them into a form
+        with nothing on them. It is the world's most reliable system for storing
+        blank rectangles.
+      </p>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <p class="eyebrow">Side by side</p>
+      <h2>An unfair fight,<br />mostly the other way.</h2>
+      <div class="tablewrap">
+        <table>
+          <thead>
+            <tr><th></th><th>CabSnap</th><th>The glovebox</th></tr>
+          </thead>
+          <tbody>
+            <tr><th scope="row">Cost</th><td>Free to download</td><td>Came with the truck</td></tr>
+            <tr><th scope="row">Works offline</th><td>Photo is taken on your phone</td><td>Aggressively</td></tr>
+            <tr><th scope="row">Battery required</th><td>Yes</td><td>No</td></tr>
+            <tr><th scope="row">Setup time</th><td>A download</td><td>Open, insert, close</td></tr>
+            <tr><th scope="row">Search</th><td>Yes</td><td>Elbow-deep, in a parking lot</td></tr>
+            <tr><th scope="row">Still readable in April</th><td>Yes</td><td>This is the problem</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <p class="eyebrow">The offer</p>
+      <h2>Keep the glovebox.<br />Photograph the paper.</h2>
+      <p class="intro">
+        Nobody is asking you to stop putting receipts in there. Put them in there.
+        Take a photo first, and the compartment can go back to doing what it is
+        genuinely excellent at, which is holding things you have already dealt
+        with.
+      </p>
+    </div>
+  </section>
+
+  <section class="dark">
+    <div class="wrap">
+      <p class="eyebrow">Questions</p>
+      <h2>Straight answers.</h2>
+      <Faq items={faq} />
+    </div>
+  </section>
+
+  <Closing html="The glovebox keeps paper.<br />We keep the <em>writing</em>." />
+</Base>
+
+<style>
+  .hero { padding: 56px 0 52px; }
+  .eyebrow.orange { color: var(--orange); }
+  h1 em, h2 em { font-style: normal; color: var(--orange); }
+  .lead { font-size: 18px; margin-top: 18px; }
+  .intro { margin-top: 16px; }
+  section p + p { margin-top: 14px; }
+
+  .tablewrap { margin-top: 26px; overflow-x: auto; }
+  table { width: 100%; border-collapse: collapse; font-size: 14.5px; }
+  th, td {
+    text-align: left; padding: 12px 10px;
+    border-bottom: 1px solid var(--rule); vertical-align: top;
+  }
+  thead th {
+    font-family: var(--font-display); font-weight: 800;
+    text-transform: uppercase; font-size: 16px;
+    border-bottom: 2px solid var(--navy);
+  }
+  thead th:nth-child(2) { color: var(--orange-ink); }
+  tbody th { font-weight: 600; color: var(--muted); font-size: 13.5px; width: 34%; }
+
+  .dark :global(.faq details) { border-bottom-color: var(--rule-dk); }
+  .dark :global(.faq summary) { color: var(--paper); }
+  .dark :global(.faq summary::after) { color: var(--green); }
+</style>

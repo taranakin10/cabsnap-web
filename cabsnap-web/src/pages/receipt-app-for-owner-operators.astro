@@ -1,0 +1,146 @@
+---
+import Base from '../layouts/Base.astro';
+import Faq from '../components/Faq.astro';
+import IrsProof from '../components/IrsProof.astro';
+import HeroOverlay from '../components/HeroOverlay.astro';
+import ReceiptList from '../components/ReceiptList.astro';
+import Steps from '../components/Steps.astro';
+import SiblingLinks from '../components/SiblingLinks.astro';
+import Closing from '../components/Closing.astro';
+
+const RECEIPTS = [
+  { name: 'Fuel', note: 'The biggest line on the settlement, and the fastest to fade' },
+  { name: 'Maintenance & repairs', note: 'Shop invoices, roadside calls, the parts counter' },
+  { name: 'Tolls', note: 'Small each time, thousands across a year' },
+  { name: 'Scale tickets', note: 'Weigh slips on thermal paper, illegible by spring' },
+  { name: 'Lumper fees', note: 'Cash out of pocket, hardest of all to prove later' },
+  { name: 'Permits', note: 'Oversize, trip, state — filed somewhere, findable never' },
+];
+
+const STEPS = [
+  { h: 'Snap it', p: 'One hand at the fuel island or the shop counter. No typing.' },
+  { h: 'AI reads it', p: 'Vendor, date, and total pulled off the paper automatically.' },
+  { h: "It's kept", p: 'Filed and searchable under your own records, not a carrier’s.' },
+];
+
+const faq = [
+  {
+    q: 'Does the IRS accept photos of receipts?',
+    a: 'Yes. Under Rev. Proc. 97-22 the IRS accepts electronic copies of paper records, provided the image is legible, matches the original, can be printed on request, and is stored securely. This is a recordkeeping answer, not tax advice — talk to your tax preparer about your own situation.',
+  },
+  {
+    q: 'I already get a settlement statement. Why photograph anything?',
+    a: 'A settlement statement shows what the carrier deducted. It does not show what you paid out of pocket at a shop, a scale, or a dock. Those are the receipts that go missing, and they are the ones only you are holding.',
+  },
+  {
+    q: 'Does CabSnap track my miles?',
+    a: 'No. CabSnap captures and keeps receipts, and that is the whole job. If you need mileage tracking you will want a separate app for it.',
+  },
+  {
+    q: 'What about a repair invoice that comes by email?',
+    a: 'Photograph the screen, or keep the email — either way the point is having one place where the record lives. CabSnap handles anything you can point a camera at, which covers the paper the shop hands you at the counter.',
+  },
+  {
+    q: 'Does it work without signal?',
+    a: 'The photo is captured on your phone when you take it. Dead zones are exactly the situation this needs to survive, so if you hit a case where it does not behave, email admin@getcabsnap.com and tell us.',
+  },
+  {
+    q: 'Is there an iPhone version?',
+    a: 'Not yet. CabSnap is Android only right now, on Google Play.',
+  },
+];
+---
+
+<Base
+  title="Receipt App for Owner-Operators — CabSnap"
+  description="Fuel, maintenance, tolls, scale tickets, lumper fees, permits. Photograph each one when you get it and it is kept. Free on Google Play."
+  path="/receipt-app-for-owner-operators"
+  faq={faq}
+>
+  <HeroOverlay
+    img="/img/hero-cab.webp"
+    alt="A driver photographing a fuel receipt on the steering wheel of a truck cab"
+    eyebrow="For owner-operators"
+  >
+    <h1 slot="h1">It's your truck.<br />It's your <em>paper</em>.</h1>
+    <p slot="lead" class="lead">
+      Fuel, maintenance, tolls, scale tickets, lumper fees, permits. Nobody
+      reimburses you and nobody files it for you. Photograph each one and it is kept.
+    </p>
+  </HeroOverlay>
+
+  <section>
+    <div class="wrap">
+      <p class="eyebrow">What you're carrying</p>
+      <h2>The paper an<br />owner-operator holds.</h2>
+      <ReceiptList items={RECEIPTS} />
+      <p class="closer">
+        Every one of those is money that already left your account. The only
+        question is whether you can still show it eleven months from now.
+      </p>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <p class="eyebrow">What goes wrong</p>
+      <h2>Nobody is filing<br />this but you.</h2>
+      <figure>
+        <img src="/img/glovebox.webp" width="900" height="900" loading="lazy"
+             alt="An open glove compartment crammed with crumpled paper receipts" />
+        <figcaption>The filing system most owner-operators actually use.</figcaption>
+      </figure>
+      <p class="intro">
+        Run as a company driver and someone else keeps the records. Run your own
+        authority and the entire paper trail is yours — every shop invoice, every
+        scale ticket, every lumper receipt you paid in cash at a dock in the dark.
+      </p>
+      <p>
+        Most of it is thermal paper, which goes blank in a hot cab in a matter of
+        weeks. A photograph taken the day you got it does not fade. That is the
+        whole premise.
+      </p>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <p class="eyebrow">How it works</p>
+      <h2>Three seconds<br />at the pump.</h2>
+      <Steps items={STEPS} />
+    </div>
+  </section>
+
+  <IrsProof />
+
+  <section class="topline">
+    <div class="wrap">
+      <p class="eyebrow">Questions</p>
+      <h2>Straight answers.</h2>
+      <Faq items={faq} />
+    </div>
+  </section>
+
+  <SiblingLinks slugs={['truck-drivers', 'lease-operators']} />
+
+  <Closing />
+</Base>
+
+<style>
+  h2 em { font-style: normal; color: var(--orange); }
+  .closer { margin-top: 24px; font-size: 17px; }
+  .intro { margin-top: 20px; }
+  section p + p { margin-top: 14px; }
+
+  figure { margin: 26px 0 0; }
+  figure img {
+    width: 100%; height: 220px; object-fit: cover; border-radius: 5px;
+  }
+  @media (min-width: 768px) { figure img { height: 280px; } }
+  figcaption {
+    font-family: var(--font-mono); font-size: 12.5px;
+    color: var(--muted); margin-top: 9px;
+  }
+
+  .topline { border-top: 1px solid var(--rule); }
+</style>

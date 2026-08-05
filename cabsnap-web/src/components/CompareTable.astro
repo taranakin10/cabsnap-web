@@ -1,0 +1,59 @@
+---
+/**
+ * Comparison table with a mandatory verification date.
+ *
+ * `verified` is not optional and must not be faked. Competitor products
+ * change; an undated table becomes a false claim by neglect. Every row
+ * must be checkable on the competitor's public site on that date.
+ */
+interface Props {
+  them: string;
+  themDomain: string;
+  verified: string;
+  rows: readonly { feature: string; cabsnap: string; them: string }[];
+}
+const { them, themDomain, verified, rows } = Astro.props;
+---
+<div class="tablewrap">
+  <table>
+    <thead>
+      <tr><th></th><th>CabSnap</th><th>{them}</th></tr>
+    </thead>
+    <tbody>
+      {rows.map((r) => (
+        <tr>
+          <th scope="row">{r.feature}</th>
+          <td>{r.cabsnap}</td>
+          <td>{r.them}</td>
+        </tr>
+      ))}
+    </tbody>
+  </table>
+</div>
+<p class="verified">
+  {them} details verified against {themDomain} on {verified}.
+  Their product changes &mdash; check their site for current information.
+</p>
+
+<style>
+  .tablewrap { margin-top: 26px; overflow-x: auto; }
+  table { width: 100%; border-collapse: collapse; font-size: 14.5px; }
+  th, td {
+    text-align: left; padding: 12px 10px;
+    border-bottom: 1px solid var(--rule); vertical-align: top;
+  }
+  thead th {
+    font-family: var(--font-display); font-weight: 800;
+    text-transform: uppercase; font-size: 16px;
+    border-bottom: 2px solid var(--navy);
+  }
+  thead th:nth-child(2) { color: var(--orange-ink); }
+  tbody th {
+    font-weight: 600; color: var(--muted);
+    font-size: 13.5px; width: 34%;
+  }
+  .verified {
+    font-family: var(--font-mono); font-size: 11.5px;
+    color: var(--muted); margin-top: 14px; line-height: 1.5;
+  }
+</style>

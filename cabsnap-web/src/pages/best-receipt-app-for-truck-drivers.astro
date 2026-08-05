@@ -1,0 +1,241 @@
+---
+import Base from '../layouts/Base.astro';
+import Faq from '../components/Faq.astro';
+import Closing from '../components/Closing.astro';
+
+/**
+ * THE ROUNDUP — the page most likely to be read by someone deciding.
+ *
+ * Rules, stricter here than anywhere else on the site:
+ *
+ * 1. Every fact about every product must be verifiable on that product's
+ *    public site today. The verified date is displayed. No exceptions.
+ * 2. We say plainly where we lose. A roundup that recommends its own
+ *    product in every scenario is an ad, and readers know it.
+ * 3. No ratings, download counts, user counts, or testimonials for anyone,
+ *    including ourselves. No invented statistics.
+ * 4. No disparagement. Every product here is a reasonable choice for the
+ *    person it was built for.
+ * 5. Recordkeeping only — never advise what anyone should deduct.
+ *
+ * Verified 2026-08-05:
+ *   Shoeboxed (shoeboxed.com) — Magic Envelope mail-in scanning, human data
+ *     verification, free mileage tracking, iPhone + Android, Gmail plugin,
+ *     plans listed $9 / $29 / $79 / $179 per month, "© 2007-2026".
+ *   Expensify (expensify.com) — SmartScan, mileage tracking, expense reports
+ *     with submit/review/approve, accounting sync, iPhone + Android, free
+ *     plan for individual use, paid plans "start at $5 per member".
+ *   Smart Receipts (smartreceipts.co) — AI/OCR receipt scanning, PDF/CSV/ZIP
+ *     export, iOS + Android + Web, free to start with premium subscription;
+ *     no mileage tracking mentioned on the page.
+ *   CabSnap — Android only, no mileage tracking, free download with in-app
+ *     purchases, operating since 2025.
+ */
+const VERIFIED = 'August 5, 2026';
+
+const options = [
+  {
+    name: 'CabSnap',
+    us: true,
+    pitch: 'Capture and keep, built for one hand in a cab.',
+    best: 'Owner-operators and 1099 drivers who want the receipt saved in three seconds at the pump and nothing else.',
+    not: 'Anyone who needs mileage tracking, an iPhone app, expense reports, or accounting sync. We do none of those.',
+    facts: ['Android only', 'No mileage tracking', 'Free download, in-app purchases', 'Operating since 2025'],
+  },
+  {
+    name: 'Shoeboxed',
+    us: false,
+    pitch: 'Mail your paper in and let people scan it.',
+    best: 'Drivers with a backlog — a drawer or a box going back years — and anyone who wants human verification of the data rather than trusting OCR.',
+    not: "Someone who only wants to catch today's receipt at the pump and has no backlog to clear.",
+    facts: ['Magic Envelope mail-in scanning', 'Human data verification', 'Mileage tracking included', 'iPhone & Android', 'Plans listed $9–$179/mo', 'Operating since 2007'],
+  },
+  {
+    name: 'Expensify',
+    us: false,
+    pitch: 'Full expense management with reports and approvals.',
+    best: 'Anyone who submits expenses to a company — employees, and drivers who also do contract work where a client wants an expense report.',
+    not: 'An owner-operator with nobody to submit to. The approval workflow has no other end.',
+    facts: ['SmartScan receipt capture', 'Mileage tracking', 'Expense reports & approvals', 'Accounting sync', 'iPhone & Android', 'Free plan for individual use; paid plans from $5/member'],
+  },
+  {
+    name: 'Smart Receipts',
+    us: false,
+    pitch: 'Scan receipts, build PDF and CSV reports.',
+    best: 'People who want their receipts exported into their own files and formats, on whichever platform they use.',
+    not: 'Drivers who want mileage tracking — the site does not list it.',
+    facts: ['AI/OCR receipt scanning', 'PDF, CSV & ZIP export', 'iOS, Android & Web', 'Free to start, premium subscription'],
+  },
+  {
+    name: 'The glovebox',
+    us: false,
+    pitch: 'Put the paper in the compartment.',
+    best: 'Nobody, honestly — but it is what most drivers are actually using, and pretending otherwise would be silly.',
+    not: 'Anyone who needs the receipt to still be readable in April. Thermal paper goes blank in a hot cab.',
+    facts: ['Free', 'Works offline', 'No battery', 'Contents fade'],
+  },
+];
+
+const faq = [
+  {
+    q: 'Which receipt app is best for truck drivers?',
+    a: 'It depends on which problem you have. For clearing a years-old backlog of paper, a mail-in service like Shoeboxed is the strongest fit. For submitting expenses to a company, Expensify. For exporting into your own files, Smart Receipts. For catching the receipt in your hand at the fuel island in three seconds, CabSnap. Anyone who tells you one app wins every scenario is selling that app.',
+  },
+  {
+    q: 'Which one tracks mileage?',
+    a: 'Of the products on this page, Shoeboxed and Expensify both list mileage tracking. Smart Receipts does not mention it on its site, and CabSnap does not do it at all. If mileage is your main requirement, that narrows the list immediately.',
+  },
+  {
+    q: 'Which ones work on iPhone?',
+    a: 'Shoeboxed, Expensify, and Smart Receipts all list iPhone apps. CabSnap is Android only right now. If you are on an iPhone, CabSnap is not currently an option for you and we would rather say that on this page than let you find out at the App Store.',
+  },
+  {
+    q: 'Does the IRS accept photos of receipts?',
+    a: 'Yes. Under Rev. Proc. 97-22 the IRS accepts electronic copies of paper records, provided the image is legible, matches the original, can be printed on request, and is stored securely. This is a recordkeeping answer, not tax advice — talk to your tax preparer about your own situation.',
+  },
+  {
+    q: 'How current is this comparison?',
+    a: `Every fact here was checked against each product's own public site on ${VERIFIED}. These products change, and this page will go stale between updates — check their sites before deciding. If something here is out of date, email admin@getcabsnap.com and we will correct it.`,
+  },
+];
+---
+
+<Base
+  title="Best Receipt App for Truck Drivers — An Honest Roundup"
+  description="Shoeboxed, Expensify, Smart Receipts, CabSnap, and the glovebox. What each is genuinely best at, including where CabSnap loses. Every fact checked and dated."
+  path="/best-receipt-app-for-truck-drivers"
+  faq={faq}
+>
+  <section class="hero dark">
+    <div class="wrap">
+      <p class="eyebrow orange">Roundup</p>
+      <h1>Best receipt app<br />for <em>truck drivers</em></h1>
+      <p class="lead">
+        Five options, including ours and including the ones we lose to.
+        Every fact checked against their own site and dated.
+      </p>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <p class="eyebrow">How to read this</p>
+      <h2>We wrote this<br />and we sell one.</h2>
+      <p class="intro">
+        Obviously we are not neutral. So instead of pretending, every entry below
+        says what that product is genuinely best at and where it beats us &mdash;
+        and our own entry says plainly who should not use CabSnap.
+      </p>
+      <p>
+        There are no ratings, no download counts, and no testimonials on this page,
+        for anyone including us. Just what each product says it does, checked on
+        {VERIFIED}.
+      </p>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <p class="eyebrow">The options</p>
+      <h2>What each one is<br />actually for.</h2>
+
+      {options.map((o) => (
+        <div class:list={['opt', { mine: o.us }]}>
+          <h3>{o.name}{o.us && <span class="tag">ours</span>}</h3>
+          <p class="pitch">{o.pitch}</p>
+          <p class="line"><b>Best for:</b> {o.best}</p>
+          <p class="line"><b>Not for:</b> {o.not}</p>
+          <ul>
+            {o.facts.map((f) => <li>{f}</li>)}
+          </ul>
+        </div>
+      ))}
+
+      <p class="verified">
+        Shoeboxed details verified against shoeboxed.com, Expensify against
+        expensify.com, and Smart Receipts against smartreceipts.co, all on
+        {VERIFIED}. These products change &mdash; check their sites for current
+        information before deciding.
+      </p>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <p class="eyebrow">Where we lose</p>
+      <h2>Four reasons to<br />pick something else.</h2>
+      <ol class="lose">
+        <li><b>You need mileage tracking.</b> We do not do it and will not fake it. Shoeboxed and Expensify both list it.</li>
+        <li><b>You are on an iPhone.</b> CabSnap is Android only right now. The other three list iPhone apps.</li>
+        <li><b>You have a backlog of old paper.</b> Photographing three years of receipts one at a time is miserable. A mail-in service is the right tool.</li>
+        <li><b>You submit expenses to a company.</b> You need reports and approvals, and that is not what we built.</li>
+      </ol>
+      <p class="note">
+        If none of those four apply to you, we think CabSnap is the fastest way to
+        stop losing receipts at the pump. If one of them does, use the other thing.
+      </p>
+    </div>
+  </section>
+
+  <section class="dark">
+    <div class="wrap">
+      <p class="eyebrow">Questions</p>
+      <h2>Straight answers.</h2>
+      <Faq items={faq} />
+    </div>
+  </section>
+
+  <Closing />
+</Base>
+
+<style>
+  .hero { padding: 56px 0 52px; }
+  .eyebrow.orange { color: var(--orange); }
+  h1 em, h2 em { font-style: normal; color: var(--orange); }
+  .lead { font-size: 18px; margin-top: 18px; }
+  .intro { margin-top: 16px; }
+  section p + p { margin-top: 14px; }
+
+  .opt {
+    margin-top: 24px; padding: 20px 18px;
+    background: var(--card); border: 1px solid var(--rule); border-radius: 5px;
+  }
+  .opt.mine { border-color: var(--orange); }
+  .opt h3 { display: flex; align-items: center; gap: 10px; }
+  .tag {
+    font-family: var(--font-mono); font-size: 10.5px; letter-spacing: .14em;
+    text-transform: uppercase; color: var(--orange-ink);
+    border: 1px solid var(--orange); border-radius: 3px; padding: 2px 6px;
+  }
+  .pitch { margin-top: 6px; font-size: 15.5px; }
+  .line { margin-top: 10px; font-size: 15px; }
+  .line b {
+    font-family: var(--font-display); font-weight: 800;
+    text-transform: uppercase; letter-spacing: .02em;
+    color: var(--text); margin-right: 4px;
+  }
+  .opt ul {
+    list-style: none; margin-top: 12px; padding-top: 12px;
+    border-top: 1px solid var(--rule);
+    display: flex; flex-wrap: wrap; gap: 6px;
+  }
+  .opt li {
+    font-family: var(--font-mono); font-size: 11.5px; color: var(--muted);
+    background: var(--paper); border: 1px solid var(--rule);
+    border-radius: 3px; padding: 4px 8px;
+  }
+
+  .lose { margin-top: 22px; padding-left: 20px; display: flex; flex-direction: column; gap: 12px; }
+  .lose li { font-size: 15.5px; color: var(--text-body); }
+  .lose b { color: var(--text); }
+  .note { margin-top: 20px; font-size: 15.5px; }
+
+  .verified {
+    font-family: var(--font-mono); font-size: 11.5px;
+    color: var(--muted); margin-top: 20px; line-height: 1.5;
+  }
+
+  .dark :global(.faq details) { border-bottom-color: var(--rule-dk); }
+  .dark :global(.faq summary) { color: var(--paper); }
+  .dark :global(.faq summary::after) { color: var(--green); }
+</style>

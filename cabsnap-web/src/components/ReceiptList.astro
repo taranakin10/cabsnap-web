@@ -1,0 +1,28 @@
+---
+/**
+ * The named-receipts block. This is the part of an audience page that does
+ * the work: naming the SPECIFIC paper that audience is actually holding.
+ */
+interface Props {
+  items: readonly { name: string; note: string }[];
+}
+const { items } = Astro.props;
+---
+<div class="receipts">
+  {items.map((r) => (
+    <div class="receipt">
+      <h3>{r.name}</h3>
+      <p>{r.note}</p>
+    </div>
+  ))}
+</div>
+
+<style>
+  .receipts {
+    margin-top: 26px; display: flex; flex-direction: column;
+    gap: 1px; background: var(--rule);
+  }
+  .receipt { background: var(--paper); padding: 16px 0; }
+  .receipt h3 { font-size: 19px; }
+  .receipt p { font-size: 14.5px; margin-top: 3px; color: var(--muted); }
+</style>

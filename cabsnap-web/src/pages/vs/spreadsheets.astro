@@ -1,0 +1,150 @@
+---
+import Base from '../../layouts/Base.astro';
+import Faq from '../../components/Faq.astro';
+import Closing from '../../components/Closing.astro';
+
+/**
+ * There is no vendor here and therefore no verified-date table: a spreadsheet
+ * is a method, not a product. Nothing on this page describes a competitor's
+ * features, so there is nothing to date-stamp. Do not invent a comparison
+ * table of "Excel features" — that would be a claim about Microsoft.
+ */
+
+const faq = [
+  {
+    q: 'Is a spreadsheet good enough for receipts?',
+    a: 'A spreadsheet is an excellent ledger. It records what you typed. What it cannot do is be the receipt — if someone asks to see the document behind row 47, the spreadsheet has nothing to show. That is the gap, and it is not a gap you can close by typing more carefully.',
+  },
+  {
+    q: 'Can I use both?',
+    a: 'Yes, and plenty of drivers do. Keep the running total in the sheet if that is how you think; keep the images in CabSnap so the paper behind each line still exists. They are not competing — one is arithmetic, the other is evidence.',
+  },
+  {
+    q: 'Can I get my data out of CabSnap into a spreadsheet?',
+    a: 'Check the current app listing on Google Play for exactly what export exists today, rather than trusting a claim typed on a marketing page. We would rather you see the real feature list than our description of it.',
+  },
+  {
+    q: 'Does the IRS accept photos of receipts?',
+    a: 'Yes. Under Rev. Proc. 97-22 the IRS accepts electronic copies of paper records, provided the image is legible, matches the original, can be printed on request, and is stored securely. This is a recordkeeping answer, not tax advice — talk to your tax preparer about your own situation.',
+  },
+];
+---
+
+<Base
+  title="CabSnap vs a Spreadsheet — What a Spreadsheet Can't Do"
+  description="A spreadsheet records what you typed. It needs the receipt to still exist. That's the failure point, and it happens in a hot cab in about six weeks."
+  path="/vs/spreadsheets"
+  faq={faq}
+>
+  <section class="hero dark">
+    <div class="wrap">
+      <p class="eyebrow orange">Comparison</p>
+      <h1>CabSnap<br />vs a <em>spreadsheet</em></h1>
+      <p class="lead">
+        A spreadsheet is a good ledger. It is not a receipt. That distinction
+        stays invisible until the day somebody asks to see one.
+      </p>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <p class="eyebrow">First, the honest part</p>
+      <h2>A spreadsheet is<br />a real system.</h2>
+      <p class="intro">
+        It is free, it works offline, nobody can shut it off, it exports anywhere,
+        and it will still open in thirty years. If you keep one faithfully you are
+        already ahead of most owner-operators, and that is not a backhanded
+        compliment.
+      </p>
+      <p>
+        Some drivers genuinely think in rows and columns. If you are one of them,
+        keep the sheet. Nothing below is an argument for deleting it.
+      </p>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <p class="eyebrow">The gap</p>
+      <h2>The sheet assumes<br />the paper survives.</h2>
+      <p class="intro">
+        Every row in a receipt spreadsheet is a pointer. It says: on this date, at
+        this vendor, I spent this much &mdash; and the document proving it is
+        somewhere else. In a folder, a drawer, a glovebox.
+      </p>
+      <p>
+        That pointer is only worth as much as the thing it points at. Fuel slips,
+        scale tickets, and truck stop receipts are thermal paper, and thermal paper
+        in a hot cab goes blank in weeks. The row stays perfectly legible while the
+        document behind it turns into a white rectangle.
+      </p>
+      <p>
+        The spreadsheet does not know that happened. It looks exactly as complete
+        the day the receipt fades as it did the day you typed it.
+      </p>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <p class="eyebrow">The other gap</p>
+      <h2>Typing at the pump<br />does not happen.</h2>
+      <p class="intro">
+        A spreadsheet needs two hands, a keyboard or a very patient thumb, and a
+        moment of calm. None of those exist at a fuel island with the engine
+        running and someone waiting behind you.
+      </p>
+      <p>
+        So the entry gets deferred. The paper goes in the door pocket to be typed
+        up later, and later is where receipts go to die. Not because anyone is
+        careless &mdash; because the batch keeps growing and the paper keeps fading
+        while it waits.
+      </p>
+      <p>
+        A photo takes three seconds and does not need a free hand for a keyboard.
+        That is the entire difference in the habit.
+      </p>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <p class="eyebrow">Together</p>
+      <h2>Keep the sheet<br />if you like it.</h2>
+      <p class="intro">
+        This is not really a versus. A spreadsheet does arithmetic; CabSnap keeps
+        evidence. If you want the running total in a sheet, keep the running total
+        in a sheet.
+      </p>
+      <p>
+        Just make sure something, somewhere, is holding an image of the paper each
+        row is pointing at &mdash; because in April the row is not the thing anyone
+        wants to see.
+      </p>
+    </div>
+  </section>
+
+  <section class="dark">
+    <div class="wrap">
+      <p class="eyebrow">Questions</p>
+      <h2>Straight answers.</h2>
+      <Faq items={faq} />
+    </div>
+  </section>
+
+  <Closing html="Keep the row.<br />Keep the <em>receipt</em>." />
+</Base>
+
+<style>
+  .hero { padding: 56px 0 52px; }
+  .eyebrow.orange { color: var(--orange); }
+  h1 em, h2 em { font-style: normal; color: var(--orange); }
+  .lead { font-size: 18px; margin-top: 18px; }
+  .intro { margin-top: 16px; }
+  section p + p { margin-top: 14px; }
+
+  .dark :global(.faq details) { border-bottom-color: var(--rule-dk); }
+  .dark :global(.faq summary) { color: var(--paper); }
+  .dark :global(.faq summary::after) { color: var(--green); }
+</style>

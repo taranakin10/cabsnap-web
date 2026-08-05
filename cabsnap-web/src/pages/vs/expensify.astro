@@ -1,0 +1,149 @@
+---
+import Base from '../../layouts/Base.astro';
+import Faq from '../../components/Faq.astro';
+import CompareTable from '../../components/CompareTable.astro';
+import Closing from '../../components/Closing.astro';
+
+/**
+ * COMPARISON PAGE RULES — do not relax these when editing.
+ *
+ * 1. Every claim about Expensify must be verifiable on expensify.com today.
+ * 2. The table carries a visible verified date. Their product changes;
+ *    an undated table becomes a false claim by neglect.
+ * 3. Concede their strengths in the first screen, not buried at the bottom.
+ * 4. No disparagement. This page wins by being believed, not by winning.
+ *
+ * Expensify facts below were verified against expensify.com on 2026-08-05:
+ * SmartScan receipt capture, mileage tracking, iPhone and Android apps,
+ * expense reports with submit/review/approve, a free plan for individual
+ * use, and paid plans described as starting at $5 per member.
+ */
+const VERIFIED = 'August 5, 2026';
+
+const rows = [
+  { feature: 'Built for',         cabsnap: 'Owner-operators & 1099 drivers', them: 'Employees, employers & finance teams' },
+  { feature: 'Core workflow',     cabsnap: 'Capture and keep',               them: 'Submit, review, approve, reimburse' },
+  { feature: 'Receipt scanning',  cabsnap: 'Yes — phone camera',             them: 'Yes — SmartScan' },
+  { feature: 'Mileage tracking',  cabsnap: 'No',                             them: 'Yes' },
+  { feature: 'Expense reports',   cabsnap: 'No',                             them: 'Yes' },
+  { feature: 'Accounting sync',   cabsnap: 'No',                             them: 'Yes' },
+  { feature: 'iPhone app',        cabsnap: 'Not yet',                        them: 'Yes' },
+  { feature: 'Android app',       cabsnap: 'Yes',                            them: 'Yes' },
+];
+
+const faq = [
+  {
+    q: 'Is Expensify free?',
+    a: 'Expensify shows a free plan for individual use, with paid company plans described as starting at $5 per member. CabSnap is free to download from Google Play and has in-app purchases. Check both listings for current pricing rather than trusting a number typed on a marketing page.',
+  },
+  {
+    q: 'What does Expensify do that CabSnap does not?',
+    a: 'Expense reports with an approval flow, mileage tracking, accounting integrations, corporate cards, and an iPhone app. If any of those are requirements, Expensify is the better fit and we would rather you knew that now.',
+  },
+  {
+    q: 'Why would an owner-operator pick CabSnap?',
+    a: 'Because there is nobody to submit a report to. When no employer is reimbursing you, the approval workflow is not a feature — it is steps between you and a saved receipt. CabSnap does the capture and stops there.',
+  },
+  {
+    q: 'Can I use both?',
+    a: 'Yes, and it is a sensible setup if you drive under your own authority but also do contract work that requires submitting expenses to a client. They are aimed at different halves of the problem.',
+  },
+];
+---
+
+<Base
+  title="CabSnap vs Expensify — An Honest Comparison for Drivers"
+  description="Expensify is built for employees submitting expense reports to a company. CabSnap is for drivers with no company to submit to. A straight comparison, including what Expensify does better."
+  path="/vs/expensify"
+  faq={faq}
+>
+  <section class="hero dark">
+    <div class="wrap">
+      <p class="eyebrow orange">Comparison</p>
+      <h1>CabSnap<br />vs <em>Expensify</em></h1>
+      <p class="lead">
+        Expensify is built around submitting expenses to a company. CabSnap is for
+        people who don't have one. Same receipts, different destination.
+      </p>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <p class="eyebrow">First, the honest part</p>
+      <h2>Expensify is<br />a serious product.</h2>
+      <p class="intro">
+        It is a full expense management platform. SmartScan reads receipts, it
+        tracks mileage, it syncs with accounting software, it runs the whole
+        submit-review-approve-reimburse loop, and it has an iPhone app. We have
+        none of that.
+      </p>
+      <p>
+        If you are an employee expensing to your employer, or you run a business
+        with people submitting expenses to you, use Expensify. That is the job it
+        was designed for and it does it well.
+      </p>
+      <p>
+        What follows is for everyone else.
+      </p>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <p class="eyebrow">Side by side</p>
+      <h2>The differences<br />that matter.</h2>
+      <CompareTable
+        them="Expensify"
+        themDomain="expensify.com"
+        verified={VERIFIED}
+        rows={rows}
+      />
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <p class="eyebrow">The real difference</p>
+      <h2>There is nobody<br />to submit to.</h2>
+      <p class="intro">
+        An expense report exists so somebody else can approve it and pay you back.
+        Every part of that product — the report, the approver, the reimbursement,
+        the policy rules — assumes a company on the other end.
+      </p>
+      <p>
+        An owner-operator has no other end. The money left your account and it is
+        not coming back from anyone. The receipt is not a claim against an
+        employer; it is just a record, and the only question is whether it still
+        exists in April.
+      </p>
+      <p>
+        So CabSnap does not build a report. It captures the paper, reads it, keeps
+        it, and gets out of the way.
+      </p>
+    </div>
+  </section>
+
+  <section class="dark">
+    <div class="wrap">
+      <p class="eyebrow">Questions</p>
+      <h2>Straight answers.</h2>
+      <Faq items={faq} />
+    </div>
+  </section>
+
+  <Closing html="Try the one built<br />for <em>no employer</em>." />
+</Base>
+
+<style>
+  .hero { padding: 56px 0 52px; }
+  .eyebrow.orange { color: var(--orange); }
+  h1 em, h2 em { font-style: normal; color: var(--orange); }
+  .lead { font-size: 18px; margin-top: 18px; }
+  .intro { margin-top: 16px; }
+  section p + p { margin-top: 14px; }
+
+  .dark :global(.faq details) { border-bottom-color: var(--rule-dk); }
+  .dark :global(.faq summary) { color: var(--paper); }
+  .dark :global(.faq summary::after) { color: var(--green); }
+</style>

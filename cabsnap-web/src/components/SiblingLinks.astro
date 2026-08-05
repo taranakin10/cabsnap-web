@@ -1,0 +1,42 @@
+---
+import { AUDIENCES } from '../config';
+
+/** Cross-links to two sibling audience pages, by slug. */
+interface Props {
+  slugs: readonly string[];
+  heading?: string;
+}
+const { slugs, heading = 'Also built for' } = Astro.props;
+const items = slugs
+  .map((s) => AUDIENCES.find((a) => a.slug === s))
+  .filter((a): a is (typeof AUDIENCES)[number] => Boolean(a));
+---
+<section>
+  <div class="wrap">
+    <p class="eyebrow">{heading}</p>
+    <div class="siblings">
+      {items.map((a) => (
+        <a href={`/receipt-app-for-${a.slug}`}>
+          <span>{a.label}</span><small>{a.note}</small>
+        </a>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .siblings { margin-top: 20px; display: grid; grid-template-columns: 1fr 1fr; gap: 9px; }
+  .siblings a {
+    display: block; text-decoration: none; color: var(--text);
+    background: var(--card); border: 1px solid var(--rule);
+    border-radius: 4px; padding: 16px 14px;
+  }
+  .siblings span {
+    display: block; font-family: var(--font-display); font-weight: 800;
+    text-transform: uppercase; font-size: 18px; line-height: 1.05;
+  }
+  .siblings small {
+    display: block; color: var(--muted); font-size: 12px;
+    margin-top: 5px; font-family: var(--font-mono);
+  }
+</style>
