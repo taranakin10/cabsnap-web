@@ -62,16 +62,16 @@ const faq = [
     <div class="hero-photo">
       <img src="/img/hands-receipts.webp" width="900" height="900" fetchpriority="high"
            alt="A driver's hands holding a stack of crumpled receipts at a truck stop fuel island" />
-    </div>
-    <div class="wrap hero-copy">
-      <p class="eyebrow orange">For truck drivers</p>
-      <h1>Your receipts are<br />in the <em>glovebox</em>.</h1>
-      <p class="lead">
-        Fuel, scale tickets, lumper fees, tolls. Photograph each one when you get it
-        and it is kept — readable in April, when the paper version won't be.
-      </p>
-      <Cta />
-      <p class="plat">Android &middot; Google Play &middot; <b>&#10003;</b> in-app purchases available</p>
+      <div class="wrap hero-copy">
+        <p class="eyebrow orange">For truck drivers</p>
+        <h1>Your receipts are<br />in the <em>glovebox</em>.</h1>
+        <p class="lead">
+          Fuel, scale tickets, lumper fees, tolls. Photograph each one when you get it
+          and it is kept — readable in April, when the paper version won't be.
+        </p>
+        <Cta />
+        <p class="plat">Android &middot; Google Play &middot; <b>&#10003;</b> in-app purchases available</p>
+      </div>
     </div>
   </header>
 
@@ -171,14 +171,39 @@ const faq = [
 
 <style>
   .hero { padding-bottom: 40px; }
-  .hero-photo { position: relative; }
+  /* copy is anchored to the photo's bottom edge; min-height (not height)
+     so the photo can grow when the copy is taller than 55vh */
+  .hero-photo {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    min-height: 55vh;
+  }
+  @media (min-width: 768px) {
+    .hero-photo { min-height: min(55vh, 480px); max-height: 480px; }
+  }
+  .hero-photo img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+  }
   .hero-photo::after {
     content: ""; position: absolute; inset: 0;
     background: linear-gradient(180deg,
       rgba(20,33,61,.5) 0%, rgba(20,33,61,.1) 35%,
       rgba(20,33,61,.45) 70%, var(--navy) 100%);
   }
-  .hero-copy { padding-top: 26px; }
+  .hero-copy {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    padding-top: 26px;
+    padding-bottom: 18px;
+  }
   .eyebrow.orange { color: var(--orange); }
   h1 em, h2 em { font-style: normal; color: var(--orange); }
   .lead { font-size: 18px; margin-top: 16px; }
@@ -195,7 +220,15 @@ const faq = [
   .closer { margin-top: 24px; font-size: 17px; }
 
   figure { margin: 26px 0 0; }
-  figure img { width: 100%; border-radius: 5px; }
+  figure img {
+    width: 100%;
+    height: 220px;
+    object-fit: cover;
+    border-radius: 5px;
+  }
+  @media (min-width: 768px) {
+    figure img { height: 280px; }
+  }
   figcaption {
     font-family: var(--font-mono); font-size: 12.5px;
     color: var(--muted); margin-top: 9px;

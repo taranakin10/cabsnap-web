@@ -59,16 +59,16 @@ const problems = [
         alt="A driver photographing a fuel receipt on the steering wheel of a truck cab"
         fetchpriority="high"
       />
-    </div>
-    <div class="wrap hero-copy">
-      <p class="eyebrow orange">Receipt app for owner-operators</p>
-      <h1>Snap the receipt.<br />Keep the <em>deduction</em>.</h1>
-      <p class="lead">
-        Point your phone at any receipt. CabSnap's AI reads it, files it, and keeps it —
-        so it's still there when your accountant asks in April.
-      </p>
-      <Cta />
-      <p class="plat">Android &middot; Google Play &middot; <b>&#10003;</b> in-app purchases available</p>
+      <div class="wrap hero-copy">
+        <p class="eyebrow orange">Receipt app for owner-operators</p>
+        <h1>Snap the receipt.<br />Keep the <em>deduction</em>.</h1>
+        <p class="lead">
+          Point your phone at any receipt. CabSnap's AI reads it, files it, and keeps it —
+          so it's still there when your accountant asks in April.
+        </p>
+        <Cta />
+        <p class="plat">Android &middot; Google Play &middot; <b>&#10003;</b> in-app purchases available</p>
+      </div>
     </div>
   </header>
 
@@ -168,14 +168,39 @@ const problems = [
 
 <style>
   .hero { padding-bottom: 40px; }
-  .hero-photo { position: relative; }
+  /* copy is anchored to the photo's bottom edge; min-height (not height)
+     so the photo can grow when the copy is taller than 55vh */
+  .hero-photo {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    min-height: 55vh;
+  }
+  @media (min-width: 768px) {
+    .hero-photo { min-height: min(55vh, 480px); max-height: 480px; }
+  }
+  .hero-photo img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+  }
   .hero-photo::after {
     content: ""; position: absolute; inset: 0;
     background: linear-gradient(180deg,
       rgba(20,33,61,.55) 0%, rgba(20,33,61,.08) 32%,
       rgba(20,33,61,.4) 68%, var(--navy) 100%);
   }
-  .hero-copy { padding-top: 26px; }
+  .hero-copy {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    padding-top: 26px;
+    padding-bottom: 18px;
+  }
   .eyebrow.orange { color: var(--orange); }
   h1 em { font-style: normal; color: var(--orange); }
   .lead { font-size: 18px; margin-top: 16px; max-width: 27em; }
@@ -186,7 +211,15 @@ const problems = [
   .plat b { color: var(--green); font-weight: 400; }
 
   figure { margin: 26px 0 0; }
-  figure img { width: 100%; border-radius: 5px; }
+  figure img {
+    width: 100%;
+    height: 220px;
+    object-fit: cover;
+    border-radius: 5px;
+  }
+  @media (min-width: 768px) {
+    figure img { height: 280px; }
+  }
   figcaption {
     font-family: var(--font-mono); font-size: 12.5px;
     color: var(--muted); margin-top: 9px;
