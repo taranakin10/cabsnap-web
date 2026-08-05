@@ -1,67 +1,269 @@
 ---
 import Prose from '../layouts/Prose.astro';
-import { SITE } from '../config';
 ---
 <Prose
   title="Privacy Policy — CabSnap"
-  description="How CabSnap handles your data."
+  description="How CabSnap collects, uses, shares, retains, and deletes information."
   path="/privacy"
   heading="Privacy Policy"
-  updated="[DATE]"
+  updated="June 26, 2026"
 >
-  <div class="note">
-    <strong>Draft — requires legal review before publishing.</strong> This is a
-    structural starting point written from how the product appears to work, not a
-    reviewed legal document. Every bracketed item must be confirmed against actual
-    app behaviour, and the whole thing should be read by a lawyer. Google Play
-    requires an accurate privacy policy, and an inaccurate one is a compliance
-    problem rather than a formality.
-  </div>
-
-  <h2>Who we are</h2>
   <p>
-    CabSnap is operated by {SITE.company}, {SITE.companyLocation}.
-    Contact: <a href={`mailto:${SITE.email}`}>{SITE.email}</a>.
+    This Privacy Policy explains how CabSnap handles information when you use the CabSnap
+    Android app and related services. CabSnap is operated by Nuvol Holdings LLC ("Nuvol,"
+    and together with the CabSnap app and services, "CabSnap," "we," "us," or "our"), a
+    New Jersey limited liability company located at 426 Main St. #166, Spotswood, NJ 08884.
+  </p>
+  <p>Privacy contact: <a href="mailto:privacy@getcabsnap.com">privacy@getcabsnap.com</a></p>
+
+  <h2>1. What CabSnap Does</h2>
+  <p>
+    CabSnap helps drivers capture, organize, sync, and export receipt records. Depending on
+    your plan and settings, CabSnap may store receipts only on your device, sync redacted
+    receipt copies to the cloud, use AI to extract receipt fields, or back up original
+    receipt images if you explicitly turn that feature on.
   </p>
 
-  <h2>What we collect</h2>
+  <h2>2. Information We Collect</h2>
+  <p>
+    <strong>Account information.</strong> Email address, first name, last name,
+    authentication session data, password reset state, referral code information, legal
+    acceptance records, and account deletion records.
+  </p>
+  <p>
+    <strong>Receipt information.</strong> Receipt photos you capture or import, manually
+    entered or AI-extracted fields such as merchant, date, amount, currency, category, and
+    notes, receipt deletion status, and sync status.
+  </p>
+  <p>
+    <strong>Redacted receipt images.</strong> CabSnap creates a redacted copy of each receipt
+    image after running on-device checks for sensitive payment card details. For Pro and
+    Fleet users, the redacted copy may be uploaded to CabSnap cloud storage for sync and AI
+    processing.
+  </p>
+  <p>
+    <strong>Original receipt images.</strong> CabSnap also stores an un-redacted original copy
+    on the capturing device so you can keep a complete record for tax, reimbursement, or
+    audit needs. Original cloud backup is off by default. If you explicitly turn on original
+    cloud backup, original images may also be uploaded to private CabSnap cloud storage until
+    you turn the feature off, delete the cloud originals, lose Pro access, or delete your
+    account.
+  </p>
+  <p>
+    <strong>Subscription and billing information.</strong> Plan tier, Play purchase token,
+    product and base plan identifiers, subscription status, renewal status, trial and referral
+    credit dates, and billing-event audit records. We do not receive or store your full
+    payment card number from Google Play.
+  </p>
+  <p>
+    <strong>Usage, diagnostics, and security information.</strong> AI request timestamps, usage
+    counts, rate-limit counters, error details, deletion audit records, and basic device or
+    network information needed to operate, protect, and troubleshoot the service.
+  </p>
+
+  <h2>3. How We Use Information</h2>
+  <p>We use information to:</p>
   <ul>
-    <li><strong>Receipt images</strong> you photograph, and the data extracted from them.</li>
-    <li><strong>Account information</strong> — [CONFIRM: email address, sign-in method].</li>
-    <li><strong>Purchase records</strong> for in-app purchases, processed by Google Play.</li>
-    <li><strong>Usage data</strong> — [CONFIRM: which analytics SDKs are in the app].</li>
+    <li>create and manage your account;</li>
+    <li>save, sync, restore, delete, and export receipts;</li>
+    <li>process Pro and Fleet receipts with AI;</li>
+    <li>enforce receipt limits, subscription access, trials, and referral credits;</li>
+    <li>provide account deletion and data export features;</li>
+    <li>prevent abuse, enforce rate limits, and secure the service;</li>
+    <li>maintain legal, tax, accounting, and operational records;</li>
+    <li>communicate with you about support, security, billing, and material changes.</li>
   </ul>
+  <p>
+    We do not sell personal information, and we do not share personal information for
+    cross-context behavioral advertising. We do not use your receipt images to train
+    third-party AI models.
+  </p>
 
-  <h2>What we do with it</h2>
+  <h2>4. Free, Pro, and Fleet Handling</h2>
+  <p>
+    <strong>Free.</strong> Free receipt records are intended to remain local to your device and
+    do not receive cloud receipt sync or AI processing. Account, subscription, legal
+    acceptance, support, and security features may still communicate with CabSnap servers.
+  </p>
+  <p>
+    <strong>Pro.</strong> Pro receipts may sync redacted receipt images and receipt fields to
+    the cloud and may be processed by AI.
+  </p>
+  <p>
+    <strong>Fleet.</strong> Fleet receipts may be visible to the fleet company or administrator
+    according to the Fleet setup. If you use CabSnap through a Fleet, your fleet organization
+    may control certain receipt records associated with that Fleet.
+  </p>
+
+  <h2>5. Redaction and Sensitive Content</h2>
+  <p>
+    Before a receipt image is uploaded for sync or AI processing, CabSnap runs on-device
+    redaction designed to detect and cover payment card numbers, CVV/CVC codes, and expiration
+    dates. Our server also has a safety check that can reject and remove an uploaded image if
+    it still appears to contain sensitive payment card data.
+  </p>
+  <p>
+    Redaction is best-effort and is not guaranteed. OCR and image detection can miss sensitive
+    data, especially with poor lighting, glare, blur, low contrast, creased paper, unusual card
+    formats, handwriting, partial obstruction, skewed photos, or low-resolution images. You are
+    responsible for reviewing photos before confirming them and for covering or avoiding
+    sensitive information that you do not want processed.
+  </p>
+  <p>
+    Do not intentionally capture or upload payment card numbers, CVV/CVC codes, passwords,
+    government IDs, medical information, or other confidential information unless you have the
+    right to do so and understand the risk.
+  </p>
+
+  <h2>6. Cloud Storage</h2>
+  <p>
+    CabSnap stores redacted receipt images in a cloud storage bucket used for cross-device
+    viewing and sync. The bucket is private and requires authenticated access. When another
+    signed-in device needs to display a synced receipt, CabSnap downloads the redacted image
+    using that user's authenticated session and stores a local app copy on that device.
+  </p>
+  <p>
+    Original receipt images, when you opt in to original cloud backup, are stored in a private
+    cloud bucket and require authenticated access. Original receipt images are not used for AI
+    processing.
+  </p>
+
+  <h2>7. AI Processing and Service Providers</h2>
+  <p>
+    For Pro and Fleet features, CabSnap may send redacted receipt images and receipt metadata
+    to a third-party AI provider selected by CabSnap to extract receipt fields. Our AI
+    providers currently are Anthropic and Google. We may add, change, or remove AI providers,
+    and we will update this Privacy Policy if we make a material change to the providers we use.
+  </p>
+  <p>
+    We configure AI processing for receipt extraction and, where available under the provider's
+    terms, no-training or limited-retention settings. Provider availability, model selection,
+    and data handling terms may change.
+  </p>
+  <p>
+    CabSnap also uses service providers for hosting, authentication, database, storage, billing,
+    app distribution, email or support, security, and operational monitoring. Current core
+    providers include Supabase and Google Play.
+  </p>
+
+  <h2>8. Sharing</h2>
+  <p>We may share information:</p>
   <ul>
-    <li>Extract text from receipt images so you can search and organise them.</li>
-    <li>Store your receipts so they remain available to you.</li>
-    <li>[CONFIRM: whether images or extracted data are used to improve extraction accuracy. This must be stated plainly either way.]</li>
+    <li>with service providers that process information for CabSnap;</li>
+    <li>with AI providers for Pro and Fleet receipt extraction;</li>
+    <li>with Google Play for subscription purchase verification and billing events;</li>
+    <li>with Fleet organizations when your account is covered by or assigned to a Fleet;</li>
+    <li>when you direct us to export, download, share, or transfer information;</li>
+    <li>to comply with law, legal process, tax, accounting, or security obligations;</li>
+    <li>in connection with a merger, acquisition, financing, or sale of assets, with appropriate notice where required.</li>
   </ul>
-
-  <h2>Who we share it with</h2>
-  <p>[CONFIRM: list every third-party processor — hosting, text extraction, analytics, crash reporting.]</p>
-  <p>We do not sell your data.</p>
-
-  <h2>How long we keep it</h2>
-  <p>[CONFIRM: retention period for receipt images, and what happens on account deletion.]</p>
-
-  <h2>Your rights</h2>
   <p>
-    You can request access to, correction of, or deletion of your data by emailing
-    <a href={`mailto:${SITE.email}`}>{SITE.email}</a>.
-    [CONFIRM: in-app account deletion path — Google Play requires one.]
+    We do not sell personal information, and we do not share personal information for
+    cross-context behavioral advertising.
   </p>
 
-  <h2>Website analytics</h2>
+  <h2>9. Retention and Deletion</h2>
   <p>
-    This website uses Meta Pixel and Google Analytics to measure which pages lead
-    to Play Store visits. [CONFIRM: cookie consent requirements for your traffic regions.]
+    Receipt records and redacted cloud images are kept while your account is active or while
+    needed to provide the service. You can delete individual receipts in the app.
+  </p>
+  <p>
+    If you delete your account, CabSnap deletes account-linked receipt rows and receipt storage
+    objects from our active systems, signs you out, and wipes local CabSnap receipt data on that
+    device after the server confirms deletion. Some records may be retained in anonymized or
+    non-identifying form for legal, security, tax, accounting, fraud-prevention, or operational
+    audit purposes.
+  </p>
+  <p>
+    Billing and subscription audit records may be retained for up to 7 years where needed for
+    tax, accounting, chargeback, or compliance purposes, with direct personal identifiers
+    removed or minimized where feasible.
+  </p>
+  <p>
+    AI request logs and diagnostic records are retained only as long as reasonably needed for
+    operations, security, troubleshooting, and abuse prevention.
+  </p>
+  <p>
+    Deleting the app from your device may remove local-only receipts that were not exported or
+    synced. Export important records before deleting the app, deleting your account, or
+    replacing your device.
   </p>
 
-  <h2>Children</h2>
-  <p>CabSnap is not directed at children under 13 and we do not knowingly collect their data.</p>
+  <h2>10. Your Choices and Rights</h2>
+  <p>You can:</p>
+  <ul>
+    <li>export your CabSnap data from Settings;</li>
+    <li>delete individual receipts;</li>
+    <li>turn original cloud backup on or off;</li>
+    <li>delete cloud-backed original images from Settings;</li>
+    <li>delete your account in the app;</li>
+    <li>contact us to request access, correction, deletion, restriction, objection, or portability where required by applicable law.</li>
+  </ul>
+  <p>
+    To make a request outside the app, contact
+    <a href="mailto:privacy@getcabsnap.com">privacy@getcabsnap.com</a>. We will respond as
+    required by applicable law. We will not discriminate against you for exercising a privacy
+    right.
+  </p>
+  <p>
+    Some requests may be limited by legal, tax, accounting, security, fraud prevention, or
+    Fleet-controller obligations.
+  </p>
 
-  <h2>Changes</h2>
-  <p>Material changes to this policy will be posted here with an updated date.</p>
+  <h2>11. U.S. State Privacy Rights</h2>
+  <p>
+    Depending on where you live, U.S. state privacy laws (including in California, Virginia,
+    Colorado, Connecticut, Utah, and other states) may give you rights to know about, access,
+    correct, delete, or obtain a portable copy of your personal information, and to appeal a
+    denied request. We honor these rights where they apply.
+  </p>
+  <p>
+    We do not sell personal information, and we do not "share" personal information for
+    cross-context behavioral advertising as those terms are defined under California law. To
+    exercise a state privacy right, contact
+    <a href="mailto:privacy@getcabsnap.com">privacy@getcabsnap.com</a>. We may need to verify
+    your identity before responding, and you may use an authorized agent where the law allows.
+  </p>
+
+  <h2>12. Security</h2>
+  <p>
+    We use HTTPS/TLS in transit, provider-managed encryption at rest, access controls, and
+    operational logging. No system is perfectly secure. If you believe your account or data has
+    been compromised, contact
+    <a href="mailto:security@getcabsnap.com">security@getcabsnap.com</a>.
+  </p>
+
+  <h2>13. Children</h2>
+  <p>
+    CabSnap is not directed to anyone under 18 years old, and you must be at least 18 to create
+    an account or use the service. We do not knowingly collect personal information from anyone
+    under 18. If we learn that we have collected personal information from someone under 18, we
+    will delete it. If you believe a person under 18 has provided us personal information,
+    contact <a href="mailto:privacy@getcabsnap.com">privacy@getcabsnap.com</a>.
+  </p>
+
+  <h2>14. International Processing</h2>
+  <p>
+    Your information may be processed in the United States and other countries where we or our
+    service providers operate. Those countries may have data protection laws different from
+    where you live. Where we transfer information, we use measures required by applicable law.
+  </p>
+
+  <h2>15. Changes to This Policy</h2>
+  <p>
+    We may update this Privacy Policy from time to time. Material changes may be shown in the
+    app, and we may require you to accept the updated policy before continuing to use CabSnap.
+    The effective date above identifies the current version.
+  </p>
+
+  <h2>16. Contact</h2>
+  <p>
+    Nuvol Holdings LLC<br />
+    426 Main St. #166<br />
+    Spotswood, NJ 08884
+  </p>
+  <p>
+    Privacy questions: <a href="mailto:privacy@getcabsnap.com">privacy@getcabsnap.com</a><br />
+    Security reports: <a href="mailto:security@getcabsnap.com">security@getcabsnap.com</a>
+  </p>
 </Prose>
