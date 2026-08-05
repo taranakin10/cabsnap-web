@@ -48,12 +48,8 @@ const { img, alt, eyebrow } = Astro.props;
     object-fit: cover;
     object-position: center;
   }
-  .hero-photo::after {
-    content: ""; position: absolute; inset: 0;
-    background: linear-gradient(180deg,
-      rgba(20,33,61,.5) 0%, rgba(20,33,61,.1) 35%,
-      rgba(20,33,61,.45) 70%, var(--navy) 100%);
-  }
+  /* .hero-photo::after and the .hero-copy backdrop live in global.css so the
+     homepage and these pages cannot drift apart again. */
   .hero-copy {
     position: relative;
     z-index: 1;

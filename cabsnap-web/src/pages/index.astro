@@ -195,12 +195,8 @@ const problems = [
     object-fit: cover;
     object-position: center;
   }
-  .hero-photo::after {
-    content: ""; position: absolute; inset: 0;
-    background: linear-gradient(180deg,
-      rgba(20,33,61,.55) 0%, rgba(20,33,61,.08) 32%,
-      rgba(20,33,61,.4) 68%, var(--navy) 100%);
-  }
+  /* .hero-photo::after and the .hero-copy backdrop live in global.css so the
+     homepage and the audience pages cannot drift apart again. */
   .hero-copy {
     position: relative;
     z-index: 1;

@@ -176,6 +176,47 @@ section { padding: 52px 0; border-bottom: 1px solid var(--rule); }
   color: var(--muted);
 }
 
+/* --- hero scrim -------------------------------------------------------
+   Defined once here rather than in each hero's scoped styles. The homepage
+   and the audience-page component render identical markup, and keeping two
+   copies is how they drifted apart and left bright photos unreadable.
+
+   Three stacked protections, because a single gradient cannot cope with
+   both a dark cab interior and a blown-out windshield:
+     1. a flat 0.55 wash over the whole photo
+     2. a gradient on top of it, reaching solid navy at the bottom
+     3. the copy block's own gradient, solid navy under the text itself
+   By the time text is painted it is sitting on navy, not on photograph. */
+.hero-photo::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  /* background-color is the base layer; background-image paints over it */
+  background-color: rgba(20, 33, 61, 0.55);
+  background-image: linear-gradient(
+    180deg,
+    rgba(20, 33, 61, 0.35) 0%,
+    rgba(20, 33, 61, 0.55) 45%,
+    rgba(20, 33, 61, 0.88) 80%,
+    #14213d 100%
+  );
+}
+
+.hero-copy {
+  background: linear-gradient(
+    0deg,
+    #14213d 0%,
+    #14213d 55%,
+    rgba(20, 33, 61, 0.85) 100%
+  );
+}
+
+/* Safety net for the two elements that can extend highest up the photo. */
+.hero-copy h1,
+.hero-copy .lead {
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+}
+
 /* --- dark bands --- */
 .dark { background: var(--navy); color: var(--paper); }
 .dark p, .dark li { color: #C3CADA; }
