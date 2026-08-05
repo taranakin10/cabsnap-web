@@ -16,7 +16,9 @@ const faq = [
   },
   {
     q: 'Is there an iPhone version?',
-    a: 'Not yet. CabSnap is Android only right now, on Google Play.',
+    a: "Not yet — CabSnap is Android only. An iPhone version is in development. There's no release date I can promise you yet.",
+    href: '/iphone',
+    hrefLabel: 'More on the iPhone version',
   },
   {
     q: 'What if the AI reads a receipt wrong?',
@@ -73,7 +75,6 @@ const problems = [
           so it's still there when your accountant asks in April.
         </p>
         <Cta />
-        <p class="plat">Android &middot; Google Play &middot; <b>&#10003;</b> in-app purchases available</p>
       </div>
     </div>
   </header>
@@ -210,11 +211,6 @@ const problems = [
   .eyebrow.orange { color: var(--orange); }
   h1 em { font-style: normal; color: var(--orange); }
   .lead { font-size: 18px; margin-top: 16px; max-width: 27em; }
-  .plat {
-    text-align: center; margin-top: 12px; font-size: 12.5px;
-    color: var(--muted-dk); font-family: var(--font-mono);
-  }
-  .plat b { color: var(--green); font-weight: 400; }
 
   figure { margin: 26px 0 0; }
   figure img {

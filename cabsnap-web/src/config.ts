@@ -45,7 +45,12 @@ export const PLAY_STORE_URL =
 export const CTA = {
   primary: 'Download for Free',
   note: 'Free to download.',
-  nav: 'Get the app',
+  nav: 'Google Play',
+  /**
+   * Shown under every primary CTA. Says what is true today and what is
+   * underway, and promises no date — because there isn't one to promise.
+   */
+  platform: 'Android only. iPhone version in development.',
 } as const;
 
 /** Confirmed platform facts. Answered honestly wherever a visitor might ask. */

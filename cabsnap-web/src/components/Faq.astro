@@ -1,12 +1,22 @@
 ---
-interface Props { items: { q: string; a: string }[]; }
+/**
+ * `a` stays plain text so it can go straight into FAQPage schema. Where an
+ * answer needs to point somewhere, use `href`/`hrefLabel` rather than putting
+ * markup in `a` — the schema should not carry HTML.
+ */
+interface Props {
+  items: { q: string; a: string; href?: string; hrefLabel?: string }[];
+}
 const { items } = Astro.props;
 ---
 <div class="faq">
-  {items.map(({ q, a }) => (
+  {items.map(({ q, a, href, hrefLabel }) => (
     <details>
       <summary>{q}</summary>
-      <p>{a}</p>
+      <p>
+        {a}
+        {href && <> <a href={href}>{hrefLabel ?? 'Read more'}</a></>}
+      </p>
     </details>
   ))}
 </div>
@@ -23,4 +33,5 @@ const { items } = Astro.props;
   summary::after { content: "+"; color: var(--orange-ink); font-size: 24px; line-height: 1; }
   details[open] summary::after { content: "\2013"; }
   details p { margin-top: 11px; font-size: 15.5px; }
+  details a { color: var(--orange-ink); }
 </style>

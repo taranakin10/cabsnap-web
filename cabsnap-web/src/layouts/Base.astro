@@ -14,7 +14,8 @@ interface Props {
   /** Ad landing pages drop the nav and footer — one CTA, no exits. */
   bare?: boolean;
   /** Any FAQ block on the page, emitted as FAQPage schema. */
-  faq?: { q: string; a: string }[];
+  /** href/hrefLabel are for rendering only; the schema uses `a` alone. */
+  faq?: { q: string; a: string; href?: string; hrefLabel?: string }[];
   /** Set on /guide and /blog articles, emitted as Article schema. */
   article?: { headline: string; published: string; modified?: string };
 }
@@ -146,6 +147,46 @@ const faqSchema = faq && {
   {!bare && <Nav />}
   <slot />
   {!bare && <Footer />}
+
+  <script>
+    // iOS visitors cannot install CabSnap, so the primary CTA is swapped for a
+    // plain statement rather than sending them to a Play Store page they
+    // cannot use. Deliberately client-side and post-parse: the static HTML and
+    // everything a crawler sees keep the real Play Store button.
+    (() => {
+      const ua = navigator.userAgent;
+      const isIOS =
+        /iPad|iPhone|iPod/.test(ua) ||
+        // iPadOS 13+ reports itself as a Mac; touch points tell them apart.
+        (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+      if (!isIOS) return;
+
+      document.querySelectorAll<HTMLAnchorElement>('a.btn[data-play-store]').forEach((btn) => {
+        const card = document.createElement('div');
+        card.className = 'ios-card';
+        // Height is pinned to the button it replaces so the swap does not
+        // push the rest of the page around.
+        card.style.minHeight = `${Math.round(btn.getBoundingClientRect().height)}px`;
+
+        const h = document.createElement('strong');
+        h.textContent = 'Not on iPhone yet';
+        const p = document.createElement('span');
+        p.textContent =
+          'CabSnap is Android only right now. The iPhone version is in development.';
+        card.append(h, p);
+
+        btn.replaceWith(card);
+      });
+
+      // The nav button leads to the same place, so it goes too.
+      document.querySelectorAll<HTMLAnchorElement>('a.nav-cta[data-play-store]').forEach((a) => {
+        a.setAttribute('href', '/iphone');
+        a.removeAttribute('data-play-store');
+        const label = a.querySelector('span');
+        if (label) label.textContent = 'On iPhone?';
+      });
+    })();
+  </script>
 
   <script>
     // Preserve UTM parameters through to the Play Store so campaign

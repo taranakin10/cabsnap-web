@@ -1,0 +1,157 @@
+---
+import Base from '../layouts/Base.astro';
+import Faq from '../components/Faq.astro';
+import { CONTACTS, PLAY_STORE_URL } from '../config';
+
+/**
+ * The answer for anyone searching "cabsnap iphone" or "cabsnap ios".
+ *
+ * NO DATES. Not a quarter, not a season, not "soon". There is no date to
+ * give, and a made-up one would be found out on the day it passed. If a
+ * date ever becomes real, it goes here first.
+ */
+
+const faq = [
+  {
+    q: 'Is CabSnap available on iPhone?',
+    a: 'Not yet. CabSnap is Android only right now, on Google Play. An iPhone version is in development.',
+  },
+  {
+    q: 'When will the iPhone version be out?',
+    a: "There's no release date I can promise you yet. When there is one, it will be on this page. We would rather say nothing than give you a date that slips.",
+  },
+  {
+    q: 'Can I use CabSnap on an iPad?',
+    a: 'No. CabSnap is an Android app, so it does not run on iPad or any other Apple device.',
+  },
+  {
+    q: 'Is there a web version I can use in the meantime?',
+    a: 'No. Capture happens in the app, on the phone, which is the whole point of it — a receipt photographed at the pump in three seconds. There is no browser version that does that job.',
+  },
+  {
+    q: 'What should I use instead for now?',
+    a: 'Several receipt apps list iPhone versions, including Shoeboxed, Expensify, and Smart Receipts. Our comparison pages describe what each one does, including where they beat us. If one of them fits, use it — we would rather that than have you wait on something with no date.',
+  },
+  {
+    q: 'Can you tell me when it launches?',
+    a: 'Email us and we will let you know when there is something real to tell you. We will not use the address for anything else.',
+  },
+];
+---
+
+<Base
+  title="CabSnap for iPhone — Not Yet, and Here's the Honest Status"
+  description="CabSnap is Android only right now. An iPhone version is in development, with no release date promised. Here is exactly where things stand."
+  path="/iphone"
+  faq={faq}
+>
+  <section class="hero dark">
+    <div class="wrap">
+      <p class="eyebrow orange">iPhone &amp; iOS</p>
+      <h1>Not on iPhone<br /><em>yet</em>.</h1>
+      <p class="lead">
+        CabSnap is an Android app. There is no iPhone version today, and there is
+        no App Store listing to look for. An iPhone version is in development.
+      </p>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <p class="eyebrow">The short version</p>
+      <h2>Three answers,<br />no hedging.</h2>
+
+      <div class="answers">
+        <div class="answer">
+          <p class="q">Is it available on iPhone?</p>
+          <p class="a">No. Android only, on Google Play.</p>
+        </div>
+        <div class="answer">
+          <p class="q">Is one being built?</p>
+          <p class="a">Yes. An iPhone version is in development.</p>
+        </div>
+        <div class="answer">
+          <p class="q">When?</p>
+          <p class="a">
+            There is no release date I can promise you yet. Not a quarter, not a
+            season. When there is a real date, it goes on this page.
+          </p>
+        </div>
+      </div>
+
+      <p class="intro">
+        We could write "coming soon" here. Every app does. It means nothing, and
+        you would have no way of knowing whether it meant next month or never.
+        So the status is exactly what it is: being built, no date.
+      </p>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <p class="eyebrow">In the meantime</p>
+      <h2>Use something<br />that works today.</h2>
+      <p class="intro">
+        If you are on an iPhone and you need receipts captured now, waiting on us
+        is the wrong plan. Shoeboxed, Expensify, and Smart Receipts all list
+        iPhone apps.
+      </p>
+      <p>
+        Our <a href="/best-receipt-app-for-truck-drivers">comparison of the real options</a>
+        sets out what each one does and where it beats CabSnap. That page was
+        written to be useful even when the answer is not us, and this is one of
+        those times.
+      </p>
+      <p>
+        If you also have an Android phone, or you switch later, CabSnap is
+        <a href={PLAY_STORE_URL} data-play-store rel="noopener">free to download on Google Play</a>.
+      </p>
+    </div>
+  </section>
+
+  <section class="topline">
+    <div class="wrap">
+      <p class="eyebrow">Questions</p>
+      <h2>Straight answers.</h2>
+      <Faq items={faq} />
+    </div>
+  </section>
+
+  <div class="dark closing">
+    <div class="wrap">
+      <h2>Want to know when<br />it's <em>actually ready</em>?</h2>
+      <p class="lead">
+        Email <a href={`mailto:${CONTACTS.general}`}>{CONTACTS.general}</a> and we
+        will tell you when there is something real to tell. No date until there is
+        one.
+      </p>
+    </div>
+  </div>
+</Base>
+
+<style>
+  .hero { padding: 56px 0 52px; }
+  .eyebrow.orange { color: var(--orange); }
+  h1 em, h2 em { font-style: normal; color: var(--orange); }
+  .lead { font-size: 18px; margin-top: 18px; }
+  .intro { margin-top: 20px; }
+  section p + p { margin-top: 14px; }
+
+  .answers {
+    margin-top: 26px;
+    display: flex; flex-direction: column; gap: 1px;
+    background: var(--rule);
+  }
+  .answer { background: var(--paper); padding: 16px 0; }
+  .q {
+    font-family: var(--font-display); font-weight: 800;
+    text-transform: uppercase; font-size: 19px; color: var(--text);
+  }
+  .a { margin-top: 5px; font-size: 15.5px; }
+
+  .topline { border-top: 1px solid var(--rule); }
+  .closing { text-align: center; padding: 56px 0; border-bottom: none; }
+  .closing h2 { margin-bottom: 4px; }
+  .closing .lead { font-size: 16px; }
+  .closing a { color: var(--orange); }
+</style>

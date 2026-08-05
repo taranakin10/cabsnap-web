@@ -60,6 +60,7 @@ export const OG: OgEntry[] = [
   { path: '/blog/what-happens-if-you-lose-a-receipt', kicker: 'Blog', title: 'What happens if you\nlose a receipt' },
 
   // Static
+  { path: '/iphone', kicker: 'iPhone & iOS', title: 'Not on iPhone\nyet.' },
   { path: '/about', kicker: 'About', title: 'A receipt app for\npeople who buy fuel.' },
   { path: '/contact', kicker: 'Contact', title: 'Talk to a person.' },
   { path: '/security', kicker: 'Security', title: 'How your records\nare handled.' },

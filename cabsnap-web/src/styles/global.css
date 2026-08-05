@@ -124,6 +124,37 @@ section { padding: 52px 0; border-bottom: 1px solid var(--rule); }
 }
 .btn:active { transform: translateY(1px); }
 
+/* Replaces the primary CTA for iOS visitors (see Base.astro). Same box as the
+   button it stands in for, but deliberately not a control — nothing here is
+   clickable, because there is nothing yet to click through to. */
+.ios-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 3px;
+  text-align: center;
+  background: var(--navy-2);
+  border: 2px solid var(--orange);
+  border-radius: 4px;
+  padding: 11px 14px;
+  margin-top: 24px;
+}
+.ios-card strong {
+  font-family: var(--font-display);
+  font-weight: 900;
+  text-transform: uppercase;
+  font-size: 19px;
+  letter-spacing: 0.02em;
+  line-height: 1.05;
+  color: var(--paper);
+}
+.ios-card span {
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  line-height: 1.4;
+  color: #C3CADA;
+}
+
 .btn-note {
   text-align: center;
   margin-top: 10px;
