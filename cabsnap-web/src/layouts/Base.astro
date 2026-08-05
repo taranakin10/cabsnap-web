@@ -173,7 +173,14 @@ const faqSchema = faq && {
         const p = document.createElement('span');
         p.textContent =
           'CabSnap is Android only right now. The iPhone version is in development.';
-        card.append(h, p);
+
+        // The one actionable thing an iPhone visitor can do: join the list.
+        const a = document.createElement('a');
+        a.href = '/iphone';
+        a.className = 'ios-card-link';
+        a.textContent = 'Get notified';
+
+        card.append(h, p, a);
 
         btn.replaceWith(card);
       });

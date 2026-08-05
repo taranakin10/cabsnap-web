@@ -1,6 +1,7 @@
 ---
 import Base from '../layouts/Base.astro';
 import Faq from '../components/Faq.astro';
+import IosWaitlist from '../components/IosWaitlist.astro';
 import { CONTACTS, PLAY_STORE_URL } from '../config';
 
 /**
@@ -53,6 +54,19 @@ const faq = [
         CabSnap is an Android app. There is no iPhone version today, and there is
         no App Store listing to look for. An iPhone version is in development.
       </p>
+    </div>
+  </section>
+
+  <section class="signup">
+    <div class="wrap">
+      <p class="eyebrow">The waitlist</p>
+      <h2>One message,<br />when it <em>ships</em>.</h2>
+      <p class="intro">
+        Leave an email address or a US phone number and we will tell you the
+        day the iPhone version is actually available. That is the only thing
+        we will send.
+      </p>
+      <IosWaitlist />
     </div>
   </section>
 
@@ -119,11 +133,10 @@ const faq = [
 
   <div class="dark closing">
     <div class="wrap">
-      <h2>Want to know when<br />it's <em>actually ready</em>?</h2>
+      <h2>Rather just<br />email us?</h2>
       <p class="lead">
-        Email <a href={`mailto:${CONTACTS.general}`}>{CONTACTS.general}</a> and we
-        will tell you when there is something real to tell. No date until there is
-        one.
+        <a href={`mailto:${CONTACTS.general}`}>{CONTACTS.general}</a> reaches a
+        person. Either way, no date until there is one.
       </p>
     </div>
   </div>
@@ -149,6 +162,7 @@ const faq = [
   }
   .a { margin-top: 5px; font-size: 15.5px; }
 
+  .signup { border-bottom: 1px solid var(--rule); }
   .topline { border-top: 1px solid var(--rule); }
   .closing { text-align: center; padding: 56px 0; border-bottom: none; }
   .closing h2 { margin-bottom: 4px; }
