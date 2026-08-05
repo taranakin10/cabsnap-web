@@ -1,5 +1,5 @@
 ---
-import { SITE, DISCLAIMER } from '../config';
+import { SITE, DISCLAIMER, CONTACTS } from '../config';
 const links = [
   ['/receipt-app-for-truck-drivers', 'Truck drivers'],
   ['/receipt-app-for-owner-operators', 'Owner-operators'],
@@ -26,7 +26,12 @@ const links = [
     <div class="flinks">
       {links.map(([href, label]) => <a href={href}>{label}</a>)}
     </div>
-    <p>{SITE.name} is a product of {SITE.company}, {SITE.companyLocation} &middot; {SITE.email}</p>
+    <p>{SITE.name} is a product of {SITE.company}, {SITE.companyLocation}</p>
+    <p class="contacts">
+      General <a href={`mailto:${CONTACTS.general}`}>{CONTACTS.general}</a> &middot;
+      Privacy <a href={`mailto:${CONTACTS.privacy}`}>{CONTACTS.privacy}</a> &middot;
+      Security <a href={`mailto:${CONTACTS.security}`}>{CONTACTS.security}</a>
+    </p>
     <p class="disclaimer">{DISCLAIMER}</p>
   </div>
 </footer>
@@ -42,6 +47,8 @@ const links = [
     padding-top: 26px; border-top: 1px solid var(--rule-dk);
   }
   .flinks a { color: var(--muted-dk); }
+  .contacts { margin-top: 7px; line-height: 1.7; }
+  .contacts a { color: var(--muted-dk); }
   .disclaimer {
     border-top: 1px solid var(--rule-dk); padding-top: 16px;
     margin-top: 16px; line-height: 1.5; font-size: 12px;

@@ -19,9 +19,24 @@ export const SITE = {
   description:
     "Point your phone at any receipt. CabSnap's AI reads it, files it, and keeps it — built for owner-operators and 1099 drivers.",
   company: 'Nuvol Holdings LLC',
-  companyLocation: 'East Brunswick, NJ',
+  /** Full registered address — use where an address is what's wanted (footer, legal). */
+  companyLocation: '426 Main St. #166, Spotswood, NJ 08884',
+  /** Short form for running prose, where a street address reads badly. */
+  companyCity: 'Spotswood, NJ',
   email: 'admin@getcabsnap.com',
   packageId: 'com.getcabsnap.android',
+} as const;
+
+/**
+ * Contact routing. These mailboxes are the ones named in the privacy policy
+ * and terms — keep them in sync with those documents rather than inventing
+ * new addresses here.
+ */
+export const CONTACTS = {
+  general: 'admin@getcabsnap.com',
+  privacy: 'privacy@getcabsnap.com',
+  security: 'security@getcabsnap.com',
+  legal: 'legal@getcabsnap.com',
 } as const;
 
 export const PLAY_STORE_URL =
