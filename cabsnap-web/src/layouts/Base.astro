@@ -3,6 +3,7 @@ import '../styles/global.css';
 import Nav from '../components/Nav.astro';
 import Footer from '../components/Footer.astro';
 import { SITE } from '../config';
+import { ogImageFor } from '../data/og';
 
 interface Props {
   title: string;
@@ -22,7 +23,8 @@ const {
   title,
   description,
   path,
-  ogImage = '/img/og-default.jpg',
+  // Per-page card generated at build time by src/pages/og/[slug].png.ts.
+  ogImage = ogImageFor(path),
   bare = false,
   faq,
   article,
@@ -31,6 +33,14 @@ const {
 const canonical = new URL(path, Astro.site).href;
 const ogUrl = new URL(ogImage, Astro.site).href;
 const noindex = import.meta.env.PUBLIC_NOINDEX === 'true';
+
+// Analytics are opt-in via env. With the vars unset nothing is emitted and no
+// third-party script loads, which is also how local builds stay clean.
+const META_PIXEL_ID = import.meta.env.PUBLIC_META_PIXEL_ID;
+const GA4_ID = import.meta.env.PUBLIC_GA4_ID;
+
+const FONT_CSS =
+  'https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;800;900&family=Courier+Prime:wght@400;700&family=Inter:wght@400;500;600&display=swap';
 
 const orgSchema = {
   '@context': 'https://schema.org',
@@ -93,14 +103,43 @@ const faqSchema = faq && {
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link
-    href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;800;900&family=Courier+Prime:wght@400;700&family=Inter:wght@400;500;600&display=swap"
-    rel="stylesheet"
-  />
+  {/* Loaded non-render-blocking: as a print stylesheet first, promoted to all
+      media once it arrives. Blocking on this cost ~850ms of first paint. */}
+  <link rel="preload" as="style" href={FONT_CSS} />
+  <link rel="stylesheet" href={FONT_CSS} media="print" onload="this.media='all';this.onload=null" />
+  <noscript><link rel="stylesheet" href={FONT_CSS} /></noscript>
 
   <script type="application/ld+json" set:html={JSON.stringify(orgSchema)} />
   {articleSchema && <script type="application/ld+json" set:html={JSON.stringify(articleSchema)} />}
   {faqSchema && <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />}
+
+  {META_PIXEL_ID && (
+    <script is:inline define:vars={{ META_PIXEL_ID }}>
+      !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+      n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+      if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+      n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;
+      s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script',
+      'https://connect.facebook.net/en_US/fbevents.js');
+      fbq('init', META_PIXEL_ID);
+      fbq('track', 'PageView');
+    </script>
+  )}
+
+  {GA4_ID && (
+    <script is:inline async src={`https://www.googletagmanager.com/gtag/js?id=${GA4_ID}`}></script>
+  )}
+  {GA4_ID && (
+    <script is:inline define:vars={{ GA4_ID }}>
+      // Assigned to window explicitly: define:vars wraps this script in an
+      // IIFE, so Google's stock `function gtag(){}` would be scoped to that
+      // closure and the event calls elsewhere would never find it.
+      window.dataLayer = window.dataLayer || [];
+      window.gtag = function gtag(){ window.dataLayer.push(arguments); };
+      window.gtag('js', new Date());
+      window.gtag('config', GA4_ID);
+    </script>
+  )}
 </head>
 
 <body>
@@ -118,19 +157,29 @@ const faqSchema = faq && {
       const params = new URLSearchParams(window.location.search);
       const utms = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term']
         .filter((k) => params.get(k))
-        .map((k) => `${k}=${encodeURIComponent(params.get(k)!)}`)
-        .join('&');
+        .map((k) => `${k}=${encodeURIComponent(params.get(k)!)}`);
 
-      if (utms) {
+      // Landing pages carry ?v=a|b|c. Pass it through so the install can be
+      // attributed to the variant that produced it.
+      const variant = params.get('v');
+      if (variant && /^[a-c]$/.test(variant)) {
+        utms.push(`cabsnap_variant=${encodeURIComponent(variant)}`);
+      }
+
+      if (utms.length) {
         const url = new URL((link as HTMLAnchorElement).href);
-        url.searchParams.set('referrer', utms);
+        url.searchParams.set('referrer', utms.join('&'));
         (link as HTMLAnchorElement).href = url.toString();
       }
 
+      const payload: Record<string, string> = { page: window.location.pathname };
+      if (variant) payload.variant = variant;
+
       if (typeof (window as any).fbq === 'function') {
-        (window as any).fbq('trackCustom', 'PlayStoreClick', {
-          page: window.location.pathname,
-        });
+        (window as any).fbq('trackCustom', 'PlayStoreClick', payload);
+      }
+      if (typeof (window as any).gtag === 'function') {
+        (window as any).gtag('event', 'PlayStoreClick', payload);
       }
     });
   </script>

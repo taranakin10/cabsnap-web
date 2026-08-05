@@ -1,0 +1,43 @@
+---
+import Landing from '../../layouts/Landing.astro';
+
+/**
+ * Runs against deduction-intent ad traffic. It must stay a RECORDS page:
+ * no promised tax outcome, no amount anyone is entitled to, no advice about
+ * what to deduct. The proposition is "you can still show what you spent",
+ * which is true and is what the app actually does.
+ */
+---
+
+<Landing
+  title="Spent It, Can't Prove It — CabSnap"
+  description="Every receipt that fades is a record you no longer have. Photograph each one when you get it and you can still show what you spent. Free on Google Play."
+  path="/lp/deduction"
+  kicker="Free on Google Play"
+  headlines={{
+    a: "Spent it.<br />Can't <em>prove it</em>.",
+    b: "Every lost receipt<br />is a <em>lost record</em>.",
+    c: "Can you still show<br />what you <em>spent</em>?",
+  }}
+  sub="You already paid for the fuel, the repair, the tires. Come tax time the only question is whether you can still produce the record."
+>
+  <ul class="points">
+    <li>Photograph each receipt in three seconds, at the pump</li>
+    <li>The AI reads the vendor, date, and total off the paper</li>
+    <li>The original image is kept as your record</li>
+    <li>Still readable in April, when the paper isn't</li>
+  </ul>
+
+  <p class="para">
+    The IRS has accepted electronic copies of paper records since 1997, under
+    Rev. Proc. 97-22, provided the copy is legible, matches the original, can be
+    printed on request, and is stored securely.
+  </p>
+
+  <p class="para">
+    Which is the whole idea: a photograph taken the day you got the receipt
+    doesn't fade. What any of it means for your return is a question for your
+    tax preparer &mdash; CabSnap just makes sure the record still exists to
+    talk about.
+  </p>
+</Landing>

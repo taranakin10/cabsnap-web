@@ -1,0 +1,158 @@
+---
+import Base from './Base.astro';
+import { CTA, PLAY_STORE_URL, DISCLAIMER } from '../config';
+
+/**
+ * AD LANDING PAGE TEMPLATE.
+ *
+ * bare={true} — no nav, no footer, no outbound links except the one CTA.
+ * Every exit from this page should be the Play Store or the back button.
+ *
+ * Variants: ?v=a|b|c swaps the headline only. The param is validated against
+ * /^[a-c]$/ and applied client-side (the site is static), then passed to the
+ * Play Store referrer by the click handler in Base.astro.
+ *
+ * Keep these under 800 words. They are ads, not articles.
+ */
+interface Props {
+  title: string;
+  description: string;
+  path: string;
+  kicker: string;
+  /** Three headline variants, keyed a/b/c. 'a' is the default. */
+  headlines: { a: string; b: string; c: string };
+  sub: string;
+}
+const { title, description, path, kicker, headlines, sub } = Astro.props;
+---
+
+<Base title={title} description={description} path={path} bare={true}>
+  <main class="lp">
+    {/* Runs synchronously during parse, before the headline below is painted,
+        so the right variant is chosen on first render. Swapping the text after
+        load instead cost 0.17 CLS and flashed the wrong headline. */}
+    <script is:inline>
+      (function () {
+        var v = new URLSearchParams(location.search).get('v');
+        if (v === 'b' || v === 'c') document.documentElement.setAttribute('data-variant', v);
+      })();
+    </script>
+
+    <div class="wrap">
+      <p class="logo">Cab<span>Snap</span></p>
+
+      <p class="kicker">{kicker}</p>
+      {/* All three rendered; CSS reveals one. Works without JS (shows a). */}
+      <h1>
+        <span data-v="a" set:html={headlines.a} />
+        <span data-v="b" set:html={headlines.b} />
+        <span data-v="c" set:html={headlines.c} />
+      </h1>
+      <p class="sub">{sub}</p>
+
+      <slot />
+
+      <div class="steps">
+        <p class="steps-h">How it works</p>
+        <div class="step"><span>1</span><p><b>Snap it.</b> One hand at the pump, engine running, before you climb back in.</p></div>
+        <div class="step"><span>2</span><p><b>AI reads it.</b> Vendor, date, and total pulled off the paper. No typing.</p></div>
+        <div class="step"><span>3</span><p><b>It's kept.</b> Filed and searchable, with the original photo alongside it.</p></div>
+      </div>
+
+      <a class="btn" href={PLAY_STORE_URL} data-play-store rel="noopener">{CTA.primary}</a>
+      <p class="note">{CTA.note} Android &middot; Google Play</p>
+
+      <p class="honest">
+        CabSnap does one job: capturing and keeping receipts. It does not track
+        mileage, and it's Android only right now. We'd rather say so here than
+        after you've downloaded it.
+      </p>
+
+      <p class="disclaimer">{DISCLAIMER}</p>
+    </div>
+  </main>
+</Base>
+
+<style>
+  .lp { background: var(--navy); color: var(--paper); min-height: 100vh; padding: 34px 0 52px; }
+  .lp .wrap { max-width: 560px; }
+
+  .logo {
+    font-family: var(--font-display); font-weight: 900;
+    font-size: 25px; letter-spacing: -.02em; text-transform: uppercase;
+    color: var(--paper); margin-bottom: 40px;
+  }
+  .logo span { color: var(--green); }
+
+  .kicker {
+    font-family: var(--font-mono); font-size: 12px;
+    letter-spacing: .18em; text-transform: uppercase; color: var(--orange);
+  }
+  h1 { margin-top: 12px; }
+  .lp :global(h1 em) { font-style: normal; color: var(--orange); }
+
+  /* Variant selection happens in CSS so the chosen headline is correct on
+     first paint. Default (no param, or ?v=a) shows a; also the no-JS result. */
+  h1 [data-v] { display: none; }
+  h1 [data-v='a'] { display: block; }
+  :global(:root[data-variant='b']) h1 [data-v='a'],
+  :global(:root[data-variant='c']) h1 [data-v='a'] { display: none; }
+  :global(:root[data-variant='b']) h1 [data-v='b'] { display: block; }
+  :global(:root[data-variant='c']) h1 [data-v='c'] { display: block; }
+  .sub { font-size: 18px; margin-top: 18px; color: #C3CADA; }
+
+  .lp :global(.points) {
+    list-style: none; margin-top: 28px;
+    display: flex; flex-direction: column; gap: 14px;
+  }
+  .lp :global(.points li) {
+    padding-left: 28px; position: relative;
+    font-size: 16px; color: #C3CADA;
+  }
+  .lp :global(.points li::before) {
+    content: "\2713"; position: absolute; left: 0;
+    color: var(--green); font-weight: 700; font-size: 16px;
+  }
+  .lp :global(.para) { margin-top: 20px; font-size: 16px; color: #C3CADA; }
+
+  .steps {
+    margin-top: 34px; padding-top: 26px;
+    border-top: 1px solid var(--rule-dk);
+  }
+  .steps-h {
+    font-family: var(--font-mono); font-size: 12px;
+    letter-spacing: .18em; text-transform: uppercase; color: var(--green);
+    margin-bottom: 18px;
+  }
+  .step { display: grid; grid-template-columns: 34px 1fr; gap: 12px; margin-top: 14px; }
+  .step span {
+    font-family: var(--font-display); font-weight: 900;
+    font-size: 30px; color: var(--orange); line-height: .85;
+  }
+  .step p { font-size: 15.5px; color: #C3CADA; }
+  .step b { color: var(--paper); font-weight: 600; }
+
+  .honest {
+    margin-top: 26px; font-size: 14px; line-height: 1.6;
+    color: var(--muted-dk);
+  }
+
+  .btn {
+    display: block; text-align: center; text-decoration: none;
+    background: var(--orange); color: var(--navy);
+    font-family: var(--font-display); font-weight: 900;
+    text-transform: uppercase; font-size: 23px; letter-spacing: .03em;
+    padding: 18px; border-radius: 4px; margin-top: 34px;
+  }
+  .btn:active { transform: translateY(1px); }
+  .note {
+    text-align: center; margin-top: 12px;
+    font-family: var(--font-mono); font-size: 12.5px; color: var(--muted-dk);
+  }
+  .disclaimer {
+    margin-top: 40px; padding-top: 18px;
+    border-top: 1px solid var(--rule-dk);
+    font-family: var(--font-mono); font-size: 11.5px;
+    line-height: 1.55; color: var(--muted-dk);
+  }
+</style>

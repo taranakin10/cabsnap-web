@@ -12,6 +12,24 @@
    "do this." That is why the buttons pull.
    ============================================================ */
 
+/* Metric-matched fallback for the display face.
+   'Arial Narrow' is named in the stack but is absent on most machines, so the
+   real fallback was the default sans — which is far wider than Barlow
+   Condensed. Headlines therefore wrapped onto extra lines before the webfont
+   arrived and reflowed when it swapped in, which was the entire measured
+   layout shift on the landing pages.
+
+   size-adjust was solved empirically rather than from font tables: candidate
+   values were rendered against the site's actual headline strings at their
+   real widths, and 70–72% reproduced Barlow's wrapped height exactly on every
+   one. 71% is the middle of that band. Re-measure if the display face or the
+   headline sizes change. */
+@font-face {
+  font-family: 'Barlow Condensed Fallback';
+  src: local('Arial'), local('Helvetica Neue'), local('Liberation Sans');
+  size-adjust: 71%;
+}
+
 :root {
   --paper: #F7F6F3;
   --navy: #14213D;
@@ -33,7 +51,7 @@
   --maxw: 560px;
   --pad: 22px;
 
-  --font-display: 'Barlow Condensed', 'Arial Narrow', sans-serif;
+  --font-display: 'Barlow Condensed', 'Barlow Condensed Fallback', 'Arial Narrow', sans-serif;
   --font-body: 'Inter', system-ui, -apple-system, sans-serif;
   --font-mono: 'Courier Prime', 'Courier New', monospace;
 }

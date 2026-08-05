@@ -280,13 +280,16 @@ const faq = [
     const chip = (e.target as HTMLElement).closest?.('button.chip') as HTMLButtonElement | null;
     if (!chip) return;
 
-    // Same guard as the PlayStoreClick wiring in Base.astro.
+    // Same guard as the PlayStoreClick wiring in Base.astro: first
+    // interaction only, and no-op when analytics are not configured.
     if (!engaged) {
       engaged = true;
+      const payload = { page: window.location.pathname };
       if (typeof (window as any).fbq === 'function') {
-        (window as any).fbq('trackCustom', 'CalculatorEngaged', {
-          page: window.location.pathname,
-        });
+        (window as any).fbq('trackCustom', 'CalculatorEngaged', payload);
+      }
+      if (typeof (window as any).gtag === 'function') {
+        (window as any).gtag('event', 'CalculatorEngaged', payload);
       }
     }
 
