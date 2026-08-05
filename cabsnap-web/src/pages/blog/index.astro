@@ -1,0 +1,88 @@
+---
+import Base from '../../layouts/Base.astro';
+import Closing from '../../components/Closing.astro';
+import { POSTS, GUIDES, articlePath, REVIEWED } from '../../data/articles';
+import { DISCLAIMER } from '../../config';
+---
+
+<Base
+  title="The CabSnap Blog — Notes on Receipts and Paper"
+  description="Shorter reads about the paper drivers actually carry: why thermal receipts fade, which slips are worth keeping, and what happens when one goes missing."
+  path="/blog"
+>
+  <header class="dark head">
+    <div class="wrap">
+      <p class="eyebrow orange">Blog</p>
+      <h1>Notes on<br /><em>paper</em>.</h1>
+      <p class="lead">
+        Shorter reads about the receipts drivers actually carry &mdash; how they
+        fail, which ones matter, and what to do when one goes missing.
+      </p>
+    </div>
+  </header>
+
+  <section>
+    <div class="wrap">
+      <div class="list">
+        {POSTS.map((a) => (
+          <a href={articlePath(a)}>
+            <span>{a.heading}</span>
+            <small>{a.blurb}</small>
+          </a>
+        ))}
+      </div>
+
+      <div class="note">
+        <p>
+          <strong>Recordkeeping, not tax advice.</strong>
+          These posts describe what records to keep and why. They do not tell you
+          what you can deduct. Sources last reviewed {REVIEWED}.
+        </p>
+      </div>
+
+      <p class="cross">
+        Longer, more thorough pieces are in the
+        <a href="/guide">guides</a> &mdash; {GUIDES.length} of them.
+      </p>
+
+      <p class="disclaimer">{DISCLAIMER}</p>
+    </div>
+  </section>
+
+  <Closing />
+</Base>
+
+<style>
+  .head { padding: 44px 0 40px; }
+  .eyebrow.orange { color: var(--orange); }
+  h1 em { font-style: normal; color: var(--orange); }
+  .lead { font-size: 18px; margin-top: 16px; max-width: 27em; }
+
+  .list { display: flex; flex-direction: column; gap: 9px; }
+  .list a {
+    display: block; text-decoration: none; color: var(--text);
+    background: var(--card); border: 1px solid var(--rule);
+    border-radius: 4px; padding: 18px 16px;
+  }
+  .list span {
+    display: block; font-family: var(--font-display); font-weight: 800;
+    text-transform: uppercase; font-size: 21px; line-height: 1.05;
+  }
+  .list small {
+    display: block; color: var(--muted); font-size: 13px;
+    margin-top: 6px; font-family: var(--font-mono);
+  }
+
+  .note {
+    background: var(--card); border-left: 3px solid var(--orange);
+    padding: 16px 18px; margin-top: 28px; border-radius: 0 4px 4px 0;
+    font-size: 15px;
+  }
+  .cross { margin-top: 26px; font-size: 15.5px; }
+  .cross a { color: var(--orange-ink); }
+  .disclaimer {
+    margin-top: 30px; padding-top: 18px; border-top: 1px solid var(--rule);
+    font-family: var(--font-mono); font-size: 12px;
+    line-height: 1.55; color: var(--muted);
+  }
+</style>

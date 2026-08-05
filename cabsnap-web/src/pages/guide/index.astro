@@ -1,0 +1,90 @@
+---
+import Base from '../../layouts/Base.astro';
+import Closing from '../../components/Closing.astro';
+import { GUIDES, POSTS, articlePath, REVIEWED } from '../../data/articles';
+import { DISCLAIMER } from '../../config';
+---
+
+<Base
+  title="Recordkeeping Guides for Drivers — CabSnap"
+  description="Long-form guides on keeping business records as a driver: what the IRS asks of a record, how long to keep things, and how to build a system that survives a year in a truck."
+  path="/guide"
+>
+  <header class="dark head">
+    <div class="wrap">
+      <p class="eyebrow orange">Guides</p>
+      <h1>Recordkeeping,<br />explained <em>properly</em>.</h1>
+      <p class="lead">
+        Long-form guides on keeping records as a driver. What the IRS asks of a
+        record, how long to keep things, and what to document.
+      </p>
+    </div>
+  </header>
+
+  <section>
+    <div class="wrap">
+      <div class="list">
+        {GUIDES.map((a) => (
+          <a href={articlePath(a)}>
+            <span>{a.heading}</span>
+            <small>{a.blurb}</small>
+          </a>
+        ))}
+      </div>
+
+      <div class="note">
+        <p>
+          <strong>These are recordkeeping guides, not tax advice.</strong>
+          They describe what records to keep and why. They do not tell you what
+          you can deduct, and they do not print figures that change from year to
+          year &mdash; where a rate is set annually, the guide says so and points
+          you at the source instead. Sources last reviewed {REVIEWED}.
+        </p>
+      </div>
+
+      <p class="cross">
+        Shorter reads are over on the <a href="/blog">blog</a> &mdash;
+        {POSTS.length} posts on the paper itself.
+      </p>
+
+      <p class="disclaimer">{DISCLAIMER}</p>
+    </div>
+  </section>
+
+  <Closing />
+</Base>
+
+<style>
+  .head { padding: 44px 0 40px; }
+  .eyebrow.orange { color: var(--orange); }
+  h1 em { font-style: normal; color: var(--orange); }
+  .lead { font-size: 18px; margin-top: 16px; max-width: 27em; }
+
+  .list { display: flex; flex-direction: column; gap: 9px; }
+  .list a {
+    display: block; text-decoration: none; color: var(--text);
+    background: var(--card); border: 1px solid var(--rule);
+    border-radius: 4px; padding: 18px 16px;
+  }
+  .list span {
+    display: block; font-family: var(--font-display); font-weight: 800;
+    text-transform: uppercase; font-size: 21px; line-height: 1.05;
+  }
+  .list small {
+    display: block; color: var(--muted); font-size: 13px;
+    margin-top: 6px; font-family: var(--font-mono);
+  }
+
+  .note {
+    background: var(--card); border-left: 3px solid var(--orange);
+    padding: 16px 18px; margin-top: 28px; border-radius: 0 4px 4px 0;
+    font-size: 15px;
+  }
+  .cross { margin-top: 26px; font-size: 15.5px; }
+  .cross a { color: var(--orange-ink); }
+  .disclaimer {
+    margin-top: 30px; padding-top: 18px; border-top: 1px solid var(--rule);
+    font-family: var(--font-mono); font-size: 12px;
+    line-height: 1.55; color: var(--muted);
+  }
+</style>

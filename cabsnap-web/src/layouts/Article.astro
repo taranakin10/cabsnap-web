@@ -1,0 +1,171 @@
+---
+import Base from './Base.astro';
+import Cta from '../components/Cta.astro';
+import { DISCLAIMER } from '../config';
+import { findArticle, articlePath, ARTICLES, REVIEWED } from '../data/articles';
+
+/**
+ * Shared template for everything under /guide and /blog.
+ *
+ * The disclaimer and the free-tool link are rendered here rather than left to
+ * each article, so no article can ship without them. See the editorial rules
+ * at the top of src/data/articles.ts before writing or editing content.
+ */
+interface Props {
+  slug: string;
+  /** Contextual sentence introducing the free tool link. */
+  toolLine: string;
+}
+const { slug, toolLine } = Astro.props;
+
+const article = findArticle(slug);
+if (!article) throw new Error(`Article "${slug}" is not in src/data/articles.ts`);
+
+const path = articlePath(article);
+const kindLabel = article.kind === 'guide' ? 'Guide' : 'Blog';
+const indexPath = `/${article.kind}`;
+
+// Three more from the same section, for onward reading.
+const more = ARTICLES.filter((a) => a.kind === article.kind && a.slug !== slug).slice(0, 3);
+---
+
+<Base
+  title={`${article.title} — CabSnap`}
+  description={article.description}
+  path={path}
+  article={{ headline: article.title, published: article.publishedISO }}
+>
+  <article>
+    <header class="dark head">
+      <div class="wrap">
+        <p class="eyebrow orange"><a href={indexPath}>{kindLabel}</a></p>
+        <h1>{article.heading}</h1>
+        <p class="meta">
+          Published {article.published} &middot; Sources reviewed {REVIEWED}
+        </p>
+      </div>
+    </header>
+
+    <section class="prose body">
+      <div class="wrap">
+        <slot />
+
+        <div class="tool">
+          <p class="toolline">{toolLine}</p>
+          <a href="/tools/undocumented-spend-calculator">
+            Undocumented spend calculator &rarr;
+          </a>
+          <small>Four questions, no signup.</small>
+        </div>
+
+        <p class="disclaimer">{DISCLAIMER}</p>
+      </div>
+    </section>
+  </article>
+
+  <section class="topline">
+    <div class="wrap">
+      <p class="eyebrow">Keep reading</p>
+      <div class="more">
+        {more.map((a) => (
+          <a href={articlePath(a)}>
+            <span>{a.heading}</span>
+            <small>{a.blurb}</small>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <div class="dark closing">
+    <div class="wrap">
+      <h2>Keep the receipt<br />while it's still <em>readable</em>.</h2>
+      <Cta />
+    </div>
+  </div>
+</Base>
+
+<style>
+  .head { padding: 40px 0 34px; }
+  .eyebrow.orange { color: var(--orange); }
+  .eyebrow.orange a { color: inherit; text-decoration: none; }
+  h1 { font-size: clamp(38px, 10vw, 52px); margin-top: 10px; }
+  .meta {
+    font-family: var(--font-mono); font-size: 12px;
+    color: var(--muted-dk); margin-top: 16px;
+  }
+
+  .body { padding-top: 38px; }
+
+  .tool {
+    margin-top: 40px; padding: 22px 20px;
+    background: var(--card); border-left: 3px solid var(--orange);
+    border-radius: 0 4px 4px 0;
+  }
+  .toolline { margin: 0 0 14px; font-size: 15.5px; }
+  .tool a {
+    font-family: var(--font-display); font-weight: 800;
+    text-transform: uppercase; font-size: 19px; letter-spacing: .02em;
+    color: var(--text); text-decoration: none;
+    border-bottom: 2px solid var(--orange); padding-bottom: 2px;
+  }
+  .tool small {
+    display: block; margin-top: 10px;
+    font-family: var(--font-mono); font-size: 12px; color: var(--muted);
+  }
+
+  .disclaimer {
+    margin-top: 36px; padding-top: 18px;
+    border-top: 1px solid var(--rule);
+    font-family: var(--font-mono); font-size: 12px;
+    line-height: 1.55; color: var(--muted);
+  }
+
+  .topline { border-top: 1px solid var(--rule); }
+  .more { margin-top: 20px; display: flex; flex-direction: column; gap: 9px; }
+  .more a {
+    display: block; text-decoration: none; color: var(--text);
+    background: var(--card); border: 1px solid var(--rule);
+    border-radius: 4px; padding: 16px 14px;
+  }
+  .more span {
+    display: block; font-family: var(--font-display); font-weight: 800;
+    text-transform: uppercase; font-size: 18px; line-height: 1.05;
+  }
+  .more small {
+    display: block; color: var(--muted); font-size: 12.5px;
+    margin-top: 5px; font-family: var(--font-mono);
+  }
+
+  .closing { text-align: center; padding: 56px 0; border-bottom: none; }
+  .closing h2 { margin-bottom: 4px; }
+  .closing :global(h2 em) { font-style: normal; color: var(--orange); }
+</style>
+
+<style is:global>
+  /* Long-form body copy. Wider measure than the marketing pages, which are
+     deliberately narrow. */
+  .prose.body .wrap { max-width: 640px; }
+  .prose.body h2 {
+    font-size: 27px; margin-top: 40px; line-height: 1.05;
+  }
+  .prose.body h3 { font-size: 19px; margin-top: 28px; }
+  .prose.body p { margin-top: 15px; font-size: 17px; }
+  .prose.body ul, .prose.body ol { margin-top: 15px; padding-left: 22px; }
+  .prose.body li { margin-top: 8px; color: var(--text-body); }
+  .prose.body a { color: var(--orange-ink); }
+  .prose.body strong { color: var(--text); }
+  .prose.body .lede { font-size: 19px; color: var(--text); }
+  .prose.body .note {
+    background: var(--card); border-left: 3px solid var(--orange);
+    padding: 16px 18px; margin-top: 24px; border-radius: 0 4px 4px 0;
+    font-size: 15.5px;
+  }
+  .prose.body .note p { margin-top: 10px; font-size: 15.5px; }
+  .prose.body .note p:first-child { margin-top: 0; }
+  .prose.body .src {
+    font-family: var(--font-mono); font-size: 12.5px;
+    color: var(--muted); margin-top: 22px; line-height: 1.55;
+    padding-left: 14px; border-left: 2px solid var(--rule);
+  }
+</style>

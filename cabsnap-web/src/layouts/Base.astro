@@ -14,6 +14,8 @@ interface Props {
   bare?: boolean;
   /** Any FAQ block on the page, emitted as FAQPage schema. */
   faq?: { q: string; a: string }[];
+  /** Set on /guide and /blog articles, emitted as Article schema. */
+  article?: { headline: string; published: string; modified?: string };
 }
 
 const {
@@ -23,6 +25,7 @@ const {
   ogImage = '/img/og-default.jpg',
   bare = false,
   faq,
+  article,
 } = Astro.props;
 
 const canonical = new URL(path, Astro.site).href;
@@ -36,6 +39,22 @@ const orgSchema = {
   url: Astro.site?.href,
   email: SITE.email,
   parentOrganization: { '@type': 'Organization', name: SITE.company },
+};
+
+const articleSchema = article && {
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: article.headline,
+  description,
+  datePublished: article.published,
+  dateModified: article.modified ?? article.published,
+  mainEntityOfPage: { '@type': 'WebPage', '@id': canonical },
+  author: { '@type': 'Organization', name: SITE.name, url: Astro.site?.href },
+  publisher: {
+    '@type': 'Organization',
+    name: SITE.name,
+    parentOrganization: { '@type': 'Organization', name: SITE.company },
+  },
 };
 
 const faqSchema = faq && {
@@ -80,6 +99,7 @@ const faqSchema = faq && {
   />
 
   <script type="application/ld+json" set:html={JSON.stringify(orgSchema)} />
+  {articleSchema && <script type="application/ld+json" set:html={JSON.stringify(articleSchema)} />}
   {faqSchema && <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />}
 </head>
 
