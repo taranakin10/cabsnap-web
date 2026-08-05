@@ -55,6 +55,25 @@ export const CTA = {
   platform: 'Android only. iPhone version in development.',
 } as const;
 
+/**
+ * Analytics property IDs.
+ *
+ * These are public identifiers — they appear in the page source of every site
+ * that uses them, and none of them grants access to anything. They live here
+ * rather than in markup so there is one place to change them.
+ *
+ * PUBLIC_GA4_ID / PUBLIC_META_PIXEL_ID / PUBLIC_CLARITY_ID override these at
+ * build time, so a staging deploy can point at a different property. Setting
+ * one to an empty string drops that tool from the page entirely — note that
+ * only works where the platform can hold an empty env var, which Railway can
+ * and a Windows shell cannot.
+ */
+export const ANALYTICS = {
+  ga4: 'G-34RHGJNFX7',
+  metaPixel: '2183395942226334',
+  clarity: 'x73hoyehoi',
+} as const;
+
 /** Confirmed platform facts. Answered honestly wherever a visitor might ask. */
 export const PLATFORM = {
   android: true,

@@ -2,7 +2,7 @@
 import '../styles/global.css';
 import Nav from '../components/Nav.astro';
 import Footer from '../components/Footer.astro';
-import { SITE } from '../config';
+import { SITE, ANALYTICS } from '../config';
 import { ogImageFor } from '../data/og';
 
 interface Props {
@@ -35,10 +35,11 @@ const canonical = new URL(path, Astro.site).href;
 const ogUrl = new URL(ogImage, Astro.site).href;
 const noindex = import.meta.env.PUBLIC_NOINDEX === 'true';
 
-// Analytics are opt-in via env. With the vars unset nothing is emitted and no
-// third-party script loads, which is also how local builds stay clean.
-const META_PIXEL_ID = import.meta.env.PUBLIC_META_PIXEL_ID;
-const GA4_ID = import.meta.env.PUBLIC_GA4_ID;
+// IDs come from config; an env var of the same name overrides, and setting one
+// to an empty string switches that tool off for a given deploy.
+const GA4_ID = import.meta.env.PUBLIC_GA4_ID ?? ANALYTICS.ga4;
+const META_PIXEL_ID = import.meta.env.PUBLIC_META_PIXEL_ID ?? ANALYTICS.metaPixel;
+const CLARITY_ID = import.meta.env.PUBLIC_CLARITY_ID ?? ANALYTICS.clarity;
 
 const FONT_CSS =
   'https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;800;900&family=Courier+Prime:wght@400;700&family=Inter:wght@400;500;600&display=swap';
@@ -114,18 +115,12 @@ const faqSchema = faq && {
   {articleSchema && <script type="application/ld+json" set:html={JSON.stringify(articleSchema)} />}
   {faqSchema && <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />}
 
-  {META_PIXEL_ID && (
-    <script is:inline define:vars={{ META_PIXEL_ID }}>
-      !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-      n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-      if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-      n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;
-      s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script',
-      'https://connect.facebook.net/en_US/fbevents.js');
-      fbq('init', META_PIXEL_ID);
-      fbq('track', 'PageView');
-    </script>
-  )}
+  {/* Analytics. All three are is:inline so Astro leaves them alone — bundled,
+      the globals (gtag, fbq, clarity) would be closure-scoped and the event
+      calls further down the page would silently find nothing.
+
+      These sit in <head>, above the click handler in <body>, so fbq and gtag
+      both exist before any click can fire. */}
 
   {GA4_ID && (
     <script is:inline async src={`https://www.googletagmanager.com/gtag/js?id=${GA4_ID}`}></script>
@@ -141,9 +136,41 @@ const faqSchema = faq && {
       window.gtag('config', GA4_ID);
     </script>
   )}
+
+  {META_PIXEL_ID && (
+    <script is:inline define:vars={{ META_PIXEL_ID }}>
+      !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+      n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+      if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+      n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;
+      s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script',
+      'https://connect.facebook.net/en_US/fbevents.js');
+      fbq('init', META_PIXEL_ID);
+      fbq('track', 'PageView');
+    </script>
+  )}
+
+  {CLARITY_ID && (
+    <script is:inline define:vars={{ CLARITY_ID }}>
+      (function(c,l,a,r,i,t,y){
+        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+      })(window, document, "clarity", "script", CLARITY_ID);
+    </script>
+  )}
 </head>
 
 <body>
+  {META_PIXEL_ID && (
+    <noscript>
+      <img
+        height="1" width="1" style="display:none" alt=""
+        src={`https://www.facebook.com/tr?id=${META_PIXEL_ID}&ev=PageView&noscript=1`}
+      />
+    </noscript>
+  )}
+
   {!bare && <Nav />}
   <slot />
   {!bare && <Footer />}
@@ -232,7 +259,10 @@ const faqSchema = faq && {
         (window as any).fbq('trackCustom', 'PlayStoreClick', payload);
       }
       if (typeof (window as any).gtag === 'function') {
-        (window as any).gtag('event', 'PlayStoreClick', payload);
+        (window as any).gtag('event', 'play_store_click', {
+          page_path: window.location.pathname,
+          ...(variant ? { variant } : {}),
+        });
       }
     });
   </script>
