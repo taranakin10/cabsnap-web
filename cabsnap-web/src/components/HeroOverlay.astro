@@ -2,10 +2,13 @@
 import Cta from './Cta.astro';
 
 /**
- * Audience-page hero: photo stage with the copy overlaid on the bottom edge.
- * The photo is min-height 55vh (capped 480px on desktop) and grows if the
- * copy needs more room, so the h1 and CTA always sit above the fold.
+ * Audience-page hero: a photo band, then the copy beneath it in normal flow.
  *
+ * The copy is NOT overlaid. It used to be, and when the text grew taller than
+ * the photo the top of the h1 was clipped. Nothing here constrains the copy's
+ * height, so the section is always as tall as its content.
+ *
+ * Shared layout lives in global.css so this and the homepage stay identical.
  * Pages provide <h1 slot="h1"> and <p slot="lead" class="lead">.
  */
 interface Props {
@@ -19,7 +22,9 @@ const { img, alt, eyebrow } = Astro.props;
 <header class="dark hero">
   <div class="hero-photo">
     <img src={img} width="900" height="900" fetchpriority="high" alt={alt} />
-    <div class="wrap hero-copy">
+  </div>
+  <div class="hero-copy">
+    <div class="wrap">
       <p class="eyebrow orange">{eyebrow}</p>
       <slot name="h1" />
       <slot name="lead" />
@@ -29,34 +34,8 @@ const { img, alt, eyebrow } = Astro.props;
 </header>
 
 <style>
-  .hero { padding-bottom: 40px; }
-  .hero-photo {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    min-height: 55vh;
-  }
-  @media (min-width: 768px) {
-    .hero-photo { min-height: min(55vh, 480px); max-height: 480px; }
-  }
-  .hero-photo > img {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: center;
-  }
-  /* .hero-photo::after and the .hero-copy backdrop live in global.css so the
-     homepage and these pages cannot drift apart again. */
-  .hero-copy {
-    position: relative;
-    z-index: 1;
-    width: 100%;
-    padding-top: 26px;
-    padding-bottom: 18px;
-  }
+  /* .hero-photo and .hero-copy live in global.css so this and the homepage
+     cannot drift apart again. No height is set here on purpose. */
   .eyebrow.orange { color: var(--orange); }
   .hero-copy :global(h1 em) { font-style: normal; color: var(--orange); }
   .hero-copy :global(.lead) { font-size: 18px; margin-top: 16px; }
