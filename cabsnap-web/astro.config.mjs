@@ -6,7 +6,14 @@ export default defineConfig({
   integrations: [sitemap()],
   build: { inlineStylesheets: 'auto' },
   compressHTML: true,
-  vite: {
-    preview: { allowedHosts: true },
+  // `astro preview` only honors Astro's own server.allowedHosts,
+  // not vite.preview.allowedHosts
+  server: {
+    allowedHosts: [
+      'getcabsnap.com',
+      'www.getcabsnap.com',
+      'site-production-235e.up.railway.app',
+      '.up.railway.app',
+    ],
   },
 });
