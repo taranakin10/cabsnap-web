@@ -178,6 +178,11 @@ const faqSchema = faq && {
         btn.replaceWith(card);
       });
 
+      // The Play badge sits under the button and points at the same place, so
+      // it has to go too — leaving it would put a live "Get it on Google Play"
+      // next to a card saying the app is not available.
+      document.querySelectorAll('a.gp-badge').forEach((b) => b.remove());
+
       // The nav button leads to the same place, so it goes too.
       document.querySelectorAll<HTMLAnchorElement>('a.nav-cta[data-play-store]').forEach((a) => {
         a.setAttribute('href', '/iphone');

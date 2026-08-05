@@ -34,6 +34,9 @@ const links = [
       Security <a href={`mailto:${CONTACTS.security}`}>{CONTACTS.security}</a>
     </p>
     <p class="disclaimer">{DISCLAIMER}</p>
+    <p class="trademark">
+      Google Play and the Google Play logo are trademarks of Google LLC.
+    </p>
   </div>
 </footer>
 
@@ -53,5 +56,9 @@ const links = [
   .disclaimer {
     border-top: 1px solid var(--rule-dk); padding-top: 16px;
     margin-top: 16px; line-height: 1.5; font-size: 12px;
+  }
+  .trademark {
+    margin-top: 12px; font-size: 11px; line-height: 1.5;
+    color: var(--muted-dk); opacity: .8;
   }
 </style>

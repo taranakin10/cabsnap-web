@@ -1,32 +1,43 @@
 ---
 import { CTA, PLAY_STORE_URL } from '../config';
+import PlayBadge from './PlayBadge.astro';
 
 /**
- * The primary CTA. The platform line lives here rather than in each page so
- * every CTA on the site carries the same honest one-liner, and so the iOS
- * swap in Base.astro has a consistent shape to work with.
+ * The primary CTA.
  *
- * No id on the button: it is rendered more than once per page, and the
- * duplicate id it used to carry was only there for a nav anchor that no
- * longer exists.
+ * Two links, deliberately: the orange button is ours and carries no Google
+ * branding at all, and the official Google Play badge sits below it
+ * unmodified. Google's mark appears only on Google's badge — mixing the two
+ * would mean recolouring or breaking up a locked-up trademark.
+ *
+ * The platform line lives here so every CTA on the site carries the same
+ * disclosure, and so the iOS swap in Base.astro has a consistent shape.
+ *
+ * No id on the button: it renders more than once per page.
  */
 interface Props { label?: string; note?: boolean; }
 const { label = CTA.primary, note = true } = Astro.props;
 ---
 <a class="btn" href={PLAY_STORE_URL} data-play-store rel="noopener">{label}</a>
 {note && <p class="btn-note">{CTA.note}</p>}
-<p class="platform">{CTA.platform}</p>
+
+<PlayBadge />
+
+<p class="platform">
+  Android only. <a href="/iphone">iPhone version</a> in development.
+</p>
 
 <style>
   /* Deliberately quiet: this is a disclosure, not a badge, and it must not
      compete with the button above it. */
   .platform {
     text-align: center;
-    margin-top: 8px;
+    margin-top: 10px;
     font-family: var(--font-mono);
     font-size: 12px;
     line-height: 1.5;
     color: var(--muted);
   }
+  .platform a { color: inherit; text-underline-offset: 2px; }
   :global(.dark) .platform { color: var(--muted-dk); }
 </style>

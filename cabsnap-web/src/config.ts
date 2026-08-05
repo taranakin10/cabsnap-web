@@ -43,12 +43,14 @@ export const PLAY_STORE_URL =
   'https://play.google.com/store/apps/details?id=com.getcabsnap.android';
 
 export const CTA = {
-  primary: 'Download for Free',
+  primary: 'Download Free on Android',
   note: 'Free to download.',
   nav: 'Google Play',
   /**
    * Shown under every primary CTA. Says what is true today and what is
    * underway, and promises no date — because there isn't one to promise.
+   * Rendered with "iPhone version" linked to /iphone; this plain string is
+   * the fallback for anywhere that needs it without markup.
    */
   platform: 'Android only. iPhone version in development.',
 } as const;

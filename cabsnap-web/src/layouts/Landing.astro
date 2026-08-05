@@ -1,5 +1,6 @@
 ---
 import Base from './Base.astro';
+import PlayBadge from '../components/PlayBadge.astro';
 import { CTA, PLAY_STORE_URL, DISCLAIMER } from '../config';
 
 /**
@@ -61,7 +62,10 @@ const { title, description, path, kicker, headlines, sub } = Astro.props;
 
       <a class="btn" href={PLAY_STORE_URL} data-play-store rel="noopener">{CTA.primary}</a>
       <p class="note">{CTA.note}</p>
-      <p class="platform">{CTA.platform}</p>
+      <PlayBadge />
+      <p class="platform">
+        Android only. <a href="/iphone">iPhone version</a> in development.
+      </p>
 
       <p class="honest">
         CabSnap does one job: capturing and keeping receipts. It does not track
@@ -70,6 +74,11 @@ const { title, description, path, kicker, headlines, sub } = Astro.props;
       </p>
 
       <p class="disclaimer">{DISCLAIMER}</p>
+      {/* These pages are bare, so they never render Footer.astro — the
+          trademark attribution has to travel with the badge itself. */}
+      <p class="trademark">
+        Google Play and the Google Play logo are trademarks of Google LLC.
+      </p>
     </div>
   </main>
 </Base>
@@ -160,5 +169,10 @@ const { title, description, path, kicker, headlines, sub } = Astro.props;
     border-top: 1px solid var(--rule-dk);
     font-family: var(--font-mono); font-size: 11.5px;
     line-height: 1.55; color: var(--muted-dk);
+  }
+  .trademark {
+    margin-top: 10px;
+    font-family: var(--font-mono); font-size: 11px;
+    line-height: 1.5; color: var(--muted-dk); opacity: .8;
   }
 </style>
