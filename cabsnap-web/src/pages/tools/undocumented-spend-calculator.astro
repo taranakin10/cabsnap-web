@@ -1,0 +1,299 @@
+---
+import Base from '../../layouts/Base.astro';
+import Cta from '../../components/Cta.astro';
+import Faq from '../../components/Faq.astro';
+import { DISCLAIMER } from '../../config';
+
+/**
+ * UNDOCUMENTED SPEND CALCULATOR — a loss-aversion tool.
+ *
+ * It reports one number: money the visitor says they spent that they can
+ * no longer document. It NEVER states a tax outcome, refund, deduction,
+ * or saving, and it uses no external averages or statistics — only the
+ * visitor's own four answers. Ungated by design: no email, no signup.
+ *
+ * Each chip is a range counted at its midpoint. Open-ended ranges
+ * ("Under $X" / "Over $X") are counted at 0.5x / 1.25x the threshold —
+ * the conservative reading of an unbounded answer.
+ */
+
+const Q1 = {
+  id: 'q1',
+  n: 1,
+  legend: 'Roughly what do you spend a month on fuel?',
+  chips: [
+    { label: 'Under $1,000', mid: 500 },
+    { label: '$1,000–2,500', mid: 1750 },
+    { label: '$2,500–5,000', mid: 3750 },
+    { label: 'Over $5,000', mid: 6250 },
+  ],
+};
+
+const Q2 = {
+  id: 'q2',
+  n: 2,
+  legend: 'And on everything else — repairs, tolls, tires, supplies, meals on the road?',
+  chips: [
+    { label: 'Under $500', mid: 250 },
+    { label: '$500–1,500', mid: 1000 },
+    { label: '$1,500–3,000', mid: 2250 },
+    { label: 'Over $3,000', mid: 3750 },
+  ],
+};
+
+const Q3 = {
+  id: 'q3',
+  n: 3,
+  legend: 'Out of every 10 receipts, how many do you still have come tax time?',
+  chips: [
+    { label: 'Almost all', frac: 0.9 },
+    { label: 'About 7', frac: 0.7 },
+    { label: 'About half', frac: 0.5 },
+    { label: 'Barely any', frac: 0.15 },
+  ],
+};
+
+/** Q4 never enters the maths — it only picks the closing line. */
+const Q4 = {
+  id: 'q4',
+  n: 4,
+  legend: 'How do you keep them now?',
+  chips: [
+    {
+      label: 'Glovebox or shoebox',
+      line: "The glovebox pile doesn't get more readable by April. A photo taken today never fades.",
+    },
+    {
+      label: 'Photos on my phone',
+      line: "Photos are the right instinct. CabSnap adds the part where they're read, filed, and findable when someone asks.",
+    },
+    {
+      label: 'An app or spreadsheet',
+      line: "A system only counts if it's fast enough to use at the pump. Three seconds, one hand, engine running.",
+    },
+    {
+      label: "I don't",
+      line: 'That number resets to zero the day every receipt starts getting photographed.',
+    },
+  ],
+};
+
+const faq = [
+  {
+    q: 'Is this number a refund or a deduction?',
+    a: 'No. It is not a refund, a deduction, or a saving, and it says nothing about your taxes. It is one thing only: how much you told us you spent in the last 12 months that you could not document. What any of it means for your taxes is a question for your tax professional.',
+  },
+  {
+    q: 'Where does the number come from?',
+    a: 'Only from your four answers. Each spending range is counted at its midpoint, multiplied out to 12 months, and reduced by the share of receipts you said you still have. No industry averages, no IRS rates, no statistics — nothing you did not tap yourself.',
+  },
+  {
+    q: 'Do you save my answers?',
+    a: 'No. The calculation happens on your phone, in the page. Your answers are not sent anywhere, not stored, and there is nothing to sign up for.',
+  },
+];
+---
+
+<Base
+  title="Undocumented Spend Calculator — CabSnap"
+  description="How much did you spend in the last 12 months that you can't prove? Four questions, no signup, no typing. Calculated from your answers alone."
+  path="/tools/undocumented-spend-calculator"
+  faq={faq}
+>
+  <header class="dark head">
+    <div class="wrap">
+      <p class="eyebrow orange">Free tool</p>
+      <h1>How much did you spend that you <em>can't prove</em>?</h1>
+      <p class="lead">
+        Four questions. Tap your answers &mdash; no typing, no signup.
+        The number comes from your answers alone.
+      </p>
+    </div>
+  </header>
+
+  <div class="calcband">
+    <div class="wrap">
+      <form id="calc">
+        {[Q1, Q2, Q3, Q4].map((q) => (
+          <fieldset class="q" id={q.id}>
+            <p class="qn">Question {q.n} of 4</p>
+            <legend>{q.legend}</legend>
+            <div class="chips">
+              {q.chips.map((c) => (
+                <button
+                  type="button"
+                  class="chip"
+                  aria-pressed="false"
+                  data-mid={'mid' in c ? c.mid : undefined}
+                  data-frac={'frac' in c ? c.frac : undefined}
+                  data-line={'line' in c ? c.line : undefined}
+                >{c.label}</button>
+              ))}
+            </div>
+          </fieldset>
+        ))}
+      </form>
+
+      <div class="result" id="result" hidden aria-live="polite">
+        <small>Spent in the last 12 months that you can't document</small>
+        <div class="big" id="figure">$0</div>
+        <p class="segline" id="segline"></p>
+        <Cta />
+        <p class="note">
+          Recordkeeping tool, not tax advice. This number is not a refund,
+          a deduction, or a saving &mdash; it is calculated only from the
+          answers you tapped, on your device. {DISCLAIMER}
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <section class="topline">
+    <div class="wrap">
+      <p class="eyebrow">Questions</p>
+      <h2>Straight answers.</h2>
+      <Faq items={faq} />
+    </div>
+  </section>
+</Base>
+
+<style>
+  .head { padding: 44px 0 40px; }
+  .eyebrow.orange { color: var(--orange); }
+  h1 em { font-style: normal; color: var(--orange); }
+  .lead { font-size: 18px; margin-top: 16px; max-width: 27em; }
+
+  .calcband { background: var(--navy-2); color: var(--paper); padding: 44px 0 52px; }
+
+  .q { border: none; margin-top: 34px; }
+  .q:first-child { margin-top: 0; }
+  .qn {
+    font-family: var(--font-mono); font-size: 12px;
+    letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--muted-dk); margin-bottom: 7px;
+  }
+  legend {
+    font-family: var(--font-display); font-weight: 800;
+    text-transform: uppercase; font-size: 22px; line-height: 1.05;
+    color: var(--paper);
+  }
+  .chips { margin-top: 14px; display: grid; grid-template-columns: 1fr 1fr; gap: 9px; }
+  .chip {
+    font-family: var(--font-display); font-weight: 800;
+    text-transform: uppercase; font-size: 17px; line-height: 1.1;
+    letter-spacing: 0.02em;
+    color: var(--paper); text-align: center;
+    background: rgba(0, 0, 0, 0.18);
+    border: 1px solid var(--rule-dk); border-radius: 4px;
+    padding: 15px 10px; cursor: pointer;
+  }
+  .chip[aria-pressed='true'] {
+    border-color: var(--orange);
+    background: rgba(242, 107, 33, 0.16);
+    box-shadow: inset 0 0 0 1px var(--orange);
+  }
+
+  .result {
+    border: 1px dashed rgba(242, 107, 33, 0.6); border-radius: 5px;
+    padding: 26px 18px; margin-top: 40px; text-align: center;
+    background: rgba(0, 0, 0, 0.18);
+  }
+  .result small {
+    font-family: var(--font-mono); font-size: 12px;
+    color: var(--muted-dk); display: block;
+  }
+  .big {
+    font-family: var(--font-display); font-weight: 900; font-size: 56px;
+    color: var(--orange); line-height: 1; margin: 12px 0 4px;
+    font-variant-numeric: tabular-nums;
+  }
+  .segline { margin-top: 14px; font-size: 15.5px; color: #C3CADA; }
+  .note {
+    font-family: var(--font-mono); font-size: 12px; line-height: 1.5;
+    color: var(--muted-dk); margin-top: 18px; text-align: left;
+  }
+
+  .topline { border-top: 1px solid var(--rule); }
+</style>
+
+<script>
+  const form = document.getElementById('calc')!;
+  const result = document.getElementById('result')!;
+  const figure = document.getElementById('figure')!;
+  const segline = document.getElementById('segline')!;
+
+  const answers: Record<string, HTMLButtonElement> = {};
+  let engaged = false;
+  let shown = 0;
+
+  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const fmt = (v: number) => '$' + Math.round(v).toLocaleString('en-US');
+
+  // Nearest $10, but never a round hundred — the figure must look specific.
+  function roundFigure(x: number): number {
+    let v = Math.round(x / 10) * 10;
+    if (v % 100 === 0) v -= 10;
+    return Math.max(v, 0);
+  }
+
+  function countUp(from: number, to: number) {
+    if (reducedMotion || from === to) {
+      figure.textContent = fmt(to);
+      return;
+    }
+    const t0 = performance.now();
+    const dur = 900;
+    let done = false;
+    const tick = (t: number) => {
+      if (done) return;
+      const p = Math.min((t - t0) / dur, 1);
+      const eased = 1 - Math.pow(1 - p, 3);
+      figure.textContent = fmt(from + (to - from) * eased);
+      if (p < 1) requestAnimationFrame(tick);
+      else done = true;
+    };
+    requestAnimationFrame(tick);
+    // rAF is paused in background tabs — guarantee the final figure lands.
+    setTimeout(() => {
+      done = true;
+      figure.textContent = fmt(to);
+    }, dur + 100);
+  }
+
+  function recompute() {
+    if (!answers.q1 || !answers.q2 || !answers.q3 || !answers.q4) return;
+
+    const monthly = Number(answers.q1.dataset.mid) + Number(answers.q2.dataset.mid);
+    const kept = Number(answers.q3.dataset.frac);
+    const target = roundFigure(monthly * 12 * (1 - kept));
+
+    segline.textContent = answers.q4.dataset.line ?? '';
+
+    const firstReveal = result.hidden;
+    result.hidden = false;
+    countUp(shown, target);
+    shown = target;
+    if (firstReveal) result.scrollIntoView({ behavior: reducedMotion ? 'auto' : 'smooth', block: 'nearest' });
+  }
+
+  form.addEventListener('click', (e) => {
+    const chip = (e.target as HTMLElement).closest?.('button.chip') as HTMLButtonElement | null;
+    if (!chip) return;
+
+    // Same guard as the PlayStoreClick wiring in Base.astro.
+    if (!engaged) {
+      engaged = true;
+      if (typeof (window as any).fbq === 'function') {
+        (window as any).fbq('trackCustom', 'CalculatorEngaged', {
+          page: window.location.pathname,
+        });
+      }
+    }
+
+    const fieldset = chip.closest('fieldset')!;
+    fieldset.querySelectorAll('.chip').forEach((c) => c.setAttribute('aria-pressed', 'false'));
+    chip.setAttribute('aria-pressed', 'true');
+    answers[fieldset.id] = chip;
+    recompute();
+  });
+</script>
