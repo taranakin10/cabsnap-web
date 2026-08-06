@@ -214,6 +214,20 @@ const faq = [
   }
 
   .topline { border-top: 1px solid var(--rule); }
+
+  /* --- desktop ----------------------------------------------------------
+     The form is the page. It is held to a single readable column rather than
+     spread across the container — a legend and its chips at opposite ends of
+     a 1036px row is not one question any more. The chips stay two across,
+     which at this width makes them comfortable rather than cramped. */
+  @media (min-width: 768px) {
+    .calcband .wrap > * { max-width: 640px; margin-inline: auto; }
+    .note { max-width: 68ch; margin-inline: auto; }
+  }
+  @media (min-width: 1024px) {
+    .head { padding: 72px 0 64px; }
+    .calcband { padding: 72px 0 80px; }
+  }
 </style>
 
 <script>

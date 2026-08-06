@@ -74,7 +74,7 @@ const faq = [
     eyebrow="For rideshare & delivery"
   >
     <h1 slot="h1">Receipts, yes.<br /><em>Mileage, no</em>.</h1>
-    <p slot="lead" class="lead">
+    <p slot="lead" class="lead measure">
       Gas, car washes, mounts, hot bags, tolls — photograph each one and it is kept.
       CabSnap does not track miles, and that is worth knowing before you download.
     </p>
@@ -84,17 +84,17 @@ const faq = [
     <div class="wrap">
       <p class="eyebrow">Before you download</p>
       <h2>If you came here<br />for mileage, stop.</h2>
-      <p class="intro">
+      <p class="intro measure">
         Most gig drivers looking for an expense app want automatic mileage tracking.
         CabSnap does not do that. Not a smaller version of it, not a manual version
         of it &mdash; it is not in the app and it is not on the roadmap.
       </p>
-      <p>
+      <p class="measure">
         If mileage is the thing you need, close this page and go install a mileage
         app. We would rather lose you in ten seconds than have you find out after
         the download.
       </p>
-      <p>
+      <p class="measure">
         What CabSnap does is the other half: the paper for everything you
         <em>buy</em>. Plenty of drivers run a mileage app and CabSnap side by side,
         because those are genuinely two different problems.
@@ -107,7 +107,7 @@ const faq = [
       <p class="eyebrow">What you're carrying</p>
       <h2>The paper a gig<br />driver collects.</h2>
       <ReceiptList items={RECEIPTS} />
-      <p class="closer">
+      <p class="closer measure">
         Every one of those is money you already spent on the job. The only question
         is whether you can still show it next spring.
       </p>
@@ -123,12 +123,12 @@ const faq = [
              alt="A thermal paper receipt on a dashboard, its printing faded to almost nothing" />
         <figcaption>A summer on a dashboard. Nothing left to read.</figcaption>
       </figure>
-      <p class="intro">
+      <p class="intro measure">
         Gas slips and drive-thru receipts are thermal paper, and a parked car in
         July is about the worst place that paper can sit. They do not get lost so
         much as they go blank while sitting exactly where you left them.
       </p>
-      <p>
+      <p class="measure">
         A photograph taken the day you got it does not fade.
       </p>
     </div>
@@ -165,15 +165,8 @@ const faq = [
   .intro { margin-top: 20px; }
   section p + p { margin-top: 14px; }
 
-  figure { margin: 26px 0 0; }
-  figure img {
-    width: 100%; height: 220px; object-fit: cover; border-radius: 5px;
-  }
-  @media (min-width: 768px) { figure img { height: 280px; } }
-  figcaption {
-    font-family: var(--font-mono); font-size: 12.5px;
-    color: var(--muted); margin-top: 9px;
-  }
+  /* figure / figure img / figcaption live in global.css — the same block
+     renders on the homepage and all six audience pages. */
 
   .topline { border-top: 1px solid var(--rule); }
 </style>

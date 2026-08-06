@@ -110,7 +110,7 @@ const faq = [
     <div class="wrap">
       <p class="eyebrow orange">Roundup</p>
       <h1>Best receipt app<br />for <em>truck drivers</em></h1>
-      <p class="lead">
+      <p class="lead measure">
         Five options, including ours and including the ones we lose to.
         Every fact checked against their own site and dated.
       </p>
@@ -121,12 +121,12 @@ const faq = [
     <div class="wrap">
       <p class="eyebrow">How to read this</p>
       <h2>We wrote this<br />and we sell one.</h2>
-      <p class="intro">
+      <p class="intro measure">
         Obviously we are not neutral. So instead of pretending, every entry below
         says what that product is genuinely best at and where it beats us &mdash;
         and our own entry says plainly who should not use CabSnap.
       </p>
-      <p>
+      <p class="measure">
         There are no ratings, no download counts, and no testimonials on this page,
         for anyone including us. Just what each product says it does, checked on
         {VERIFIED}.
@@ -139,17 +139,21 @@ const faq = [
       <p class="eyebrow">The options</p>
       <h2>What each one is<br />actually for.</h2>
 
-      {options.map((o) => (
-        <div class:list={['opt', { mine: o.us }]}>
-          <h3>{o.name}{o.us && <span class="tag">ours</span>}</h3>
-          <p class="pitch">{o.pitch}</p>
-          <p class="line"><b>Best for:</b> {o.best}</p>
-          <p class="line"><b>Not for:</b> {o.not}</p>
-          <ul>
-            {o.facts.map((f) => <li>{f}</li>)}
-          </ul>
-        </div>
-      ))}
+      {/* .options carries no styles below 768px — it is the grid container
+          the two-column desktop layout needs, and inert on a phone. */}
+      <div class="options">
+        {options.map((o) => (
+          <div class:list={['opt', { mine: o.us }]}>
+            <h3>{o.name}{o.us && <span class="tag">ours</span>}</h3>
+            <p class="pitch">{o.pitch}</p>
+            <p class="line"><b>Best for:</b> {o.best}</p>
+            <p class="line"><b>Not for:</b> {o.not}</p>
+            <ul>
+              {o.facts.map((f) => <li>{f}</li>)}
+            </ul>
+          </div>
+        ))}
+      </div>
 
       <p class="verified">
         Shoeboxed details verified against shoeboxed.com, Expensify against
@@ -238,4 +242,21 @@ const faq = [
   .dark :global(.faq details) { border-bottom-color: var(--rule-dk); }
   .dark :global(.faq summary) { color: var(--paper); }
   .dark :global(.faq summary::after) { color: var(--green); }
+
+  @media (min-width: 768px) {
+    /* Five option cards in two columns. They are compared against each
+       other, so seeing two at once is the point; three would squeeze the
+       "Best for" / "Not for" lines into slivers. */
+    .options {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      align-items: start;
+      margin-top: 24px;
+    }
+    .opt { margin-top: 0; }
+    .lose li, .note, .verified { max-width: 68ch; }
+  }
+
+  @media (min-width: 1024px) { .hero { padding: 80px 0; } }
 </style>

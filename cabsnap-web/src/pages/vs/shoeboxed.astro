@@ -57,7 +57,7 @@ const faq = [
     <div class="wrap">
       <p class="eyebrow orange">Comparison</p>
       <h1>CabSnap<br />vs <em>Shoeboxed</em></h1>
-      <p class="lead">
+      <p class="lead measure">
         Shoeboxed is a bookkeeping service for offices. CabSnap is a receipt app
         for the cab of a truck. Same paper, different job.
       </p>
@@ -68,17 +68,17 @@ const faq = [
     <div class="wrap">
       <p class="eyebrow">First, the honest part</p>
       <h2>Shoeboxed is<br />a good product.</h2>
-      <p class="intro">
+      <p class="intro measure">
         They have been doing this since 2007. They will mail you a prepaid envelope,
         scan your backlog by hand, verify the data with real people, and track your
         mileage for free. They have an iPhone app and we don't.
       </p>
-      <p>
+      <p class="measure">
         If you have a drawer of paper going back three years, or you need mileage
         tracking, stop reading and go use Shoeboxed. We would rather lose you here
         than lose you after you have paid for something that was never going to fit.
       </p>
-      <p>
+      <p class="measure">
         What follows is for everyone else.
       </p>
     </div>
@@ -101,18 +101,18 @@ const faq = [
     <div class="wrap">
       <p class="eyebrow">The real difference</p>
       <h2>One is built<br />for a desk.</h2>
-      <p class="intro">
+      <p class="intro measure">
         Look at who Shoeboxed writes for: bookkeepers, accountants, teams,
         realtors, therapists, consultants. It is a receipt service for people
         who work at a desk and occasionally drive.
       </p>
-      <p>
+      <p class="measure">
         CabSnap is for people who work in a vehicle and occasionally sit at a desk.
         That sounds like a small distinction. It is not. It decides whether the
         capture flow assumes two hands or one, good light or windshield glare,
         a quiet moment or thirty seconds at a fuel island.
       </p>
-      <p>
+      <p class="measure">
         We do less. We do it where you actually are.
       </p>
     </div>
@@ -141,4 +141,5 @@ const faq = [
   .dark :global(.faq details) { border-bottom-color: var(--rule-dk); }
   .dark :global(.faq summary) { color: var(--paper); }
   .dark :global(.faq summary::after) { color: var(--green); }
+  @media (min-width: 1024px) { .hero { padding: 80px 0; } }
 </style>

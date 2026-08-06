@@ -20,15 +20,19 @@ const { img, alt, eyebrow } = Astro.props;
 ---
 
 <header class="dark hero">
-  <div class="hero-photo">
-    <img src={img} width="900" height="900" fetchpriority="high" alt={alt} />
-  </div>
-  <div class="hero-copy">
-    <div class="wrap">
-      <p class="eyebrow orange">{eyebrow}</p>
-      <slot name="h1" />
-      <slot name="lead" />
-      <Cta />
+  {/* .hero-in carries no styles below 1024px — it is the grid container the
+      two-column desktop hero needs, and inert everywhere else. */}
+  <div class="hero-in">
+    <div class="hero-photo">
+      <img src={img} width="900" height="900" fetchpriority="high" alt={alt} />
+    </div>
+    <div class="hero-copy">
+      <div class="wrap">
+        <p class="eyebrow orange">{eyebrow}</p>
+        <slot name="h1" />
+        <slot name="lead" />
+        <Cta />
+      </div>
     </div>
   </div>
 </header>

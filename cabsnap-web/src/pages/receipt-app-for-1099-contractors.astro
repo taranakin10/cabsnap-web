@@ -64,7 +64,7 @@ const faq = [
     eyebrow="For 1099 contractors"
   >
     <h1 slot="h1">No employer.<br />No <em>reimbursement</em>.</h1>
-    <p slot="lead" class="lead">
+    <p slot="lead" class="lead measure">
       Tools, supplies, phone, parking, materials. Nobody is expensing this for you
       and nobody is filing it. Photograph each one and it is kept.
     </p>
@@ -75,7 +75,7 @@ const faq = [
       <p class="eyebrow">What you're carrying</p>
       <h2>The paper a contractor<br />collects in a week.</h2>
       <ReceiptList items={RECEIPTS} />
-      <p class="closer">
+      <p class="closer measure">
         Every one of those came out of your own pocket. The only question is
         whether you can still show it eleven months from now.
       </p>
@@ -91,12 +91,12 @@ const faq = [
              alt="A compartment crammed with crumpled paper receipts" />
         <figcaption>The filing system most self-employed people actually use.</figcaption>
       </figure>
-      <p class="intro">
+      <p class="intro measure">
         Nearly every expense tool is built around a workflow that ends in someone
         approving a report and paying you back. Take away the employer and most of
         that machinery is doing nothing except adding steps.
       </p>
-      <p>
+      <p class="measure">
         What is left is the part that actually matters: does the receipt still
         exist? Most of them are thermal paper and most of them are in a van, a
         pocket, or a tool bag. A photograph taken the day you got it does not fade.
@@ -133,15 +133,8 @@ const faq = [
   .intro { margin-top: 20px; }
   section p + p { margin-top: 14px; }
 
-  figure { margin: 26px 0 0; }
-  figure img {
-    width: 100%; height: 220px; object-fit: cover; border-radius: 5px;
-  }
-  @media (min-width: 768px) { figure img { height: 280px; } }
-  figcaption {
-    font-family: var(--font-mono); font-size: 12.5px;
-    color: var(--muted); margin-top: 9px;
-  }
+  /* figure / figure img / figcaption live in global.css — the same block
+     renders on the homepage and all six audience pages. */
 
   .topline { border-top: 1px solid var(--rule); }
 </style>

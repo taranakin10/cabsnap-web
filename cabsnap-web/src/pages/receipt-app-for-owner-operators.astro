@@ -65,7 +65,7 @@ const faq = [
     eyebrow="For owner-operators"
   >
     <h1 slot="h1">It's your truck.<br />It's your <em>paper</em>.</h1>
-    <p slot="lead" class="lead">
+    <p slot="lead" class="lead measure">
       Fuel, maintenance, tolls, scale tickets, lumper fees, permits. Nobody
       reimburses you and nobody files it for you. Photograph each one and it is kept.
     </p>
@@ -76,7 +76,7 @@ const faq = [
       <p class="eyebrow">What you're carrying</p>
       <h2>The paper an<br />owner-operator holds.</h2>
       <ReceiptList items={RECEIPTS} />
-      <p class="closer">
+      <p class="closer measure">
         Every one of those is money that already left your account. The only
         question is whether you can still show it eleven months from now.
       </p>
@@ -92,12 +92,12 @@ const faq = [
              alt="An open glove compartment crammed with crumpled paper receipts" />
         <figcaption>The filing system most owner-operators actually use.</figcaption>
       </figure>
-      <p class="intro">
+      <p class="intro measure">
         Run as a company driver and someone else keeps the records. Run your own
         authority and the entire paper trail is yours — every shop invoice, every
         scale ticket, every lumper receipt you paid in cash at a dock in the dark.
       </p>
-      <p>
+      <p class="measure">
         Most of it is thermal paper, which goes blank in a hot cab in a matter of
         weeks. A photograph taken the day you got it does not fade. That is the
         whole premise.
@@ -134,15 +134,8 @@ const faq = [
   .intro { margin-top: 20px; }
   section p + p { margin-top: 14px; }
 
-  figure { margin: 26px 0 0; }
-  figure img {
-    width: 100%; height: 220px; object-fit: cover; border-radius: 5px;
-  }
-  @media (min-width: 768px) { figure img { height: 280px; } }
-  figcaption {
-    font-family: var(--font-mono); font-size: 12.5px;
-    color: var(--muted); margin-top: 9px;
-  }
+  /* figure / figure img / figcaption live in global.css — the same block
+     renders on the homepage and all six audience pages. */
 
   .topline { border-top: 1px solid var(--rule); }
 </style>

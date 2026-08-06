@@ -40,7 +40,7 @@ import { DISCLAIMER } from '../../config';
         </p>
       </div>
 
-      <p class="cross">
+      <p class="cross measure">
         Longer, more thorough pieces are in the
         <a href="/guide">guides</a> &mdash; {GUIDES.length} of them.
       </p>
@@ -80,6 +80,18 @@ import { DISCLAIMER } from '../../config';
   }
   .cross { margin-top: 26px; font-size: 15.5px; }
   .cross a { color: var(--orange-ink); }
+
+  /* --- desktop --------------------------------------------------------
+     The index is a list of cards, so it takes the extra width as columns.
+     The note and the disclaimer are running text and do not. */
+  @media (min-width: 768px) {
+    .list { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .note, .cross, .disclaimer { max-width: 68ch; }
+  }
+  @media (min-width: 1024px) {
+    .head { padding: 72px 0 64px; }
+    .list { grid-template-columns: repeat(3, 1fr); }
+  }
   .disclaimer {
     margin-top: 30px; padding-top: 18px; border-top: 1px solid var(--rule);
     font-family: var(--font-mono); font-size: 12px;

@@ -75,7 +75,7 @@ const faq = [
     eyebrow="For truck drivers"
   >
     <h1 slot="h1">Your receipts are<br />in the <em>glovebox</em>.</h1>
-    <p slot="lead" class="lead">
+    <p slot="lead" class="lead measure">
       Fuel, scale tickets, lumper fees, tolls. Photograph each one when you get it
       and it is kept — readable in April, when the paper version won't be.
     </p>
@@ -86,7 +86,7 @@ const faq = [
       <p class="eyebrow">What you're carrying</p>
       <h2>The paper a driver<br />collects in a week.</h2>
       <ReceiptList items={RECEIPTS} />
-      <p class="closer">
+      <p class="closer measure">
         Every one of those is money you already spent. The only question is
         whether you can still prove it eleven months from now.
       </p>
@@ -102,13 +102,13 @@ const faq = [
              alt="A thermal paper receipt on a dashboard, its printing faded to almost nothing" />
         <figcaption>Left on a dashboard through a summer. Nothing left to read.</figcaption>
       </figure>
-      <p class="intro">
+      <p class="intro measure">
         Fuel receipts, scale tickets, and truck stop slips are nearly all thermal
         paper. Heat kills it, and a cab in July gets hotter than anywhere else that
         paper will ever sit. A receipt from a run in August can be blank by the time
         anyone looks at it.
       </p>
-      <p>
+      <p class="measure">
         A photograph taken the day you got it does not fade. That is the entire
         premise of this app.
       </p>
@@ -144,15 +144,8 @@ const faq = [
   .intro { margin-top: 20px; }
   section p + p { margin-top: 14px; }
 
-  figure { margin: 26px 0 0; }
-  figure img {
-    width: 100%; height: 220px; object-fit: cover; border-radius: 5px;
-  }
-  @media (min-width: 768px) { figure img { height: 280px; } }
-  figcaption {
-    font-family: var(--font-mono); font-size: 12.5px;
-    color: var(--muted); margin-top: 9px;
-  }
+  /* figure / figure img / figcaption live in global.css — the same block
+     renders on the homepage and all six audience pages. */
 
   .topline { border-top: 1px solid var(--rule); }
 </style>

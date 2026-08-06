@@ -39,4 +39,7 @@ const items = slugs
     display: block; color: var(--muted); font-size: 12px;
     margin-top: 5px; font-family: var(--font-mono);
   }
+
+  /* Two cards holding a 1036px row makes each one a half-empty banner. */
+  @media (min-width: 768px) { .siblings { max-width: 720px; gap: 12px; } }
 </style>

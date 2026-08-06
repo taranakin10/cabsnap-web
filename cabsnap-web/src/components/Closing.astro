@@ -16,4 +16,6 @@ const { html = "The paper fades.<br />The <em>photo doesn't</em>." } = Astro.pro
   .closing { text-align: center; padding: 56px 0; border-bottom: none; }
   .closing h2 { margin-bottom: 4px; }
   .closing :global(h2 em) { font-style: normal; color: var(--orange); }
+
+  @media (min-width: 1024px) { .closing { padding: 84px 0; } }
 </style>

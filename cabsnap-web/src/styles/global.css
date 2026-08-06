@@ -56,6 +56,13 @@
   --font-mono: 'Courier Prime', 'Courier New', monospace;
 }
 
+/* The container widens on larger screens — but a wider container must never
+   mean wider paragraphs. Every extra pixel here is spent on columns and air;
+   running text is capped separately by .measure below. Long lines are harder
+   to read, not easier, and 560px was chosen for the reading, not the phone. */
+@media (min-width: 768px)  { :root { --maxw: 720px; } }
+@media (min-width: 1024px) { :root { --maxw: 1080px; } }
+
 *,
 *::before,
 *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -96,6 +103,14 @@ p { color: var(--text-body); }
   padding-inline: var(--pad);
 }
 
+/* Caps a run of text at a readable measure no matter how wide its container
+   is. Put this on leads and body copy, not on headlines, cards, or tables —
+   those are meant to use the width.
+
+   Below 768px the container is already narrower than 68ch at every body size
+   on the site, so this rule changes nothing on a phone. */
+.measure { max-width: 68ch; }
+
 .eyebrow {
   font-family: var(--font-mono);
   font-size: 12px;
@@ -105,6 +120,25 @@ p { color: var(--text-body); }
 }
 
 section { padding: 52px 0; border-bottom: 1px solid var(--rule); }
+
+/* --- inline section figures -------------------------------------------
+   The homepage and all six audience pages render the same photo-plus-caption
+   block. This lived in seven identical copies of the same scoped rules until
+   one of them needed a desktop cap; it lives here now for the same reason the
+   hero does. */
+figure { margin: 26px 0 0; }
+figure img {
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+  border-radius: 5px;
+}
+figcaption {
+  font-family: var(--font-mono);
+  font-size: 12.5px;
+  color: var(--muted);
+  margin-top: 9px;
+}
 
 /* --- the one primary action --- */
 .btn {
@@ -233,4 +267,84 @@ summary:focus-visible {
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   *, *::before, *::after { animation: none !important; transition: none !important; }
+}
+
+/* ============================================================
+   DESKTOP — enhancement upward, nothing else
+
+   Every rule below this line sits inside a min-width query. The phone
+   layout above is the designed one and is deliberately untouched: if a
+   change would alter a rendering at 767px, it does not belong here.
+
+   That is also why the type-scale ceilings are re-declared inside the
+   768px query rather than edited in place. Raising the ceiling on the
+   base clamp() would have started taking effect at ~507px, which is a
+   phone.
+   ============================================================ */
+
+@media (min-width: 768px) {
+  /* Ceilings only. The clamp minimums, and therefore every phone size,
+     are exactly what they were. */
+  h1 { font-size: clamp(46px, 13vw, 76px); }
+  h2 { font-size: clamp(32px, 8.5vw, 48px); }
+
+  /* A block button stretched across a 1080px container reads as a slab,
+     not as a control. The CTA keeps a button's width and centres under
+     the copy, where the note and the Play badge already centre.
+     .ios-card is the swap Base.astro makes for iOS visitors and has to
+     hold the same box. */
+  .btn,
+  .ios-card { max-width: 360px; margin-inline: auto; }
+
+  /* Section photos are capped rather than stretched — a 1036px-wide band
+     at a fixed 280px height is a letterbox, not a photograph. The cap is
+     on the figure, not the image, so the caption travels with it. */
+  figure { max-width: 620px; margin-inline: auto; }
+  figure img { height: 280px; }
+}
+
+@media (min-width: 1024px) {
+  section { padding: 80px 0; }
+
+  /* --- hero: two columns ---------------------------------------------
+     Copy left and vertically centred, photo right and filling its column.
+     Below this width the hero is untouched — photo band on top, copy in a
+     solid navy block beneath it. The text still never sits on the image;
+     it sits beside it. */
+  .hero-in {
+    max-width: var(--maxw);
+    margin-inline: auto;
+    padding: 72px var(--pad);
+    display: grid;
+    /* Explicit rather than 1fr 1fr so the copy column is the stated 520px
+       and the photo takes whatever is left, instead of the cap being a
+       value that never actually binds. */
+    grid-template-columns: minmax(0, 520px) 1fr;
+    gap: 48px;
+    align-items: center;
+  }
+  /* Placed explicitly: the photo is first in the DOM because that is the
+     right order when the hero is stacked. */
+  .hero-copy  { grid-column: 1; grid-row: 1; padding: 0; }
+  .hero-photo { grid-column: 2; grid-row: 1; }
+
+  /* The .wrap inside the copy block is doing nothing here — the grid
+     column already sets the width and the .hero-in padding already sets
+     the gutter. Left alone it would inset the copy by another 22px and
+     pull it out of line with the sections below. */
+  .hero-copy .wrap {
+    max-width: 520px;
+    margin-inline: 0;
+    padding-inline: 0;
+  }
+
+  .hero-photo {
+    height: 480px;
+    max-height: none;
+    border-radius: 6px;
+  }
+  /* The gradient existed to fade the band's bottom edge into the navy copy
+     block below it. In two columns there is nothing below it to fade into,
+     and the fade just reads as a smudge across the bottom of the picture. */
+  .hero-photo::after { display: none; }
 }

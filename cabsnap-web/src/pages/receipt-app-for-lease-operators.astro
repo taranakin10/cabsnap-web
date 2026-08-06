@@ -65,7 +65,7 @@ const faq = [
     eyebrow="For lease operators"
   >
     <h1 slot="h1">Their portal.<br />Your <em>records</em>.</h1>
-    <p slot="lead" class="lead">
+    <p slot="lead" class="lead measure">
       Settlement deductions, escrow, fuel, maintenance reserves. Keep your own copy
       of every piece of it, in your hand, whatever happens to the lease.
     </p>
@@ -76,7 +76,7 @@ const faq = [
       <p class="eyebrow">What you're carrying</p>
       <h2>The paper a lease<br />operator should keep.</h2>
       <ReceiptList items={RECEIPTS} />
-      <p class="closer">
+      <p class="closer measure">
         Some of it is money you spent. Some of it is money that was taken before
         you saw it. Both are worth being able to produce later.
       </p>
@@ -92,12 +92,12 @@ const faq = [
              alt="An open glove compartment crammed with crumpled paper receipts" />
         <figcaption>The other half of the filing system: whatever is in the truck.</figcaption>
       </figure>
-      <p class="intro">
+      <p class="intro measure">
         A lease operator's records live in two places: the carrier's portal, and a
         pile of thermal paper in the cab. One of those you do not control, and the
         other goes blank in a hot truck in a few weeks.
       </p>
-      <p>
+      <p class="measure">
         Photographing both as you go is the only version where the record is
         actually yours. It does not fade and it does not get switched off.
       </p>
@@ -133,15 +133,8 @@ const faq = [
   .intro { margin-top: 20px; }
   section p + p { margin-top: 14px; }
 
-  figure { margin: 26px 0 0; }
-  figure img {
-    width: 100%; height: 220px; object-fit: cover; border-radius: 5px;
-  }
-  @media (min-width: 768px) { figure img { height: 280px; } }
-  figcaption {
-    font-family: var(--font-mono); font-size: 12.5px;
-    color: var(--muted); margin-top: 9px;
-  }
+  /* figure / figure img / figcaption live in global.css — the same block
+     renders on the homepage and all six audience pages. */
 
   .topline { border-top: 1px solid var(--rule); }
 </style>

@@ -34,4 +34,12 @@ const { items } = Astro.props;
   details[open] summary::after { content: "\2013"; }
   details p { margin-top: 11px; font-size: 15.5px; }
   details a { color: var(--orange-ink); }
+
+  /* An accordion gains nothing from width. Past 720px the summary row just
+     drags the "+" further from the question it belongs to, and the answers
+     turn into single long lines. Held at a single column. */
+  @media (min-width: 768px) {
+    .faq { max-width: 720px; }
+    details p { max-width: 68ch; }
+  }
 </style>

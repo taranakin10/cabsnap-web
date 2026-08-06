@@ -61,4 +61,17 @@ const links = [
     margin-top: 12px; font-size: 11px; line-height: 1.5;
     color: var(--muted-dk); opacity: .8;
   }
+
+  /* Nineteen links wrapped across a 1080px container become three ragged
+     rows that are hard to scan. A four-column grid puts them in readable
+     alignment instead. */
+  @media (min-width: 768px) {
+    .flinks {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px 24px;
+      margin-bottom: 24px;
+    }
+    .contacts, .disclaimer, .trademark { max-width: 68ch; }
+  }
 </style>

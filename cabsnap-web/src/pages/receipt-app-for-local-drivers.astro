@@ -64,7 +64,7 @@ const faq = [
     eyebrow="For local & regional drivers"
   >
     <h1 slot="h1">Home nightly.<br />Paper <em>still piles up</em>.</h1>
-    <p slot="lead" class="lead">
+    <p slot="lead" class="lead measure">
       Fuel, parking, meals, tolls. Sleeping in your own bed does not file anything.
       Photograph each receipt at the pump and it is kept.
     </p>
@@ -75,7 +75,7 @@ const faq = [
       <p class="eyebrow">What you're carrying</p>
       <h2>The paper a local<br />run generates.</h2>
       <ReceiptList items={RECEIPTS} />
-      <p class="closer">
+      <p class="closer measure">
         None of it is dramatic. It is the same handful of slips, five days a week,
         fifty weeks a year, and that is exactly why it stops getting kept.
       </p>
@@ -91,13 +91,13 @@ const faq = [
              alt="A thermal paper receipt on a dashboard, its printing faded to almost nothing" />
         <figcaption>Weeks on a dashboard, on a truck that goes home every night.</figcaption>
       </figure>
-      <p class="intro">
+      <p class="intro measure">
         Long-haul drivers know the paper matters because it accumulates somewhere
         visible. On a local run it goes in the cup holder, then the door pocket,
         then the kitchen counter, and the same familiarity that makes it feel
         unimportant is what makes twelve months of it disappear.
       </p>
-      <p>
+      <p class="measure">
         The truck is still hot in July. Thermal paper does not care whether the
         route was three hundred miles or thirty. A photograph does not fade.
       </p>
@@ -133,15 +133,8 @@ const faq = [
   .intro { margin-top: 20px; }
   section p + p { margin-top: 14px; }
 
-  figure { margin: 26px 0 0; }
-  figure img {
-    width: 100%; height: 220px; object-fit: cover; border-radius: 5px;
-  }
-  @media (min-width: 768px) { figure img { height: 280px; } }
-  figcaption {
-    font-family: var(--font-mono); font-size: 12.5px;
-    color: var(--muted); margin-top: 9px;
-  }
+  /* figure / figure img / figcaption live in global.css — the same block
+     renders on the homepage and all six audience pages. */
 
   .topline { border-top: 1px solid var(--rule); }
 </style>

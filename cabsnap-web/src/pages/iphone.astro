@@ -50,7 +50,7 @@ const faq = [
     <div class="wrap">
       <p class="eyebrow orange">iPhone &amp; iOS</p>
       <h1>Not on iPhone<br /><em>yet</em>.</h1>
-      <p class="lead">
+      <p class="lead measure">
         CabSnap is an Android app. There is no iPhone version today, and there is
         no App Store listing to look for. An iPhone version is in development.
       </p>
@@ -61,7 +61,7 @@ const faq = [
     <div class="wrap">
       <p class="eyebrow">The waitlist</p>
       <h2>One message,<br />when it <em>ships</em>.</h2>
-      <p class="intro">
+      <p class="intro measure">
         Leave an email address or a US phone number and we will tell you the
         day the iPhone version is actually available. That is the only thing
         we will send.
@@ -93,7 +93,7 @@ const faq = [
         </div>
       </div>
 
-      <p class="intro">
+      <p class="intro measure">
         We could write "coming soon" here. Every app does. It means nothing, and
         you would have no way of knowing whether it meant next month or never.
         So the status is exactly what it is: being built, no date.
@@ -105,18 +105,18 @@ const faq = [
     <div class="wrap">
       <p class="eyebrow">In the meantime</p>
       <h2>Use something<br />that works today.</h2>
-      <p class="intro">
+      <p class="intro measure">
         If you are on an iPhone and you need receipts captured now, waiting on us
         is the wrong plan. Shoeboxed, Expensify, and Smart Receipts all list
         iPhone apps.
       </p>
-      <p>
+      <p class="measure">
         Our <a href="/best-receipt-app-for-truck-drivers">comparison of the real options</a>
         sets out what each one does and where it beats CabSnap. That page was
         written to be useful even when the answer is not us, and this is one of
         those times.
       </p>
-      <p>
+      <p class="measure">
         If you also have an Android phone, or you switch later, CabSnap is
         <a href={PLAY_STORE_URL} data-play-store rel="noopener">free to download on Google Play</a>.
       </p>
@@ -168,4 +168,22 @@ const faq = [
   .closing h2 { margin-bottom: 4px; }
   .closing .lead { font-size: 16px; }
   .closing a { color: var(--orange); }
+
+  @media (min-width: 768px) {
+    /* Three short answers side by side. Same reasoning as the problem cards
+       on the homepage: the stacked-divider trick draws horizontals only, so
+       across a row each answer takes its own top rule. */
+    .answers {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      background: none;
+    }
+    .answer { border-top: 2px solid var(--navy); padding: 14px 0 0; }
+  }
+
+  @media (min-width: 1024px) {
+    .hero { padding: 80px 0; }
+    .closing { padding: 84px 0; }
+  }
 </style>

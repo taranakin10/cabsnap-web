@@ -60,23 +60,27 @@ const problems = [
   faq={faq}
 >
   <header class="dark hero">
-    <div class="hero-photo">
-      <img
-        src="/img/hero-cab.webp"
-        width="1200" height="1500"
-        alt="A driver photographing a fuel receipt on the steering wheel of a truck cab"
-        fetchpriority="high"
-      />
-    </div>
-    <div class="hero-copy">
-      <div class="wrap">
-        <p class="eyebrow orange">Receipt app for owner-operators</p>
-        <h1>Snap the receipt.<br />Keep the <em>deduction</em>.</h1>
-        <p class="lead">
-          Point your phone at any receipt. CabSnap's AI reads it, files it, and keeps it —
-          so it's still there when your accountant asks in April.
-        </p>
-        <Cta />
+    {/* .hero-in carries no styles below 1024px — it is the grid container the
+        two-column desktop hero needs, and inert everywhere else. */}
+    <div class="hero-in">
+      <div class="hero-photo">
+        <img
+          src="/img/hero-cab.webp"
+          width="1200" height="1500"
+          alt="A driver photographing a fuel receipt on the steering wheel of a truck cab"
+          fetchpriority="high"
+        />
+      </div>
+      <div class="hero-copy">
+        <div class="wrap">
+          <p class="eyebrow orange">Receipt app for owner-operators</p>
+          <h1>Snap the receipt.<br />Keep the <em>deduction</em>.</h1>
+          <p class="lead measure">
+            Point your phone at any receipt. CabSnap's AI reads it, files it, and keeps it —
+            so it's still there when your accountant asks in April.
+          </p>
+          <Cta />
+        </div>
       </div>
     </div>
   </header>
@@ -149,7 +153,7 @@ const problems = [
     <div class="wrap">
       <p class="eyebrow orange">Free tool</p>
       <h2>How much did you spend that you can't prove?</h2>
-      <p class="intro">Four questions. No signup to see the number.</p>
+      <p class="intro measure">Four questions. No signup to see the number.</p>
       <div class="calc">
         <small>Undocumented spend, last 12 months</small>
         <div class="big">$7,860</div>
@@ -183,20 +187,8 @@ const problems = [
   h1 em { font-style: normal; color: var(--orange); }
   .lead { font-size: 18px; margin-top: 16px; max-width: 27em; }
 
-  figure { margin: 26px 0 0; }
-  figure img {
-    width: 100%;
-    height: 220px;
-    object-fit: cover;
-    border-radius: 5px;
-  }
-  @media (min-width: 768px) {
-    figure img { height: 280px; }
-  }
-  figcaption {
-    font-family: var(--font-mono); font-size: 12.5px;
-    color: var(--muted); margin-top: 9px;
-  }
+  /* figure / figure img / figcaption live in global.css — the same block
+     renders on all six audience pages. */
 
   .stack { margin-top: 26px; display: flex; flex-direction: column; gap: 1px; background: var(--rule); }
   .cell { background: var(--paper); padding: 20px 0; }
@@ -254,4 +246,41 @@ const problems = [
   .closing { text-align: center; padding: 56px 0; border-bottom: none; }
   .closing h2 { margin-bottom: 4px; }
   .closing em { font-style: normal; color: var(--orange); }
+
+  /* --- desktop ---------------------------------------------------------
+     Stacked lists become columns. Nothing below 768px is touched. */
+  @media (min-width: 768px) {
+    /* Three problem cards side by side. The 1px-gap-over-a-rule-background
+       trick that draws the stacked dividers has no meaning across a row, so
+       each card carries its own top rule instead. Grid rows stretch, so the
+       three are equal height whatever the copy does. */
+    .stack {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      background: none;
+    }
+    .cell {
+      border-top: 2px solid var(--navy);
+      padding: 16px 0 0;
+    }
+
+    /* Three steps across. The numeral moves above its heading rather than
+       beside it — at a third of the width, a 44px gutter is most of the
+       column. */
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 32px;
+    }
+    .step { grid-template-columns: 1fr; gap: 8px; }
+
+    .who { grid-template-columns: repeat(3, 1fr); gap: 12px; }
+  }
+
+  @media (min-width: 1024px) {
+    .calcwrap { padding: 80px 0; }
+    .closing { padding: 84px 0; }
+    .who a { padding: 24px 20px; }
+  }
 </style>

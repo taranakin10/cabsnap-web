@@ -5,7 +5,7 @@ import { IRS } from '../config';
   <div class="wrap">
     <p class="eyebrow">Why a photo counts</p>
     <h2>The IRS takes<br />digital copies.</h2>
-    <p class="intro">
+    <p class="intro measure">
       You don't have to keep the paper. The IRS has accepted electronic records
       since 1997, as long as the copies meet a few basic conditions.
     </p>
@@ -31,4 +31,13 @@ import { IRS } from '../config';
     color: var(--muted-dk); margin-top: 20px; padding-top: 16px;
     border-top: 1px solid var(--rule-dk);
   }
+
+  /* The conditions are a checklist, not prose — two columns rather than six
+     stretched lines. */
+  @media (min-width: 768px) {
+    ul { display: grid; grid-template-columns: 1fr 1fr; gap: 14px 32px; }
+    .src { max-width: 68ch; }
+  }
+  /* Matches the section padding the rest of the page moves to. */
+  @media (min-width: 1024px) { .band { padding: 80px 0; } }
 </style>

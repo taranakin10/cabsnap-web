@@ -40,7 +40,7 @@ const faq = [
     <div class="wrap">
       <p class="eyebrow orange">Comparison</p>
       <h1>CabSnap<br />vs a <em>spreadsheet</em></h1>
-      <p class="lead">
+      <p class="lead measure">
         A spreadsheet is a good ledger. It is not a receipt. That distinction
         stays invisible until the day somebody asks to see one.
       </p>
@@ -51,13 +51,13 @@ const faq = [
     <div class="wrap">
       <p class="eyebrow">First, the honest part</p>
       <h2>A spreadsheet is<br />a real system.</h2>
-      <p class="intro">
+      <p class="intro measure">
         It is free, it works offline, nobody can shut it off, it exports anywhere,
         and it will still open in thirty years. If you keep one faithfully you are
         already ahead of most owner-operators, and that is not a backhanded
         compliment.
       </p>
-      <p>
+      <p class="measure">
         Some drivers genuinely think in rows and columns. If you are one of them,
         keep the sheet. Nothing below is an argument for deleting it.
       </p>
@@ -68,18 +68,18 @@ const faq = [
     <div class="wrap">
       <p class="eyebrow">The gap</p>
       <h2>The sheet assumes<br />the paper survives.</h2>
-      <p class="intro">
+      <p class="intro measure">
         Every row in a receipt spreadsheet is a pointer. It says: on this date, at
         this vendor, I spent this much &mdash; and the document proving it is
         somewhere else. In a folder, a drawer, a glovebox.
       </p>
-      <p>
+      <p class="measure">
         That pointer is only worth as much as the thing it points at. Fuel slips,
         scale tickets, and truck stop receipts are thermal paper, and thermal paper
         in a hot cab goes blank in weeks. The row stays perfectly legible while the
         document behind it turns into a white rectangle.
       </p>
-      <p>
+      <p class="measure">
         The spreadsheet does not know that happened. It looks exactly as complete
         the day the receipt fades as it did the day you typed it.
       </p>
@@ -90,18 +90,18 @@ const faq = [
     <div class="wrap">
       <p class="eyebrow">The other gap</p>
       <h2>Typing at the pump<br />does not happen.</h2>
-      <p class="intro">
+      <p class="intro measure">
         A spreadsheet needs two hands, a keyboard or a very patient thumb, and a
         moment of calm. None of those exist at a fuel island with the engine
         running and someone waiting behind you.
       </p>
-      <p>
+      <p class="measure">
         So the entry gets deferred. The paper goes in the door pocket to be typed
         up later, and later is where receipts go to die. Not because anyone is
         careless &mdash; because the batch keeps growing and the paper keeps fading
         while it waits.
       </p>
-      <p>
+      <p class="measure">
         A photo takes three seconds and does not need a free hand for a keyboard.
         That is the entire difference in the habit.
       </p>
@@ -112,12 +112,12 @@ const faq = [
     <div class="wrap">
       <p class="eyebrow">Together</p>
       <h2>Keep the sheet<br />if you like it.</h2>
-      <p class="intro">
+      <p class="intro measure">
         This is not really a versus. A spreadsheet does arithmetic; CabSnap keeps
         evidence. If you want the running total in a sheet, keep the running total
         in a sheet.
       </p>
-      <p>
+      <p class="measure">
         Just make sure something, somewhere, is holding an image of the paper each
         row is pointing at &mdash; because in April the row is not the thing anyone
         wants to see.
@@ -147,4 +147,5 @@ const faq = [
   .dark :global(.faq details) { border-bottom-color: var(--rule-dk); }
   .dark :global(.faq summary) { color: var(--paper); }
   .dark :global(.faq summary::after) { color: var(--green); }
+  @media (min-width: 1024px) { .hero { padding: 80px 0; } }
 </style>

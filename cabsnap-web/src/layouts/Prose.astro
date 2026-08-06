@@ -30,4 +30,14 @@ const { title, description, path, heading, updated } = Astro.props;
     padding: 16px 18px; margin-top: 22px; border-radius: 0 4px 4px 0;
     font-size: 15px;
   }
+
+  /* A prose page holds one column no matter how wide the container gets.
+     Privacy, terms, and security are read line by line; a 1080px measure
+     makes that harder, not easier. The paragraphs are capped inside the
+     column as well, since 720px still runs past a comfortable measure. */
+  @media (min-width: 768px) {
+    .prose .wrap { max-width: 720px; }
+    .prose p, .prose li, .prose .note { max-width: 68ch; }
+  }
+  @media (min-width: 1024px) { .prose { padding: 80px 0; } }
 </style>

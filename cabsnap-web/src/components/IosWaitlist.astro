@@ -140,6 +140,8 @@
 
 <style>
   .wl { margin-top: 26px; }
+  /* A single-field form does not want a 1036px input. */
+  @media (min-width: 768px) { .wl { max-width: 520px; } }
 
   .sr-only {
     position: absolute; width: 1px; height: 1px;

@@ -61,7 +61,7 @@ const faq = [
     <div class="wrap">
       <p class="eyebrow orange">Comparison</p>
       <h1>CabSnap<br />vs <em>Expensify</em></h1>
-      <p class="lead">
+      <p class="lead measure">
         Expensify is built around submitting expenses to a company. CabSnap is for
         people who don't have one. Same receipts, different destination.
       </p>
@@ -72,18 +72,18 @@ const faq = [
     <div class="wrap">
       <p class="eyebrow">First, the honest part</p>
       <h2>Expensify is<br />a serious product.</h2>
-      <p class="intro">
+      <p class="intro measure">
         It is a full expense management platform. SmartScan reads receipts, it
         tracks mileage, it syncs with accounting software, it runs the whole
         submit-review-approve-reimburse loop, and it has an iPhone app. We have
         none of that.
       </p>
-      <p>
+      <p class="measure">
         If you are an employee expensing to your employer, or you run a business
         with people submitting expenses to you, use Expensify. That is the job it
         was designed for and it does it well.
       </p>
-      <p>
+      <p class="measure">
         What follows is for everyone else.
       </p>
     </div>
@@ -106,18 +106,18 @@ const faq = [
     <div class="wrap">
       <p class="eyebrow">The real difference</p>
       <h2>There is nobody<br />to submit to.</h2>
-      <p class="intro">
+      <p class="intro measure">
         An expense report exists so somebody else can approve it and pay you back.
         Every part of that product — the report, the approver, the reimbursement,
         the policy rules — assumes a company on the other end.
       </p>
-      <p>
+      <p class="measure">
         An owner-operator has no other end. The money left your account and it is
         not coming back from anyone. The receipt is not a claim against an
         employer; it is just a record, and the only question is whether it still
         exists in April.
       </p>
-      <p>
+      <p class="measure">
         So CabSnap does not build a report. It captures the paper, reads it, keeps
         it, and gets out of the way.
       </p>
@@ -146,4 +146,5 @@ const faq = [
   .dark :global(.faq details) { border-bottom-color: var(--rule-dk); }
   .dark :global(.faq summary) { color: var(--paper); }
   .dark :global(.faq summary::after) { color: var(--green); }
+  @media (min-width: 1024px) { .hero { padding: 80px 0; } }
 </style>

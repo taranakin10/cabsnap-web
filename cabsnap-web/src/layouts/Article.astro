@@ -140,6 +140,21 @@ const more = ARTICLES.filter((a) => a.kind === article.kind && a.slug !== slug).
   .closing { text-align: center; padding: 56px 0; border-bottom: none; }
   .closing h2 { margin-bottom: 4px; }
   .closing :global(h2 em) { font-style: normal; color: var(--orange); }
+
+  /* An article is one column. The body is already held at 640px below; these
+     hold everything around it to 720px so the header, the onward links, and
+     the closing band stay in line with the text rather than spreading to the
+     full 1080px container. */
+  @media (min-width: 768px) {
+    .head .wrap,
+    .topline .wrap,
+    .closing .wrap { max-width: 720px; }
+    .more { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+  }
+  @media (min-width: 1024px) {
+    .head { padding: 72px 0 56px; }
+    .closing { padding: 84px 0; }
+  }
 </style>
 
 <style is:global>
