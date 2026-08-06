@@ -56,7 +56,9 @@ import { DISCLAIMER } from '../../config';
   .head { padding: 44px 0 40px; }
   .eyebrow.orange { color: var(--orange); }
   h1 em { font-style: normal; color: var(--orange); }
-  .lead { font-size: 18px; margin-top: 16px; max-width: 27em; }
+  /* Its own cap is tighter than .measure's, and it is hero copy: it holds
+     the left edge of the headline above it rather than centring. */
+  .lead { font-size: 18px; margin-top: 16px; max-width: 27em; margin-inline: 0; }
 
   .list { display: flex; flex-direction: column; gap: 9px; }
   .list a {

@@ -57,10 +57,13 @@ const { them, themDomain, verified, rows } = Astro.props;
     color: var(--muted); margin-top: 14px; line-height: 1.5;
   }
 
-  /* Three narrow columns of short answers stretched to 1036px leaves the
-     CabSnap and competitor cells a screen apart, which is the one comparison
-     the table exists to make easy. */
+  /* The table takes the full reading column and no more: three narrow
+     columns of short answers stretched wider leaves the CabSnap and
+     competitor cells a screen apart, which is the one comparison the table
+     exists to make easy. */
   @media (min-width: 768px) {
-    .tablewrap, .verified { max-width: 820px; }
+    .tablewrap, .verified { max-width: 760px; margin-inline: auto; }
+    /* More room per row now that the rows are no longer full-bleed. */
+    th, td { padding: 14px 10px; }
   }
 </style>

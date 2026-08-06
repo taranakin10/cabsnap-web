@@ -13,6 +13,16 @@ interface Props {
   ogImage?: string;
   /** Ad landing pages drop the nav and footer — one CTA, no exits. */
   bare?: boolean;
+  /**
+   * Pages that are a single column of running text — the comparisons, the
+   * roundup, and everything on the Prose layout. They hold a 760px column on
+   * desktop instead of the full container, which for a page with no grids
+   * and no media would only add empty space to the right of the text.
+   *
+   * Set here rather than per page so the rule lives in one place: it drives
+   * a class on <body>, and global.css does the rest.
+   */
+  narrow?: boolean;
   /** Any FAQ block on the page, emitted as FAQPage schema. */
   /** href/hrefLabel are for rendering only; the schema uses `a` alone. */
   faq?: { q: string; a: string; href?: string; hrefLabel?: string }[];
@@ -27,6 +37,7 @@ const {
   // Per-page card generated at build time by src/pages/og/[slug].png.ts.
   ogImage = ogImageFor(path),
   bare = false,
+  narrow = false,
   faq,
   article,
 } = Astro.props;
@@ -161,7 +172,7 @@ const faqSchema = faq && {
   )}
 </head>
 
-<body>
+<body class={narrow ? 'narrow' : undefined}>
   {META_PIXEL_ID && (
     <noscript>
       <img

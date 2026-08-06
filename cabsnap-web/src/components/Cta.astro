@@ -18,14 +18,21 @@ import PlayBadge from './PlayBadge.astro';
 interface Props { label?: string; note?: boolean; }
 const { label = CTA.primary, note = true } = Astro.props;
 ---
-<a class="btn" href={PLAY_STORE_URL} data-play-store rel="noopener">{label}</a>
-{note && <p class="btn-note">{CTA.note}</p>}
+{/* The four pieces are wrapped so desktop can hold them to one column and
+    move them as a unit. Without it the button could be capped but the badge
+    and the note would still centre against the full container, which is what
+    put the badge off-axis from the button it belongs to. .cta carries no
+    styles below 768px. */}
+<div class="cta">
+  <a class="btn" href={PLAY_STORE_URL} data-play-store rel="noopener">{label}</a>
+  {note && <p class="btn-note">{CTA.note}</p>}
 
-<PlayBadge />
+  <PlayBadge />
 
-<p class="platform">
-  Android only. <a href="/iphone">iPhone version</a> in development.
-</p>
+  <p class="platform">
+    Android only. <a href="/iphone">iPhone version</a> in development.
+  </p>
+</div>
 
 <style>
   /* Deliberately quiet: this is a disclosure, not a badge, and it must not

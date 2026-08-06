@@ -35,11 +35,21 @@ const { items } = Astro.props;
   details p { margin-top: 11px; font-size: 15.5px; }
   details a { color: var(--orange-ink); }
 
-  /* An accordion gains nothing from width. Past 720px the summary row just
+  /* An accordion gains nothing from width. Past this the summary row just
      drags the "+" further from the question it belongs to, and the answers
-     turn into single long lines. Held at a single column. */
+     turn into single long lines. Held at a single centred column — the
+     section around it carries .narrow so the heading shares these edges
+     rather than starting further left than the questions. */
   @media (min-width: 768px) {
-    .faq { max-width: 720px; }
+    .faq { max-width: 760px; margin-inline: auto; }
     details p { max-width: 68ch; }
+  }
+
+  /* At 1080px the rows were reading as cramped against the whitespace
+     around them — the question is the thing being scanned, so it takes
+     more of both. */
+  @media (min-width: 1024px) {
+    details { padding: 20px 0; }
+    summary { font-size: 21px; }
   }
 </style>

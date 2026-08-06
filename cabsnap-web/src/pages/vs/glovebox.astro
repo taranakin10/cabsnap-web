@@ -30,6 +30,7 @@ const faq = [
   description="The glovebox is free, offline, and always available. It has one flaw: thermal paper goes blank in a hot cab. A short, honest comparison."
   path="/vs/glovebox"
   faq={faq}
+  narrow
 >
   <section class="hero dark">
     <div class="wrap">
@@ -144,10 +145,12 @@ const faq = [
   }
   thead th:nth-child(2) { color: var(--orange-ink); }
   tbody th { font-weight: 600; color: var(--muted); font-size: 13.5px; width: 34%; }
-  /* Held to the same width as CompareTable on the other comparison pages —
-     three narrow columns stretched to 1036px puts the two answers being
-     compared a screen apart. */
-  @media (min-width: 768px) { .tablewrap { max-width: 820px; } }
+  /* Held to the same width and row height as CompareTable on the other
+     comparison pages. */
+  @media (min-width: 768px) {
+    .tablewrap { max-width: 760px; margin-inline: auto; }
+    th, td { padding: 14px 10px; }
+  }
 
   .dark :global(.faq details) { border-bottom-color: var(--rule-dk); }
   .dark :global(.faq summary) { color: var(--paper); }

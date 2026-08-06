@@ -149,7 +149,7 @@ const problems = [
 
   <IrsProof />
 
-  <div class="calcwrap">
+  <div class="calcwrap narrow">
     <div class="wrap">
       <p class="eyebrow orange">Free tool</p>
       <h2>How much did you spend that you can't prove?</h2>
@@ -163,7 +163,7 @@ const problems = [
     </div>
   </div>
 
-  <section class="topline">
+  <section class="topline narrow">
     <div class="wrap">
       <p class="eyebrow">Questions</p>
       <h2>Straight answers.</h2>
@@ -185,7 +185,9 @@ const problems = [
      purpose — the section is sized by its content. */
   .eyebrow.orange { color: var(--orange); }
   h1 em { font-style: normal; color: var(--orange); }
-  .lead { font-size: 18px; margin-top: 16px; max-width: 27em; }
+  /* Its own cap is tighter than .measure's, and it is hero copy: it holds
+     the left edge of the headline above it rather than centring. */
+  .lead { font-size: 18px; margin-top: 16px; max-width: 27em; margin-inline: 0; }
 
   /* figure / figure img / figcaption live in global.css — the same block
      renders on all six audience pages. */

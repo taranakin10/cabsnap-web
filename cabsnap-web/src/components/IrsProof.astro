@@ -32,12 +32,19 @@ import { IRS } from '../config';
     border-top: 1px solid var(--rule-dk);
   }
 
-  /* The conditions are a checklist, not prose — two columns rather than six
-     stretched lines. */
+  /* The intro and the source note take the left edge of the checklist below
+     them rather than centring in the band — a measure column centres by
+     default, and here there is full-width content for it to line up with. */
   @media (min-width: 768px) {
-    ul { display: grid; grid-template-columns: 1fr 1fr; gap: 14px 32px; }
-    .src { max-width: 68ch; }
+    .intro, .src { max-width: 68ch; margin-inline: 0; }
   }
-  /* Matches the section padding the rest of the page moves to. */
-  @media (min-width: 1024px) { .band { padding: 80px 0; } }
+
+  /* There are exactly four conditions, so four equal columns fill the row
+     evenly. Two columns left a 2×2 block that read as an accident rather
+     than a list, so below the width for four this stays a single column. */
+  @media (min-width: 1024px) {
+    .band { padding: 80px 0; }
+    ul { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; }
+    li { font-size: 15px; }
+  }
 </style>

@@ -93,7 +93,7 @@ const faq = [
     </div>
   </section>
 
-  <section>
+  <section class="narrow">
     <div class="wrap">
       <p class="eyebrow">What goes wrong</p>
       <h2>Thermal paper<br />is the enemy.</h2>
@@ -125,7 +125,7 @@ const faq = [
 
   <IrsProof />
 
-  <section class="topline">
+  <section class="topline narrow">
     <div class="wrap">
       <p class="eyebrow">Questions</p>
       <h2>Straight answers.</h2>
@@ -140,7 +140,9 @@ const faq = [
 
 <style>
   h2 em { font-style: normal; color: var(--orange); }
-  .closer { margin-top: 24px; font-size: 17px; }
+  /* Sits under the full-width receipt grid, so it takes that grid's left
+     edge rather than centring the way a measure column does by default. */
+  .closer { margin-top: 24px; font-size: 17px; margin-inline: 0; }
   .intro { margin-top: 20px; }
   section p + p { margin-top: 14px; }
 

@@ -104,12 +104,19 @@ p { color: var(--text-body); }
 }
 
 /* Caps a run of text at a readable measure no matter how wide its container
-   is. Put this on leads and body copy, not on headlines, cards, or tables —
-   those are meant to use the width.
+   is, and centres the capped column so the leftover width falls either side
+   of it rather than piling up on the right. Put this on leads and body copy,
+   not on headlines, cards, or tables — those are meant to use the width.
 
    Below 768px the container is already narrower than 68ch at every body size
-   on the site, so this rule changes nothing on a phone. */
-.measure { max-width: 68ch; }
+   on the site, so this rule changes nothing on a phone.
+
+   A centred column only reads as centred if the heading above it shares the
+   same edges, which is why sections built entirely of running text carry
+   .narrow (below) instead of relying on this alone. Where a measure column
+   sits under full-width content — a grid, a table — it takes that content's
+   left edge instead; those few places set margin-inline back to 0. */
+.measure { max-width: 68ch; margin-inline: auto; }
 
 .eyebrow {
   font-family: var(--font-mono);
@@ -288,13 +295,36 @@ summary:focus-visible {
   h1 { font-size: clamp(46px, 13vw, 76px); }
   h2 { font-size: clamp(32px, 8.5vw, 48px); }
 
-  /* A block button stretched across a 1080px container reads as a slab,
-     not as a control. The CTA keeps a button's width and centres under
-     the copy, where the note and the Play badge already centre.
-     .ios-card is the swap Base.astro makes for iOS visitors and has to
-     hold the same box. */
-  .btn,
-  .ios-card { max-width: 360px; margin-inline: auto; }
+  /* --- narrow reading columns -----------------------------------------
+     Some pages, and some sections of otherwise wide pages, are one column
+     of running text. Widening those to 1080px buys nothing but empty
+     space on the right.
+
+     Narrowing the container rather than each paragraph is deliberate: it
+     is what puts the eyebrow, the heading and the body on one left edge.
+     Cap the paragraphs alone and the heading stays out at the container
+     edge, hanging to the left of the text it introduces. */
+  body.narrow .wrap,
+  .narrow > .wrap { max-width: 760px; }
+
+  /* The nav and the footer are site furniture and sit at the page edges on
+     every page alike, so they keep the full container. (The nav uses
+     .nav-in, not .wrap, and is already unaffected.) */
+  body.narrow footer .wrap { max-width: var(--maxw); }
+
+  /* --- the CTA block ---------------------------------------------------
+     A block button stretched across a 1080px container reads as a slab,
+     not as a control. The whole CTA — button, note, badge, platform line —
+     is held to a button's width as one unit, so the badge sits under the
+     button rather than floating off centre from it.
+
+     That unit takes the left edge of the copy it belongs to. Centring the
+     button while the copy above it starts at the left is the thing that
+     reads as misaligned; a centred band (below) centres the whole block,
+     copy included, so there the CTA centres with it. */
+  .cta { max-width: 360px; }
+  .closing .cta,
+  .result .cta { margin-inline: auto; }
 
   /* Section photos are capped rather than stretched — a 1036px-wide band
      at a fixed 280px height is a letterbox, not a photograph. The cap is

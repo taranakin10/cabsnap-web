@@ -3,7 +3,7 @@ import Base from './Base.astro';
 interface Props { title: string; description: string; path: string; heading: string; updated?: string; }
 const { title, description, path, heading, updated } = Astro.props;
 ---
-<Base title={title} description={description} path={path}>
+<Base title={title} description={description} path={path} narrow>
   <section class="prose">
     <div class="wrap">
       <h1>{heading}</h1>
@@ -31,12 +31,10 @@ const { title, description, path, heading, updated } = Astro.props;
     font-size: 15px;
   }
 
-  /* A prose page holds one column no matter how wide the container gets.
-     Privacy, terms, and security are read line by line; a 1080px measure
-     makes that harder, not easier. The paragraphs are capped inside the
-     column as well, since 720px still runs past a comfortable measure. */
+  /* The column width comes from `narrow` on <Base> above, which every Prose
+     page inherits — these pages are read line by line and a 1080px measure
+     makes that harder, not easier. Only the per-element caps live here. */
   @media (min-width: 768px) {
-    .prose .wrap { max-width: 720px; }
     .prose p, .prose li, .prose .note { max-width: 68ch; }
   }
   @media (min-width: 1024px) { .prose { padding: 80px 0; } }

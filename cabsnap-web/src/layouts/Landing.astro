@@ -88,12 +88,12 @@ const { title, description, path, kicker, headlines, sub } = Astro.props;
   .lp .wrap { max-width: 560px; }
 
   /* These pages opt out of the site's desktop widening entirely: the column
-     is pinned at 560px at every width, so the two global rules that exist to
-     correct a widened container have nothing to correct here.
-     The button would only shrink, and the headline — which is the thing being
-     A/B tested — would rewrap at a size the column never got the room for. */
+     is pinned at 560px at every width, so the global rule that raises the
+     headline ceiling has nothing to correct here — the A/B tested headline
+     would just rewrap at a size this column never got the room for.
+     (The CTA here is this layout's own .btn, not the Cta component, so the
+     desktop .cta rules never reach it.) */
   @media (min-width: 768px) {
-    .btn { max-width: none; }
     h1 { font-size: clamp(46px, 13vw, 66px); }
   }
 
