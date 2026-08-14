@@ -66,6 +66,7 @@ export const OG: OgEntry[] = [
   { path: '/security', kicker: 'Security', title: 'How your records\nare handled.' },
   { path: '/privacy', kicker: 'Privacy', title: 'Privacy policy' },
   { path: '/terms', kicker: 'Terms', title: 'Terms of service' },
+  { path: '/delete-account', kicker: 'Your data', title: 'Delete your\naccount' },
 
   // Ad landing pages
   { path: '/lp/fade', kicker: 'Free on Google Play', title: 'The receipt fades.\nThe photo does not.' },

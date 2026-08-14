@@ -25,6 +25,9 @@ const { title, description, path, heading, updated } = Astro.props;
   .prose ul, .prose ol { margin-top: 14px; padding-left: 22px; }
   .prose li { margin-top: 7px; color: var(--text-body); }
   .prose a { color: var(--orange-ink); }
+  /* `.prose a` outranks `.btn`, so a CTA dropped into a prose page would take
+     the link colour and render orange text on the orange button. */
+  .prose a.btn { color: var(--navy); }
   .prose .note {
     background: var(--card); border-left: 3px solid var(--orange);
     padding: 16px 18px; margin-top: 22px; border-radius: 0 4px 4px 0;

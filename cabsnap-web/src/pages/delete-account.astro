@@ -1,0 +1,115 @@
+---
+import Prose from '../layouts/Prose.astro';
+import { SITE, CONTACTS } from '../config';
+
+/**
+ * DELETE ACCOUNT PAGE RULES — do not relax these when editing.
+ *
+ * 1. Required by Google Play's Data Safety "Data deletion" policy. Play
+ *    reviewers open this URL directly, so it must stay public, indexable, and
+ *    free of any login wall or redirect. Do not add noindex.
+ * 2. Both routes to deletion stay on the page — in-app and by email. Play
+ *    requires a route that does not depend on installing the app.
+ * 3. Every retention claim here must match /privacy, which is the controlling
+ *    document. Change one, change both.
+ * 4. Recordkeeping guidance only. This page never tells anyone how long their
+ *    own records need to be kept.
+ */
+const DELETION_MAILTO = `mailto:${CONTACTS.privacy}?subject=Delete%20My%20Account`;
+---
+<Prose
+  title="Delete Your CabSnap Account"
+  description="How to delete your CabSnap account and associated data."
+  path="/delete-account"
+  heading="Delete Your CabSnap Account"
+  updated="August 14, 2026"
+>
+  <p>
+    CabSnap (package name: {SITE.packageId}) is published by {SITE.company}. This page
+    explains how to delete your CabSnap account and what happens to your data when you
+    do. No login is required to read this page or to submit a deletion request.
+  </p>
+
+  <h2>Before you delete — export your receipts</h2>
+  <p>
+    Your receipts are business recordkeeping documents. Once your account is deleted,
+    they cannot be recovered. If you may need them later, export or back them up from
+    the app before requesting deletion. CabSnap provides recordkeeping tools only and
+    does not provide tax advice — check with your own tax professional about how long
+    you need to keep records.
+  </p>
+
+  <h2>Option 1 — Delete from inside the app (fastest)</h2>
+  <ol>
+    <li>Open CabSnap on your Android device.</li>
+    <li>Go to <strong>Settings</strong>.</li>
+    <li>Tap <strong>Account</strong>.</li>
+    <li>Tap <strong>Delete Account</strong>.</li>
+    <li>Confirm. Your account and cloud-stored data are queued for permanent deletion.</li>
+  </ol>
+
+  <h2>Option 2 — Request deletion by email</h2>
+  <p>
+    Email <a href={`mailto:${CONTACTS.privacy}`}>{CONTACTS.privacy}</a> from the email
+    address on your CabSnap account, with the subject line "Delete My Account". Include
+    the email address associated with your account so we can verify the request. We will
+    confirm receipt and complete the deletion within 30 days. We may ask you to verify
+    ownership of the account before we proceed.
+  </p>
+
+  {/* Wrapped in .cta so the button takes the same 360px desktop cap as every
+      other primary action on the site, rather than stretching the column. */}
+  <div class="cta">
+    <a class="btn" href={DELETION_MAILTO}>Email a deletion request</a>
+  </div>
+
+  <h2>What gets deleted</h2>
+  <ul>
+    <li>Your account and login credentials</li>
+    <li>Your profile information (name, email address)</li>
+    <li>All receipt images stored in your CabSnap cloud account</li>
+    <li>All extracted receipt data (merchant, date, amount, category, notes)</li>
+    <li>Any organization or Fleet membership records tied to your account</li>
+    <li>Your subscription record within CabSnap</li>
+  </ul>
+
+  <h2>What is retained, and for how long</h2>
+  <ul>
+    <li>
+      Residual copies may persist in encrypted system backups for up to 90 days after
+      deletion, after which they are permanently overwritten.
+    </li>
+    <li>
+      Records we are required to keep by law — such as payment and transaction records
+      tied to a purchase — are retained for the period required by applicable law and
+      tax regulations. These are held by our payment processor, not in your CabSnap
+      account.
+    </li>
+    <li>
+      De-identified, aggregated usage statistics that cannot be linked back to you or
+      your device may be retained.
+    </li>
+  </ul>
+
+  <h2>Data stored only on your device</h2>
+  <p>
+    If you use CabSnap on the Free tier, your receipts are stored locally on your device
+    and are never uploaded to our servers. Uninstalling the app removes that local data.
+    Deleting your account does not affect data that only ever existed on your phone, and
+    we cannot delete local data remotely.
+  </p>
+
+  <h2>Subscriptions</h2>
+  <p>
+    Deleting your CabSnap account does not automatically cancel a Google Play
+    subscription. Cancel your subscription separately through the Google Play Store:
+    Play Store → Profile icon → Payments &amp; subscriptions → Subscriptions → CabSnap →
+    Cancel.
+  </p>
+
+  <h2>Questions</h2>
+  <p>
+    Contact <a href={`mailto:${CONTACTS.privacy}`}>{CONTACTS.privacy}</a>.
+    {' '}{SITE.company}.
+  </p>
+</Prose>
