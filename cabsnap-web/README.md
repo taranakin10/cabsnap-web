@@ -28,11 +28,36 @@ Node 18 or newer.
 
 | Variable | Staging | Production |
 |---|---|---|
-| `PUBLIC_SITE_URL` | `https://new.getcabsnap.com` | `https://getcabsnap.com` |
-| `PUBLIC_NOINDEX` | `true` | `false` |
+| `PUBLIC_SITE_URL` | `https://new.getcabsnap.com` | `https://www.getcabsnap.com` |
+| `PUBLIC_NOINDEX` | `true` | unset |
 
 **`PUBLIC_NOINDEX=true` on staging is not optional.** Without it Google indexes
 the staging subdomain and it competes with the live site for the same keywords.
+
+**Never set `PUBLIC_NOINDEX` in production.** The build refuses to run if it is
+`true` while `PUBLIC_SITE_URL` points at getcabsnap.com, so the mistake is loud
+rather than silent — but the variable should simply not be there. Every other
+value (unset, empty, `false`) leaves the site indexable, and that default must
+never be inverted.
+
+### The canonical host
+
+`https://www.getcabsnap.com`, no trailing slash. Non-www 301s to www.
+
+That URL lives in exactly one place — `site` in `astro.config.mjs`, overridden
+by `PUBLIC_SITE_URL`. Canonical tags, `og:url`, `og:image`, the JSON-LD
+`url`/`@id` fields, `robots.txt` and the sitemap all derive from it. Do not type
+a host into a page; if you find one, it is a bug.
+
+The sitemap is normalised to the same no-trailing-slash form in the
+`@astrojs/sitemap` `serialize` hook, so every `<loc>` matches the canonical tag
+on the page it points at.
+
+`trailingSlash` stays `ignore`, which is what the server actually does: under
+`build.format: 'directory'`, `astro preview` returns 200 for both `/about` and
+`/about/`. Do not "tighten" it to `never` — that makes preview 404 on `/about/`,
+and those URLs are in Google's index because the old sitemap advertised them.
+One form is advertised; the other keeps working.
 
 ---
 

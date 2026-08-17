@@ -23,6 +23,13 @@ interface Props {
    * a class on <body>, and global.css does the rest.
    */
   narrow?: boolean;
+  /**
+   * Keep this page out of search on its own account, regardless of environment.
+   * Set by Landing.astro for the /lp/* ad pages, which are bought traffic and
+   * should never compete in organic results with the pages they mimic.
+   * Do not set this on anything a visitor could arrive at from search.
+   */
+  noindex?: boolean;
   /** Any FAQ block on the page, emitted as FAQPage schema. */
   /** href/hrefLabel are for rendering only; the schema uses `a` alone. */
   faq?: { q: string; a: string; href?: string; hrefLabel?: string }[];
@@ -38,13 +45,33 @@ const {
   ogImage = ogImageFor(path),
   bare = false,
   narrow = false,
+  noindex: pageNoindex = false,
   faq,
   article,
 } = Astro.props;
 
+// Everything absolute on the page hangs off Astro.site, which is
+// PUBLIC_SITE_URL (see astro.config.mjs). No page types a host of its own.
 const canonical = new URL(path, Astro.site).href;
 const ogUrl = new URL(ogImage, Astro.site).href;
-const noindex = import.meta.env.PUBLIC_NOINDEX === 'true';
+
+/**
+ * Two independent reasons to noindex, and the defaults run in opposite
+ * directions on purpose:
+ *
+ *   pageNoindex  — the page asks for it (the /lp/* ad pages). Defaults false.
+ *   envNoindex   — the whole deploy asks for it (staging). Defaults false, and
+ *                  ONLY the exact string 'true' turns it on. Unset, empty,
+ *                  'false' and whitespace all leave the page indexable.
+ *
+ * Never invert that second default. A missing variable that noindexes the site
+ * is a failure with no symptom until the traffic is already gone — which is
+ * what happened over 8-10 Aug 2026. astro.config.mjs now hard-fails the build
+ * if this switch is on while building for the production host, so the global
+ * form cannot reach www.getcabsnap.com again by accident.
+ */
+const envNoindex = import.meta.env.PUBLIC_NOINDEX?.trim().toLowerCase() === 'true';
+const noindex = pageNoindex || envNoindex;
 
 // IDs come from config; an env var of the same name overrides, and setting one
 // to an empty string switches that tool off for a given deploy.

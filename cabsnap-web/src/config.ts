@@ -14,6 +14,13 @@
 
 export const SITE = {
   name: 'CabSnap',
+  /**
+   * The registrable domain, for prose and display only. It is NOT the site's
+   * origin and must never be turned into a URL — the site is served at
+   * https://www.getcabsnap.com, and every absolute URL derives from `site` in
+   * astro.config.mjs (i.e. Astro.site / PUBLIC_SITE_URL). Building a link out
+   * of this value produces a non-www URL that 301s.
+   */
   domain: 'getcabsnap.com',
   tagline: 'Snap the receipt. Keep the deduction.',
   description:

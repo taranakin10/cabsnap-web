@@ -9,6 +9,13 @@ import { CTA, PLAY_STORE_URL, DISCLAIMER } from '../config';
  * bare={true} — no nav, no footer, no outbound links except the one CTA.
  * Every exit from this page should be the Play Store or the back button.
  *
+ * noindex={true} — these are paid-traffic pages. They are thin, they duplicate
+ * the angles of the organic pages, and an indexed ad page competes with the
+ * real one for the same query. The tag is set here, on the template every
+ * /lp/* page uses, so a new landing page is noindex the moment it exists and
+ * cannot depend on a deploy-wide environment variable being set correctly.
+ * astro.config.mjs keeps the matching /lp/ prefix out of the sitemap.
+ *
  * Variants: ?v=a|b|c swaps the headline only. The param is validated against
  * /^[a-c]$/ and applied client-side (the site is static), then passed to the
  * Play Store referrer by the click handler in Base.astro.
@@ -27,7 +34,7 @@ interface Props {
 const { title, description, path, kicker, headlines, sub } = Astro.props;
 ---
 
-<Base title={title} description={description} path={path} bare={true}>
+<Base title={title} description={description} path={path} bare={true} noindex={true}>
   <main class="lp">
     {/* Runs synchronously during parse, before the headline below is painted,
         so the right variant is chosen on first render. Swapping the text after
