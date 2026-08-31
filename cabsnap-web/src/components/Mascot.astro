@@ -1,0 +1,58 @@
+---
+/**
+ * A mascot pose: a transparent-background WebP cut-out that sits directly on
+ * whatever band it lands in, light or dark.
+ *
+ * Every pose is decorative. The copy beside it already says everything the
+ * drawing says, so alt is empty and it is hidden from assistive tech rather
+ * than read out as a second, worse version of the heading.
+ *
+ * PERFORMANCE — this site has a mobile-bounce problem, so the rules are not
+ * optional:
+ *   - Intrinsic width/height always come from POSES below, never from the
+ *     caller. The box is reserved before the file arrives, so nothing under
+ *     the illustration moves when it lands. Rendered size is CSS's job.
+ *   - Every pose is below the fold on every page it appears on, so they are
+ *     lazy and async by default. Only the hero opts out, and the hero does
+ *     not use this component.
+ *
+ * `display` is the rendered cap in px. The file itself is 900px wide, so a
+ * pose can be scaled up on desktop without going soft.
+ */
+const POSES = {
+  point:    { src: '/mascot/pose-point.webp',    w: 900, h: 1217 },
+  thumbsup: { src: '/mascot/pose-thumbsup.webp', w: 900, h: 1205 },
+  receipts: { src: '/mascot/pose-receipts.webp', w: 900, h: 1083 },
+  shrug:    { src: '/mascot/pose-shrug.webp',    w: 900, h:  798 },
+  wave:     { src: '/mascot/pose-wave.webp',     w: 900, h: 1004 },
+} as const;
+
+interface Props {
+  pose: keyof typeof POSES;
+  /** Rendered max-width in px. */
+  display: number;
+  /** Extra class for the wrapper, so a parent can place it. */
+  class?: string;
+}
+const { pose, display, class: cls } = Astro.props;
+const { src, w, h } = POSES[pose];
+---
+
+<div class:list={['mascot', cls]} aria-hidden="true">
+  <img
+    src={src}
+    width={w}
+    height={h}
+    loading="lazy"
+    decoding="async"
+    alt=""
+    style={`max-width:${display}px`}
+  />
+</div>
+
+<style>
+  .mascot { display: flex; justify-content: center; }
+  /* height:auto with the intrinsic attributes still set is what keeps the
+     reserved box the right shape while CSS drives the width. */
+  .mascot img { width: 100%; height: auto; display: block; }
+</style>

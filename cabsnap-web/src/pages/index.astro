@@ -3,6 +3,7 @@ import Base from '../layouts/Base.astro';
 import Cta from '../components/Cta.astro';
 import Faq from '../components/Faq.astro';
 import IrsProof from '../components/IrsProof.astro';
+import Mascot from '../components/Mascot.astro';
 import { SITE, AUDIENCES } from '../config';
 
 const faq = [
@@ -63,12 +64,16 @@ const problems = [
     {/* .hero-in carries no styles below 1024px — it is the grid container the
         two-column desktop hero needs, and inert everywhere else. */}
     <div class="hero-in">
-      <div class="hero-photo">
+      <div class="hero-photo is-mascot">
+        {/* Above the fold: eager and high priority, never lazy. Every other
+            mascot on this page is the opposite. */}
         <img
-          src="/img/hero-cab.webp"
-          width="1200" height="1500"
-          alt="A driver photographing a fuel receipt on the steering wheel of a truck cab"
+          src="/mascot/hero-trucker.webp"
+          width="900" height="1013"
+          alt="The CabSnap driver standing in front of his truck, holding up a phone showing a captured receipt"
+          loading="eager"
           fetchpriority="high"
+          decoding="async"
         />
       </div>
       <div class="hero-copy">
@@ -125,6 +130,7 @@ const problems = [
           </div>
         ))}
       </div>
+      <Mascot pose="receipts" display={230} class="pose-steps" />
     </div>
   </section>
 
@@ -173,6 +179,7 @@ const problems = [
 
   <div class="dark closing">
     <div class="wrap">
+      <Mascot pose="point" display={210} class="pose-closing" />
       <h2>The paper fades.<br />The <em>photo doesn't</em>.</h2>
       <Cta placement="closing" />
     </div>
@@ -245,6 +252,12 @@ const problems = [
   }
 
   .topline { border-top: 1px solid var(--rule); }
+
+  /* Mascot placements. Both are decorative and both sit in their own row —
+     nothing wraps around them, so neither can push the copy about. */
+  .pose-steps { margin-top: 30px; }
+  .pose-closing { margin-bottom: 6px; }
+
   .closing { text-align: center; padding: 56px 0; border-bottom: none; }
   .closing h2 { margin-bottom: 4px; }
   .closing em { font-style: normal; color: var(--orange); }
