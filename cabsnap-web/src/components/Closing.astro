@@ -1,5 +1,6 @@
 ---
 import Cta from './Cta.astro';
+import Mascot from './Mascot.astro';
 
 /** The closing dark band with the final CTA. */
 interface Props { html?: string; placement?: string; }
@@ -10,6 +11,7 @@ const {
 ---
 <div class="dark closing">
   <div class="wrap">
+    <Mascot pose="point" display={210} class="pose" />
     <h2 set:html={html} />
     <Cta placement={placement} />
   </div>
@@ -17,6 +19,8 @@ const {
 
 <style>
   .closing { text-align: center; padding: 56px 0; border-bottom: none; }
+  /* Above the headline, pointing down at the button under it. */
+  .pose { margin-bottom: 6px; }
   .closing h2 { margin-bottom: 4px; }
   .closing :global(h2 em) { font-style: normal; color: var(--orange); }
 

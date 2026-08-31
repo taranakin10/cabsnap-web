@@ -180,6 +180,15 @@ figcaption {
   padding: 11px 14px;
   margin-top: 24px;
 }
+/* The shrug. Small on purpose: this card stands in for a button, and the
+   drawing is the aside, not the message. */
+.ios-card-art {
+  width: 100%;
+  max-width: 104px;
+  height: auto;
+  align-self: center;
+  margin-bottom: 2px;
+}
 .ios-card strong {
   font-family: var(--font-display);
   font-weight: 900;
@@ -249,6 +258,32 @@ figcaption {
   inset: 0;
   background: linear-gradient(180deg, transparent 55%, #14213d 100%);
 }
+
+/* --- illustrated hero ---------------------------------------------------
+   The mascot is a cut-out on transparent ground, not a photograph. Every
+   rule the photo band needs is wrong for it: cropping to fill a fixed band
+   would cut his hat and his boots off, and the gradient exists to hide a
+   photo's hard bottom edge, which a cut-out does not have. So the band
+   becomes a box the drawing stands in, sized by the drawing itself.
+
+   No background is set — he stands directly on the .dark navy above him. */
+.hero-photo.is-mascot {
+  height: auto;
+  max-height: none;
+  overflow: visible;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  padding-top: 20px;
+}
+.hero-photo.is-mascot img {
+  width: auto;
+  height: auto;
+  max-width: min(100%, 340px);
+  max-height: 300px;
+  object-fit: contain;
+}
+.hero-photo.is-mascot::after { display: none; }
 
 .hero-copy {
   position: static;
@@ -372,6 +407,19 @@ summary:focus-visible {
     height: 480px;
     max-height: none;
     border-radius: 6px;
+  }
+
+  /* The illustration column is sized by the drawing, not pinned to the
+     photo band's 480px, and a cut-out has no edge to round. */
+  .hero-photo.is-mascot {
+    height: auto;
+    border-radius: 0;
+    align-items: center;
+    padding-top: 0;
+  }
+  .hero-photo.is-mascot img {
+    max-width: 100%;
+    max-height: 480px;
   }
   /* The gradient existed to fade the band's bottom edge into the navy copy
      block below it. In two columns there is nothing below it to fade into,

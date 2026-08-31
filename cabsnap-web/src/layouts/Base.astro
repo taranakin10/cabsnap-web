@@ -233,6 +233,21 @@ const faqSchema = faq && {
         // push the rest of the page around.
         card.style.minHeight = `${Math.round(btn.getBoundingClientRect().height)}px`;
 
+        // The shrug is the picture of the answer this card gives. Decorative,
+        // so it carries no alt text and is hidden from assistive tech — the
+        // heading under it already says the thing. Intrinsic width/height are
+        // set for the same reason they are everywhere else on the site: the
+        // box is the right shape before the file lands.
+        const art = document.createElement('img');
+        art.src = '/mascot/pose-shrug.webp';
+        art.width = 900;
+        art.height = 798;
+        art.loading = 'lazy';
+        art.decoding = 'async';
+        art.alt = '';
+        art.className = 'ios-card-art';
+        art.setAttribute('aria-hidden', 'true');
+
         const h = document.createElement('strong');
         h.textContent = 'Not on iPhone yet';
         const p = document.createElement('span');
@@ -245,7 +260,7 @@ const faqSchema = faq && {
         a.className = 'ios-card-link';
         a.textContent = 'Get notified';
 
-        card.append(h, p, a);
+        card.append(art, h, p, a);
 
         btn.replaceWith(card);
       });

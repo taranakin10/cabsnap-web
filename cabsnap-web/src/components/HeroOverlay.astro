@@ -2,29 +2,65 @@
 import Cta from './Cta.astro';
 
 /**
- * Audience-page hero: a photo band, then the copy beneath it in normal flow.
+ * Audience-page hero: an illustration band, then the copy beneath it in
+ * normal flow.
  *
  * The copy is NOT overlaid. It used to be, and when the text grew taller than
- * the photo the top of the h1 was clipped. Nothing here constrains the copy's
+ * the image the top of the h1 was clipped. Nothing here constrains the copy's
  * height, so the section is always as tall as its content.
  *
  * Shared layout lives in global.css so this and the homepage stay identical.
  * Pages provide <h1 slot="h1"> and <p slot="lead" class="lead">.
+ *
+ * TWO MODES. Pass `mascot` for an illustrated hero — a transparent cut-out
+ * standing on the navy, which must be shown whole rather than cropped to fill
+ * a band. Pass `img` + `alt` for the original photographic band. The pages
+ * that still run photographs use the second, so both have to keep working.
  */
+const MASCOTS = {
+  trucker: { src: '/mascot/hero-trucker.webp', w: 900, h: 1013 },
+  gig:     { src: '/mascot/hero-gig.webp',     w: 900, h: 1171 },
+  '1099':  { src: '/mascot/hero-1099.webp',    w: 900, h: 1379 },
+} as const;
+
 interface Props {
-  img: string;
+  mascot?: keyof typeof MASCOTS;
+  img?: string;
   alt: string;
   eyebrow: string;
 }
-const { img, alt, eyebrow } = Astro.props;
+const { mascot, img, alt, eyebrow } = Astro.props;
+const art = mascot ? MASCOTS[mascot] : null;
 ---
 
 <header class="dark hero">
   {/* .hero-in carries no styles below 1024px — it is the grid container the
       two-column desktop hero needs, and inert everywhere else. */}
   <div class="hero-in">
-    <div class="hero-photo">
-      <img src={img} width="900" height="900" fetchpriority="high" alt={alt} />
+    <div class:list={['hero-photo', art && 'is-mascot']}>
+      {art ? (
+        /* Above the fold, so it is the opposite of every pose on the page:
+           eager and high priority, never lazy. */
+        <img
+          src={art.src}
+          width={art.w}
+          height={art.h}
+          loading="eager"
+          fetchpriority="high"
+          decoding="async"
+          alt={alt}
+        />
+      ) : (
+        <img
+          src={img}
+          width="900"
+          height="900"
+          loading="eager"
+          fetchpriority="high"
+          decoding="async"
+          alt={alt}
+        />
+      )}
     </div>
     <div class="hero-copy">
       <div class="wrap">
@@ -38,8 +74,9 @@ const { img, alt, eyebrow } = Astro.props;
 </header>
 
 <style>
-  /* .hero-photo and .hero-copy live in global.css so this and the homepage
-     cannot drift apart again. No height is set here on purpose. */
+  /* .hero-photo, .hero-photo.is-mascot and .hero-copy live in global.css so
+     this and the homepage cannot drift apart again. No height is set here on
+     purpose. */
   .eyebrow.orange { color: var(--orange); }
   .hero-copy :global(h1 em) { font-style: normal; color: var(--orange); }
   .hero-copy :global(.lead) { font-size: 18px; margin-top: 16px; }
