@@ -115,3 +115,36 @@ export const AUDIENCES = [
   { slug: 'gig-drivers', label: 'Gig drivers', note: 'Rideshare & delivery' },
   { slug: 'local-drivers', label: 'Local & regional', note: 'Home nightly, paper still piles up' },
 ] as const;
+
+/**
+ * Short, stable key for a page, used to build the `source` on PlayStoreClick
+ * (see the click handler in Base.astro). The event's source is
+ * `<pageKey>-<placement>`, e.g. `home-hero-button`, `owner-operators-hero-badge`,
+ * `guide-per-diem-for-truck-drivers-closing-button`.
+ *
+ * The derivation is mechanical so a new page is covered the day it ships and
+ * cannot be forgotten. Only add an override where the derived key would be
+ * long or unreadable in Ads Manager.
+ */
+const PAGE_KEY_OVERRIDES: Record<string, string> = {
+  '/': 'home',
+  '/tools/undocumented-spend-calculator': 'calculator',
+  '/best-receipt-app-for-truck-drivers': 'roundup',
+};
+
+export function pageKeyFor(pathname: string): string {
+  // Trailing slashes are how the static host serves these; normalise first so
+  // '/' and '/receipt-app-for-gig-drivers/' key the same as their bare forms.
+  const path = pathname.replace(/\/+$/, '') || '/';
+  const override = PAGE_KEY_OVERRIDES[path];
+  if (override) return override;
+
+  return (
+    path
+      .replace(/^\//, '')
+      // The audience pages all share this prefix; it carries no information
+      // once every key on the report is a CabSnap page.
+      .replace(/^receipt-app-for-/, '')
+      .replace(/\//g, '-') || 'home'
+  );
+}

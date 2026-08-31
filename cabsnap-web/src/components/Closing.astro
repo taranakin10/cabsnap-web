@@ -2,13 +2,16 @@
 import Cta from './Cta.astro';
 
 /** The closing dark band with the final CTA. */
-interface Props { html?: string; }
-const { html = "The paper fades.<br />The <em>photo doesn't</em>." } = Astro.props;
+interface Props { html?: string; placement?: string; }
+const {
+  html = "The paper fades.<br />The <em>photo doesn't</em>.",
+  placement = 'closing',
+} = Astro.props;
 ---
 <div class="dark closing">
   <div class="wrap">
     <h2 set:html={html} />
-    <Cta />
+    <Cta placement={placement} />
   </div>
 </div>
 

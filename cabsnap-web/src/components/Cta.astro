@@ -15,8 +15,17 @@ import PlayBadge from './PlayBadge.astro';
  *
  * No id on the button: it renders more than once per page.
  */
-interface Props { label?: string; note?: boolean; }
-const { label = CTA.primary, note = true } = Astro.props;
+/**
+ * `placement` names where on the page this CTA sits. It is combined with the
+ * page key into the `source` on PlayStoreClick — see the click handler in
+ * Base.astro — so the report can tell a hero click from a closing-band one.
+ * The button and the badge get their own suffixed values: a page rendering
+ * <Cta placement="hero" /> reports `<page>-hero-button` and `<page>-hero-badge`.
+ *
+ * A page that renders this component twice MUST pass two different values.
+ */
+interface Props { label?: string; note?: boolean; placement?: string; }
+const { label = CTA.primary, note = true, placement = 'cta' } = Astro.props;
 ---
 {/* The four pieces are wrapped so desktop can hold them to one column and
     move them as a unit. Without it the button could be capped but the badge
@@ -24,10 +33,19 @@ const { label = CTA.primary, note = true } = Astro.props;
     put the badge off-axis from the button it belongs to. .cta carries no
     styles below 768px. */}
 <div class="cta">
-  <a class="btn" href={PLAY_STORE_URL} data-play-store rel="noopener">{label}</a>
+  {/* target="_blank" so the page survives the click: fbq gets to send
+      PlayStoreClick instead of racing an unload. */}
+  <a
+    class="btn"
+    href={PLAY_STORE_URL}
+    data-play-store
+    data-play-placement={`${placement}-button`}
+    target="_blank"
+    rel="noopener"
+  >{label}</a>
   {note && <p class="btn-note">{CTA.note}</p>}
 
-  <PlayBadge />
+  <PlayBadge placement={`${placement}-badge`} />
 
   <p class="platform">
     Android only. <a href="/iphone">iPhone version</a> in development.

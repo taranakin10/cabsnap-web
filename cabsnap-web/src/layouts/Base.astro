@@ -255,10 +255,14 @@ const faqSchema = faq && {
       // next to a card saying the app is not available.
       document.querySelectorAll('a.gp-badge').forEach((b) => b.remove());
 
-      // The nav button leads to the same place, so it goes too.
+      // The nav button leads to the same place, so it goes too. It now points
+      // at an internal page, so the new-tab target and the Play Store tracking
+      // attributes both have to come off with it.
       document.querySelectorAll<HTMLAnchorElement>('a.nav-cta[data-play-store]').forEach((a) => {
         a.setAttribute('href', '/iphone');
         a.removeAttribute('data-play-store');
+        a.removeAttribute('data-play-placement');
+        a.removeAttribute('target');
         const label = a.querySelector('span');
         if (label) label.textContent = 'On iPhone?';
       });
@@ -266,11 +270,33 @@ const faqSchema = faq && {
   </script>
 
   <script>
-    // Preserve UTM parameters through to the Play Store so campaign
-    // attribution survives the handoff, and fire PlayStoreClick.
-    document.addEventListener('click', (e) => {
-      const link = (e.target as HTMLElement)?.closest?.('a[data-play-store]');
-      if (!link) return;
+    import { pageKeyFor } from '../config';
+
+    /**
+     * Every Play Store CTA on the site, wherever it lives, routes through here:
+     * the UTM passthrough that keeps campaign attribution across the handoff,
+     * and the PlayStoreClick / play_store_click events.
+     *
+     * `source` is `<pageKey>-<placement>` — e.g. `home-hero-button`,
+     * `owner-operators-closing-badge`, `calculator-result-button`. The page key
+     * is derived from the path (see pageKeyFor in src/config.ts) and the
+     * placement is the data-play-placement on the link itself, so a new page
+     * or a new CTA is reported correctly with no extra wiring.
+     *
+     * NOT fired on the "iPhone version" links: those go to /iphone, carry no
+     * data-play-store, and are counted separately as iOSWaitlistClick below.
+     */
+
+    // Fired links, with the time they fired. A CTA is handled on pointerdown so
+    // the event is away before any navigation starts; the click that follows
+    // must not double-count it. Keyboard activation produces no pointerdown at
+    // all, which is why the click listener still has to do the work.
+    const fired = new WeakMap<Element, number>();
+
+    function activatePlayStore(link: HTMLAnchorElement) {
+      const last = fired.get(link);
+      if (last !== undefined && Date.now() - last < 1500) return;
+      fired.set(link, Date.now());
 
       const params = new URLSearchParams(window.location.search);
       const utms = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term']
@@ -285,12 +311,15 @@ const faqSchema = faq && {
       }
 
       if (utms.length) {
-        const url = new URL((link as HTMLAnchorElement).href);
+        const url = new URL(link.href);
         url.searchParams.set('referrer', utms.join('&'));
-        (link as HTMLAnchorElement).href = url.toString();
+        link.href = url.toString();
       }
 
-      const payload: Record<string, string> = { page: window.location.pathname };
+      const placement = link.dataset.playPlacement || 'unlabelled';
+      const source = `${pageKeyFor(window.location.pathname)}-${placement}`;
+
+      const payload: Record<string, string> = { source, page: window.location.pathname };
       if (variant) payload.variant = variant;
 
       if (typeof (window as any).fbq === 'function') {
@@ -298,9 +327,60 @@ const faqSchema = faq && {
       }
       if (typeof (window as any).gtag === 'function') {
         (window as any).gtag('event', 'play_store_click', {
+          source,
           page_path: window.location.pathname,
           ...(variant ? { variant } : {}),
         });
+      }
+    }
+
+    function playStoreLinkFrom(e: Event): HTMLAnchorElement | null {
+      return (e.target as HTMLElement)?.closest?.('a[data-play-store]') as HTMLAnchorElement | null;
+    }
+
+    // Primary path. Runs a frame or two before the click, and well before any
+    // navigation — the CTAs also open in a new tab, so this page (and the
+    // pixel on it) stays alive either way.
+    document.addEventListener('pointerdown', (e) => {
+      // Left and middle button only. A right-click opens a context menu, not
+      // the Play Store, and should not be counted as an install intent.
+      if (e.button !== 0 && e.button !== 1) return;
+      const link = playStoreLinkFrom(e);
+      if (link) activatePlayStore(link);
+    });
+
+    // Backstop: keyboard activation, and any environment that fires click
+    // without a preceding pointerdown. Deduped against the above.
+    document.addEventListener('click', (e) => {
+      const link = playStoreLinkFrom(e);
+      if (link) activatePlayStore(link);
+    });
+
+    /**
+     * The "iPhone version" link under every CTA, and the card the iOS swap
+     * puts in the button's place. Deliberately a DIFFERENT event name: these
+     * people cannot install the app, and counting them as PlayStoreClick would
+     * inflate the only number the ads are optimised against.
+     */
+    const firedIos = new WeakMap<Element, number>();
+
+    document.addEventListener('click', (e) => {
+      const link = (e.target as HTMLElement)?.closest?.('a[href^="/iphone"]') as HTMLAnchorElement | null;
+      if (!link) return;
+
+      const last = firedIos.get(link);
+      if (last !== undefined && Date.now() - last < 1500) return;
+      firedIos.set(link, Date.now());
+
+      const payload = {
+        source: `${pageKeyFor(window.location.pathname)}-iphone-link`,
+        page: window.location.pathname,
+      };
+      if (typeof (window as any).fbq === 'function') {
+        (window as any).fbq('trackCustom', 'iOSWaitlistClick', payload);
+      }
+      if (typeof (window as any).gtag === 'function') {
+        (window as any).gtag('event', 'ios_waitlist_click', payload);
       }
     });
   </script>

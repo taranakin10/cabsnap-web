@@ -67,9 +67,17 @@ const { title, description, path, kicker, headlines, sub } = Astro.props;
         <div class="step"><span>3</span><p><b>It's kept.</b> Filed and searchable, with the original photo alongside it.</p></div>
       </div>
 
-      <a class="btn" href={PLAY_STORE_URL} data-play-store rel="noopener">{CTA.primary}</a>
+      {/* New tab so the pixel is not racing the unload — see Base.astro. */}
+      <a
+        class="btn"
+        href={PLAY_STORE_URL}
+        data-play-store
+        data-play-placement="hero-button"
+        target="_blank"
+        rel="noopener"
+      >{CTA.primary}</a>
       <p class="note">{CTA.note}</p>
-      <PlayBadge />
+      <PlayBadge placement="hero-badge" />
       <p class="platform">
         Android only. <a href="/iphone">iPhone version</a> in development.
       </p>

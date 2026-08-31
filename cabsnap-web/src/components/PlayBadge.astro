@@ -14,11 +14,21 @@
  * that attribution is rendered site-wide in Footer.astro.
  */
 import { PLAY_STORE_URL } from '../config';
+
+/**
+ * Where on the page this badge sits. Combined with the page key into the
+ * `source` on PlayStoreClick — see the click handler in Base.astro. Callers
+ * that render more than one badge per page must pass distinct values.
+ */
+interface Props { placement?: string; }
+const { placement = 'badge' } = Astro.props;
 ---
 <a
   class="gp-badge"
   href={PLAY_STORE_URL}
   data-play-store
+  data-play-placement={placement}
+  target="_blank"
   rel="noopener"
   aria-label="Get it on Google Play"
 >
