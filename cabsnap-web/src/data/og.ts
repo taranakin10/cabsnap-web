@@ -27,7 +27,7 @@ export const OG: OgEntry[] = [
   { path: '/receipt-app-for-owner-operators', kicker: 'For owner-operators', title: "It's your truck.\nIt's your paper." },
   { path: '/receipt-app-for-lease-operators', kicker: 'For lease operators', title: 'Their portal.\nYour records.' },
   { path: '/receipt-app-for-1099-contractors', kicker: 'For 1099 contractors', title: 'No employer.\nNo reimbursement.' },
-  { path: '/receipt-app-for-gig-drivers', kicker: 'For rideshare & delivery', title: 'Receipts, yes.\nMileage, no.' },
+  { path: '/receipt-app-for-gig-drivers', kicker: 'For rideshare & delivery', title: 'Every gig receipt.\nKept for tax time.' },
   { path: '/receipt-app-for-local-drivers', kicker: 'For local & regional drivers', title: 'Home nightly.\nPaper still piles up.' },
 
   // Comparisons
