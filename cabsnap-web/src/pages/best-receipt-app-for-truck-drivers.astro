@@ -39,7 +39,10 @@ const options = [
     us: true,
     pitch: "CabSnap catches every receipt the moment you get it — point your phone, the AI reads the vendor, total, and date, files it, and keeps it readable until tax time. No expense reports, no desk, no monthly bookkeeping. Snap it and it's kept. Free to start.",
     best: 'Owner-operators, gig drivers, and 1099 contractors who just need every receipt caught and kept — nothing more to manage.',
-    not: 'Anyone who needs mileage tracking, an iPhone app, expense reports, or accounting sync. We do none of those.',
+    /* Our own entry states its limit once, as `fit`, and it renders below the
+       strengths rather than above them. The other four keep `not` in place.
+       The mileage comparison itself lives in the table and the FAQ. */
+    fit: 'people who want receipts caught and kept, not a mileage app or an iPhone version.',
     facts: ['AI reads every receipt', 'Filed & kept for tax time', 'One-tap capture', 'Free tier', 'Android'],
   },
   {
@@ -148,10 +151,11 @@ const faq = [
             <h3>{o.name}{o.us && <span class="tag">ours</span>}</h3>
             <p class="pitch">{o.pitch}</p>
             <p class="line"><b>Best for:</b> {o.best}</p>
-            <p class="line"><b>Not for:</b> {o.not}</p>
+            {o.not && <p class="line"><b>Not for:</b> {o.not}</p>}
             <ul>
               {o.facts.map((f) => <li>{f}</li>)}
             </ul>
+            {o.fit && <p class="line fit"><b>Best fit:</b> {o.fit}</p>}
           </div>
         ))}
       </div>
@@ -168,15 +172,14 @@ const faq = [
   <section>
     <div class="wrap">
       <p class="eyebrow">Where we lose</p>
-      <h2>Four reasons to<br />pick something else.</h2>
+      <h2>Three reasons to<br />pick something else.</h2>
       <ol class="lose">
-        <li><b>You need mileage tracking.</b> We do not do it and will not fake it. Shoeboxed and Expensify both list it.</li>
         <li><b>You are on an iPhone.</b> CabSnap is Android only right now. The other three list iPhone apps.</li>
         <li><b>You have a backlog of old paper.</b> Photographing three years of receipts one at a time is miserable. A mail-in service is the right tool.</li>
         <li><b>You submit expenses to a company.</b> You need reports and approvals, and that is not what we built.</li>
       </ol>
       <p class="note">
-        If none of those four apply to you, we think CabSnap is the fastest way to
+        If none of those three apply to you, we think CabSnap is the fastest way to
         stop losing receipts at the pump. If one of them does, use the other thing.
       </p>
     </div>
@@ -219,6 +222,9 @@ const faq = [
     text-transform: uppercase; letter-spacing: .02em;
     color: var(--text); margin-right: 4px;
   }
+  /* Sits under the fact chips, so it reads as a closing note on the entry
+     rather than a third label competing with Best for / Not for above. */
+  .line.fit { font-size: 14px; color: var(--text-body); }
   .opt ul {
     list-style: none; margin-top: 12px; padding-top: 12px;
     border-top: 1px solid var(--rule);
