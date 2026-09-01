@@ -9,13 +9,14 @@ import SiblingLinks from '../components/SiblingLinks.astro';
 import Closing from '../components/Closing.astro';
 
 /**
- * GIG DRIVERS — the honest-mismatch page.
+ * GIG DRIVERS.
  *
- * Most people searching for a gig-driver expense app want MILEAGE TRACKING,
- * which CabSnap does not do. That answer is given in the section immediately
- * below the hero, above the fold on a phone — not buried in the FAQ. A visitor
- * who needs mileage should leave in the first ten seconds rather than install
- * and find out. Do not soften or relocate that block.
+ * Leads with what CabSnap does: capture and keep the receipts a gig driver
+ * generates. The hero and the first section are benefit-first — no product
+ * limitation above the fold, and nothing framed as an absence.
+ *
+ * The scope answer still exists, in the FAQ, where a visitor who goes looking
+ * for it will find it. It does not belong any higher than that.
  */
 
 const RECEIPTS = [
@@ -24,6 +25,7 @@ const RECEIPTS = [
   { name: 'Phone mounts & chargers', note: 'The gear that quietly wears out every few months' },
   { name: 'Hot bags & coolers', note: 'Bought out of pocket, replaced more than once a year' },
   { name: 'Tolls', note: 'Pennies at a time, hundreds by December' },
+  { name: 'Parking', note: 'Meters, garages, lots — the smallest slips of all' },
 ];
 
 const STEPS = [
@@ -33,14 +35,6 @@ const STEPS = [
 ];
 
 const faq = [
-  {
-    q: 'Does CabSnap track my miles?',
-    a: 'No. CabSnap captures and keeps receipts, and that is the entire job. Mileage tracking is a different product and we do not build one. If mileage is your main need, use a dedicated mileage app — plenty of drivers run one of those alongside CabSnap for the paper side.',
-  },
-  {
-    q: 'Then what is this for, if I mostly drive my own car?',
-    a: 'The things you buy. Gas, car washes, mounts, chargers, hot bags, tolls, the replacement phone cable in month three. Those are paper and card slips, and they are the ones that vanish. Miles are tracked by a mileage app; purchases are not.',
-  },
   {
     q: 'Does the IRS accept photos of receipts?',
     a: 'Yes. Under Rev. Proc. 97-22 the IRS accepts electronic copies of paper records, provided the image is legible, matches the original, can be printed on request, and is stored securely. This is a recordkeeping answer, not tax advice — talk to your tax preparer about your own situation.',
@@ -64,7 +58,7 @@ const faq = [
 
 <Base
   title="Receipt App for Gig Drivers — CabSnap"
-  description="Gas, car washes, phone mounts, hot bags, tolls. CabSnap keeps the receipts for what you buy. It does not track mileage — read why before you download."
+  description="Snap and keep every gig receipt — gas, tolls, car washes, hot bags — so it's there at tax time. Free on Android."
   path="/receipt-app-for-gig-drivers"
   faq={faq}
 >
@@ -73,43 +67,20 @@ const faq = [
     alt="The CabSnap driver with a delivery bag on his back, holding up a phone showing a captured receipt"
     eyebrow="For rideshare & delivery"
   >
-    <h1 slot="h1">Receipts, yes.<br /><em>Mileage, no</em>.</h1>
+    <h1 slot="h1">Every gig receipt.<br />Kept for <em>tax time</em>.</h1>
     <p slot="lead" class="lead measure">
-      Gas, car washes, mounts, hot bags, tolls — photograph each one and it is kept.
-      CabSnap does not track miles, and that is worth knowing before you download.
+      Gas, car washes, phone mounts, hot bags, tolls — photograph each one and
+      CabSnap's AI reads it, files it, and keeps it for April.
     </p>
   </HeroOverlay>
-
-  <section class="upfront narrow">
-    <div class="wrap">
-      <p class="eyebrow">Before you download</p>
-      <h2>If you came here<br />for mileage, stop.</h2>
-      <p class="intro measure">
-        Most gig drivers looking for an expense app want automatic mileage tracking.
-        CabSnap does not do that. Not a smaller version of it, not a manual version
-        of it &mdash; it is not in the app and it is not on the roadmap.
-      </p>
-      <p class="measure">
-        If mileage is the thing you need, close this page and go install a mileage
-        app. We would rather lose you in ten seconds than have you find out after
-        the download.
-      </p>
-      <p class="measure">
-        What CabSnap does is the other half: the paper for everything you
-        <em>buy</em>. Plenty of drivers run a mileage app and CabSnap side by side,
-        because those are genuinely two different problems.
-      </p>
-    </div>
-  </section>
 
   <section>
     <div class="wrap">
       <p class="eyebrow">What you're carrying</p>
-      <h2>The paper a gig<br />driver collects.</h2>
+      <h2>The receipts a gig<br />driver racks up in a week.</h2>
       <ReceiptList items={RECEIPTS} />
       <p class="closer measure">
-        Every one of those is money you already spent on the job. The only question
-        is whether you can still show it next spring.
+        Every one is a business expense. Snap it and it's kept.
       </p>
     </div>
   </section>
@@ -159,8 +130,6 @@ const faq = [
 
 <style>
   h2 em { font-style: normal; color: var(--orange); }
-  .upfront { background: var(--card); }
-  .upfront em { font-style: normal; font-weight: 600; color: var(--orange-ink); }
   /* Sits under the full-width receipt grid, so it takes that grid's left
      edge rather than centring the way a measure column does by default. */
   .closer { margin-top: 24px; font-size: 17px; margin-inline: 0; }
